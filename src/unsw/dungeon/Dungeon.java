@@ -5,6 +5,7 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A dungeon in the interactive dungeon player.
@@ -48,15 +49,21 @@ public class Dungeon {
         entities.add(entity);
     }
     
-    public int checkCurrentLocation(int x, int y) {
+    public Entity getEntityAtLocation(int x, int y) {
     	
     	for(Entity e: entities) {
-    		if (e instanceof Wall) {
-    			if(e.getX() == x && e.getY() == y) {
-    				return 1;
-    			}
-    		}
+    		if (e != null) {
+	    		if(e.getX() == x && e.getY() == y) {
+	    			return e;
+	    		}
+    		}	
     	}
-    	return 0;
+    	return null;
+    }
+    
+    public void removeEntityFromMap(Entity e) {
+    	//todo 
+    	System.out.println("hello");
+    	//remove the bitch
     }
 }

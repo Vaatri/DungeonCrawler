@@ -20,8 +20,10 @@ public class Player extends Entity {
     }
 
     public void moveUp() {
-        if (getY() > 0)
-            y().set(getY() - 1);
+        if (dungeon.checkCurrentLocation(this.getX(), (this.getY() -1)) == 0){	
+        	if (getY() > 0)
+        		y().set(getY() - 1);
+        }    
     }
 
     public void moveDown() {

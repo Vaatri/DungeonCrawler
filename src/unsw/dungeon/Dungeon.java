@@ -47,4 +47,16 @@ public class Dungeon {
     public void addEntity(Entity entity) {
         entities.add(entity);
     }
+    
+    public int checkCurrentLocation(int x, int y) {
+    	
+    	for(Entity e: entities) {
+    		if (e instanceof Wall) {
+    			if(e.getX() == x && e.getY() == y) {
+    				return 1;
+    			}
+    		}
+    	}
+    	return 0;
+    }
 }

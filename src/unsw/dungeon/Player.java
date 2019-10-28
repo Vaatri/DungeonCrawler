@@ -92,22 +92,6 @@ public class Player extends Entity {
     			//remove the object from the map.
     		}
     	}
-//    	}else if (e instanceof Key) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//remove from inventory lol
-//    		}
-//    	} else if (e instanceof Sword) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//remove from inventory lol
-//    		}
-//    	} else if (e instanceof Potion) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//
-//    		}
-//    	}
     }
     
     

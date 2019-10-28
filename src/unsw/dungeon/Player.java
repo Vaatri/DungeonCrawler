@@ -46,37 +46,90 @@ public class Player extends Entity {
     
     public void movementHandler(int x, int y, String direction) {
     	Entity entityType = dungeon.getEntityAtLocation(x, y);
-    	System.out.println(entityType);
-    	//if theres a wall then cant move
-    	if(entityType == null) {
-    		switch(direction) {
-    		case("up"):
-    			if (getY() > 0)
-    	            y().set(getY() + 1);
-    			return;
-    		case("down"):
-    	        if (getY() < dungeon.getHeight() - 1)
-    	            y().set(getY() + 1);
-    			return;
-    		case("left"):
-    			if (getX() > 0)
-    	            x().set(getX() - 1);
-    			return;
-    		case("right"):
-    			if (getX() < dungeon.getWidth() - 1)
-    	            x().set(getX() + 1);
-    			return;
-    		}
-    	}
+    	boolean canMove = true;
     	if(entityType instanceof Wall) {
-    		System.out.println("you have walked into a wall");
-    	} else if (entityType instanceof Treasure) {
-    		inven.addToInv(entityType);
-    		//remove from map
-    		dungeon.removeEntityFromMap(entityType);
-    		System.out.println(inven);
+    		canMove = false;
+    	} else if (entityType instanceof Door) {
+    		//check if open else
+    		canMove = false;
+    	} else if (entityType instanceof Boulder) {
+    		//check if moveable
+    		canMove = false;
+    	}
+    	//if cant move then do nothing
+    	if(!canMove) return;
+    	
+    	
+    	//if entity is able to be picked up then handle the inventory.
+    	if ((entityType instanceof Key) || (entityType instanceof Sword)
+    			|| (entityType instanceof Potion) || (entityType instanceof Treasure)){
+    		
+    		inventoryHandler(entityType);
     	}
     	
+    	//if entity isnt a portal then we can move freely.
+    	if(entityType instanceof Portal) {
+    		Portal p = (Portal)entityType;
+    		p.teleport(this);
+    	} else {
+    		//todo teleport the player to different position
+    		move(x, y, direction);
+    	}
+    }
+    
+    
+    /**
+     * Will handle potential items that are picked up by the player.
+     * @param e
+     */
+    public void inventoryHandler(Entity e) {
+    	if(e instanceof Treasure) {
+    		inven.addToInv(e);
+    		return;
+    	} else {
+    		if (!inven.inInventory(e)) {
+    			inven.addToInv(e);
+    			//remove the object from the map.
+    		}
+    	}
+//    	}else if (e instanceof Key) {
+//    		if(!inven.inInventory(e)) {
+//    			inven.addToInv(e);
+//    			//remove from inventory lol
+//    		}
+//    	} else if (e instanceof Sword) {
+//    		if(!inven.inInventory(e)) {
+//    			inven.addToInv(e);
+//    			//remove from inventory lol
+//    		}
+//    	} else if (e instanceof Potion) {
+//    		if(!inven.inInventory(e)) {
+//    			inven.addToInv(e);
+//    			//
+//    		}
+//    	}
+    }
+    
+    
+    public void move(int x, int y, String direction) {
+		switch(direction) {
+		case("up"):
+			if (getY() > 0)
+	            y().set(getY() - 1);
+			return;
+		case("down"):
+	        if (getY() < dungeon.getHeight() - 1)
+	            y().set(getY() + 1);
+			return;
+		case("left"):
+			if (getX() > 0)
+	            x().set(getX() - 1);
+			return;
+		case("right"):
+			if (getX() < dungeon.getWidth() - 1)
+	            x().set(getX() + 1);
+			return;
+		}
     }
     
 }

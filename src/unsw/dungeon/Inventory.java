@@ -11,7 +11,27 @@ public class Inventory {
 		}
 		
 		public void addToInv(Entity e) {
-			System.out.println("adding " +e+" into inventory!");
+			System.out.println("Added "+e+ " into inventory");
 			inven.add(e);
+		}
+		
+		
+		/**
+		 * Check if there are any keys, swords, or potions already existing in players inventory.
+		 * It will return true if there are any instances of the object within it.
+		 * @param e
+		 * @return
+		 */
+		public boolean inInventory(Entity e) {
+			
+			for(Entity inInventory: inven) {
+				if(inInventory instanceof Key && e instanceof Key)
+					return true;
+				if(inInventory instanceof Sword && e instanceof Sword) 
+					return true;
+				if(inInventory instanceof Potion && e instanceof Potion)
+					return true;
+			}
+			return false;
 		}
 }

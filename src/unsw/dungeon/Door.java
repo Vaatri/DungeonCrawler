@@ -1,7 +1,11 @@
 package unsw.dungeon;
 
 public class Door extends Entity{
-	public Door(int x, int y) {
+	
+	private int keyID;
+	
+	public Door(int x, int y, int keyID) {
         super(x, y);
+        this.keyID = keyID;
     }
 }

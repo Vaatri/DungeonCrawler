@@ -67,17 +67,20 @@ public abstract class DungeonLoader {
         	entity = treasure;
         	break;
         case "portal":
+        	//need to make a function that links two portals.
+        	//maybe add an id for each portal in json
         	Portal portal = new Portal(x,y);
         	onLoad(portal);
         	entity = portal;
         	break;
         case "floorSwitch":
-        	FloorSwitch floorSwtich = new FloorSwitch(x,y);
+        	FloorSwitch floorSwitch = new FloorSwitch(x,y);
         	onLoad(floorSwitch);
         	entity = floorSwitch;
         	break;
         case "door":
-        	Door door = new Door(x,y);
+        	int keyID = json.getInt("id");
+        	Door door = new Door(x,y,keyID);
         	onLoad(door);
         	entity = door;
         	break;
@@ -102,7 +105,8 @@ public abstract class DungeonLoader {
         	entity = potion;
         	break;
         case "key":
-        	Key key = new Key(x,y);
+        	int doorID = json.getInt("id");
+        	Key key = new Key(x,y, doorID);
         	onLoad(key);
         	entity = key;
         	break;

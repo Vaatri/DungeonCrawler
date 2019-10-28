@@ -33,6 +33,30 @@
       "type": "wall"
     },
     {
+      "x": 5,
+      "y": 1,
+      "id": 10,
+      "type": "key"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "id": 10,
+      "type": "door"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "id": 11,
+      "type": "key"
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "id": 11,
+      "type": "door"
+    },    
+    {
       "x": 6,
       "y": 0,
       "type": "wall"
@@ -1036,6 +1060,16 @@
       "x": 19,
       "y": 17,
       "type": "wall"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "type": "sword"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "type": "potion"
     }
   ],
   "goal-condition": {

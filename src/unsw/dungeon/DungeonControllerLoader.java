@@ -25,6 +25,15 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerImage;
     private Image wallImage;
     private Image treasureImage;
+    private Image portalImage;
+    private Image floorSwitchImage;
+    private Image doorImage;
+    private Image boulderImage;
+    private Image enemyImage;
+    private Image exitImage;
+    private Image potionImage;
+    private Image keyImage;
+    private Image swordImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -70,12 +79,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
     @Override
     public void onLoad(FloorSwitch floorSwitch) {
-    	ImageView view = new ImageView(foorSwitchImage);
+    	ImageView view = new ImageView(floorSwitchImage);
     	addEntity(floorSwitch, view);
     }
     @Override
     public void onLoad(Door door) {
-    	ImageView view = new ImageView(door);
+    	ImageView view = new ImageView(doorImage);
     	addEntity(door, view);
     }
     @Override

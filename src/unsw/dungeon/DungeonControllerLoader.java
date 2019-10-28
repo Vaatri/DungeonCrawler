@@ -33,6 +33,18 @@ public class DungeonControllerLoader extends DungeonLoader {
         playerImage = new Image("/human_new.png");
         wallImage = new Image("/brick_brown_0.png");
         treasureImage = new Image("/gold_pile.png");
+        portalImage = new Image("/portal.png");
+        floorSwitchImage = new Image("/pressure_plate.png");
+        // need an open door
+        doorImage = new Image("/closed_door.png");
+        boulderImage = new Image("/boulder.png");
+        enemyImage = new Image("/deep_elf_master_archer.png");
+        exitImage = new Image("/exit.png");
+        // brilliant blue potion not added
+        potionImage = new Image("/bubbly.png");
+        keyImage = new Image("/key.png");
+        swordImage = new Image("/greatsword_1_new.png");
+        
     }
 
     @Override
@@ -51,6 +63,52 @@ public class DungeonControllerLoader extends DungeonLoader {
     	ImageView view = new ImageView(treasureImage);
     	addEntity(treasure, view);
     }
+    @Override
+    public void onLoad(Portal portal) {
+    	ImageView view = new ImageView(portalImage);
+    	addEntity(portal, view);
+    }
+    @Override
+    public void onLoad(FloorSwitch floorSwitch) {
+    	ImageView view = new ImageView(foorSwitchImage);
+    	addEntity(floorSwitch, view);
+    }
+    @Override
+    public void onLoad(Door door) {
+    	ImageView view = new ImageView(door);
+    	addEntity(door, view);
+    }
+    @Override
+    public void onLoad(Boulder boulder) {
+    	ImageView view = new ImageView(boulderImage);
+    	addEntity(boulder, view);
+    }
+    @Override
+    public void onLoad(Enemy enemy) {
+    	ImageView view = new ImageView(enemyImage);
+    	addEntity(enemy, view);
+    }
+    @Override
+    public void onLoad(Exit exit) {
+    	ImageView view = new ImageView(exitImage);
+    	addEntity(exit, view);
+    }
+    @Override
+    public void onLoad(Potion potion) {
+    	ImageView view = new ImageView(potionImage);
+    	addEntity(potion, view);
+    }
+    @Override
+    public void onLoad(Key key) {
+    	ImageView view = new ImageView(keyImage);
+    	addEntity(key, view);
+    }
+    @Override
+    public void onLoad(Sword sword) {
+    	ImageView view = new ImageView(swordImage);
+    	addEntity(sword, view);
+    }
+    
 
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);

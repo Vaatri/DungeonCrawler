@@ -66,6 +66,52 @@ public abstract class DungeonLoader {
         	onLoad(treasure);
         	entity = treasure;
         	break;
+        case "portal":
+        	Portal portal = new Portal(x,y);
+        	onLoad(portal);
+        	entity = portal;
+        	break;
+        case "floorSwitch":
+        	FloorSwitch floorSwtich = new FloorSwitch(x,y);
+        	onLoad(floorSwitch);
+        	entity = floorSwitch;
+        	break;
+        case "door":
+        	Door door = new Door(x,y);
+        	onLoad(door);
+        	entity = door;
+        	break;
+        case "boulder":
+        	Boulder boulder = new Boulder(x,y);
+        	onLoad(boulder);
+        	entity = boulder;
+        	break;
+        case "enemy":
+        	Enemy enemy = new Enemy(x,y);
+        	onLoad(enemy);
+        	entity = enemy;
+        	break;
+        case "exit":
+        	Exit exit = new Exit(x,y);
+        	onLoad(exit);
+        	entity = exit;
+        	break;
+        case "potion":
+        	Potion potion = new Potion(x,y);
+        	onLoad(potion);
+        	entity = potion;
+        	break;
+        case "key":
+        	Key key = new Key(x,y);
+        	onLoad(key);
+        	entity = key;
+        	break;
+        case "sword":
+        	Sword sword = new Sword(x,y);
+        	onLoad(sword);
+        	entity = sword;
+        	break;
+        	
         }
         dungeon.addEntity(entity);
     }
@@ -77,5 +123,15 @@ public abstract class DungeonLoader {
     // TODO Create additional abstract methods for the other entities
     
     public abstract void onLoad(Treasure treasure);
+    public abstract void onLoad(Portal portal);
+    public abstract void onLoad(FloorSwitch floorSwitch);
+    public abstract void onLoad(Door door);
+    public abstract void onLoad(Boulder boulder);
+    public abstract void onLoad(Enemy enemy);
+    public abstract void onLoad(Exit exit);
+    public abstract void onLoad(Potion potion);
+    public abstract void onLoad(Key key);
+    public abstract void onLoad(Sword sword);
+    
 
 }

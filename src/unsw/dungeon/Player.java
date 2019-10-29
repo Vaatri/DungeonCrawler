@@ -45,8 +45,11 @@ public class Player extends Entity {
     }
     
     public void movementHandler(int x, int y, String direction) {
+    	
     	Entity entityType = dungeon.getEntityAtLocation(x, y);
+    	
     	boolean canMove = true;
+    	
     	if(entityType instanceof Wall) {
     		canMove = false;
     	} else if (entityType instanceof Door) {
@@ -54,7 +57,10 @@ public class Player extends Entity {
     		canMove = false;
     	} else if (entityType instanceof Boulder) {
     		//check if moveable
-    		canMove = false;
+    		if (checkAdjacent(x,y,direction, ((Boulder)entityType)))
+    			canMove = false;
+    		else 
+    			((Boulder) entityType).moveBoulder(x, y, direction);
     	}
     	//if cant move then do nothing
     	if(!canMove) return;
@@ -78,6 +84,35 @@ public class Player extends Entity {
     }
     
     
+    public boolean checkAdjacent(int x, int y, String direction, Boulder b) {
+    	//check for anything adjacent to the boulder that we want to push
+		for(Entity e: dungeon.getEntitiesList()) {	
+    		if ((e instanceof Boulder && !b.equals(b)) || (e instanceof Enemy) || 
+    			(e instanceof Door) || (e instanceof Exit) || (e instanceof Wall)) {
+				switch(direction) {
+				case("up"):
+					if (e.getX() == x && e.getY() == (y-1))
+						return true;
+					break;
+				case("down"):
+					if (e.getX() == x && e.getY() == (y+1))
+						return true;
+					break;
+				case("left"):
+					if (e.getX() == (x-1) && e.getY() == y)
+						return true;
+					break;
+				case("right"):
+					if (e.getX() == (x+1) && e.getY() == y) 
+						return true;
+					break;
+				}
+    		}
+		}	
+    	
+    	return false;
+    }
+    
     /**
      * Will handle potential items that are picked up by the player.
      * @param e
@@ -92,22 +127,7 @@ public class Player extends Entity {
     			//remove the object from the map.
     		}
     	}
-//    	}else if (e instanceof Key) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//remove from inventory lol
-//    		}
-//    	} else if (e instanceof Sword) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//remove from inventory lol
-//    		}
-//    	} else if (e instanceof Potion) {
-//    		if(!inven.inInventory(e)) {
-//    			inven.addToInv(e);
-//    			//
-//    		}
-//    	}
+
     }
     
     

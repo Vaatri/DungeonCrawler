@@ -66,4 +66,8 @@ public class Dungeon {
     	System.out.println("hello");
     	//remove the bitch
     }
+    
+    public List<Entity> getEntitiesList(){
+    	return entities;
+    }
 }

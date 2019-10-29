@@ -47,7 +47,8 @@ public class Player extends Entity {
     public void movementHandler(int x, int y, String direction) {
     	
     	Entity entityType = dungeon.getEntityAtLocation(x, y);
-    	
+    	// entities that a player cannot move to: wall, blocked (on the other side) portal, 
+    	// locked door, boulder in a unmoveable position
     	boolean canMove = true;
     	
     	if(entityType instanceof Wall) {
@@ -120,13 +121,18 @@ public class Player extends Entity {
     public void inventoryHandler(Entity e) {
     	if(e instanceof Treasure) {
     		inven.addToInv(e);
+    		// trigger goal
     		return;
     	} else {
+    		// for key, sword and potion, add to inventory iff not in current inventory
     		if (!inven.inInventory(e)) {
     			inven.addToInv(e);
-    			//remove the object from the map.
     		}
-    	}
+    		// picking up potion (add extra 10 seconds), and key (should drop then pick up)
+    		else {
+    			
+    		}
+    	} //remove the object from the map.
     }
     
     

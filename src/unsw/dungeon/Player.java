@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -46,42 +47,65 @@ public class Player extends Entity {
     
     public void movementHandler(int x, int y, String direction) {
     	
-    	Entity entityType = dungeon.getEntityAtLocation(x, y);
+    	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);
     	// entities that a player cannot move to: wall, blocked (on the other side) portal, 
     	// locked door, boulder in a unmoveable position
     	boolean canMove = true;
+    	if (entityList.size() == 0) {
+    		// nothing is there
+    		move(x, y, direction);
+    		return;
+    	}
+    	if (entityList.size() > 1) {
+    		// do something about it
+    		// e.g. if boulder and floor switch, then 
+    		return;
+    	}
     	
+    	// if only one in entityList, continue
+    	Entity entityType = entityList.get(0);
+    	
+    	// wall
     	if(entityType instanceof Wall) {
-    		canMove = false;
-    	} else if (entityType instanceof Door) {
-    		//check if open else
-    		canMove = false;
-    	} else if (entityType instanceof Boulder) {
-    		//check if moveable
-    		if (checkAdjacent(x,y,direction, ((Boulder)entityType)))
-    			canMove = false;
-    		else 
-    			((Boulder) entityType).moveBoulder(x, y, direction);
-    	}
-    	//if cant move then do nothing
-    	if(!canMove) return;
-    	
-    	
-    	//if entity is able to be picked up then handle the inventory.
-    	if ((entityType instanceof Key) || (entityType instanceof Sword)
-    			|| (entityType instanceof Potion) || (entityType instanceof Treasure)){
+    		return;
+    	} 
+    	// door
+    	else if (entityType instanceof Door) {
+    		Door door = (Door)entityType;
+			door.move(this,x,y,direction);
+			return;
     		
+    	} 
+    	// key
+    	else if(entityType instanceof Key) {
     		inventoryHandler(entityType);
-    	}
-    	
-    	//if entity isnt a portal then we can move freely.
-    	if(entityType instanceof Portal) {
-    		Portal p = (Portal)entityType;
-    		p.teleport(this);
-    	} else {
-    		//todo teleport the player to different position
     		move(x, y, direction);
     	}
+    	// boulder
+    	else if (entityType instanceof Boulder) {
+    		//check if moveable
+    		if (checkAdjacent(x,y,direction, ((Boulder)entityType)))
+    			return;
+    		else { 
+    			((Boulder) entityType).moveBoulder(x, y, direction);
+    			move(x, y, direction);
+    		}
+    		
+    	}
+    	
+    	//if entity is able to be picked up then handle the inventory.
+    	if ((entityType instanceof Sword)|| (entityType instanceof Potion) || (entityType instanceof Treasure)){
+    		
+    		inventoryHandler(entityType);
+    		move(x, y, direction);
+    	}
+    	
+    	// portal
+    	if(entityType instanceof Portal) {
+    		Portal p = (Portal)entityType;
+    		p.teleport(this, dungeon, x, y, direction);
+    	} 
+    	
     }
     
     

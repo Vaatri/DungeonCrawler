@@ -69,7 +69,8 @@ public abstract class DungeonLoader {
         case "portal":
         	//need to make a function that links two portals.
         	//maybe add an id for each portal in json
-        	Portal portal = new Portal(x,y);
+        	int portalID = json.getInt("id");
+        	Portal portal = new Portal(x,y, portalID);
         	onLoad(portal);
         	entity = portal;
         	break;
@@ -88,6 +89,13 @@ public abstract class DungeonLoader {
         	Boulder boulder = new Boulder(x,y);
         	onLoad(boulder);
         	entity = boulder;
+        	break;
+        case "openDoor":
+        	int keyID2 = json.getInt("id");
+        	Door openDoor = new Door(x,y, keyID2);
+        	openDoor.setState(openDoor.getOpenState());
+        	onLoad(openDoor);
+        	entity = openDoor;
         	break;
         case "enemy":
         	Enemy enemy = new Enemy(x,y);

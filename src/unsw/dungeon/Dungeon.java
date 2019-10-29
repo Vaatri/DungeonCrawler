@@ -49,16 +49,16 @@ public class Dungeon {
         entities.add(entity);
     }
     
-    public Entity getEntityAtLocation(int x, int y) {
-    	
+    public ArrayList<Entity> getEntityAtLocation(int x, int y) {
+    	ArrayList<Entity> entityList = new ArrayList<Entity>();
     	for(Entity e: entities) {
     		if (e != null) {
 	    		if(e.getX() == x && e.getY() == y) {
-	    			return e;
+	    			entityList.add(e);
 	    		}
     		}	
     	}
-    	return null;
+    	return entityList;
     }
     
     public void removeEntityFromMap(Entity e) {

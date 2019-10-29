@@ -127,7 +127,6 @@ public class Player extends Entity {
     			//remove the object from the map.
     		}
     	}
-
     }
     
     

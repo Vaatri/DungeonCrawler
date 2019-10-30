@@ -43,7 +43,6 @@ public class Portal extends Entity {
 	public void setPortalID(int portalID) {
 		this.portalID = portalID;
 	}
-]
 
 	
 }

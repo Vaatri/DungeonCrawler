@@ -45,6 +45,10 @@ public class Player extends Entity {
         movementHandler(this.getX() + 1, this.getY(), "right"); 
     }
     
+    public Inventory getInventory() {
+    	return inven;
+    }
+    
     public void movementHandler(int x, int y, String direction) {
     	
     	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);
@@ -108,13 +112,13 @@ public class Player extends Entity {
      */
     public void inventoryHandler(Entity e) {
     	if(e instanceof Treasure) {
-    		inven.addToInv(e);
+    		inven.addToInv(e, dungeon);
     		// trigger goal
     		return;
     	} else {
     		// for key, sword and potion, add to inventory iff not in current inventory
     		if (!inven.inInventory(e)) {
-    			inven.addToInv(e);
+    			inven.addToInv(e, dungeon);
     		}
     		// picking up potion (add extra 10 seconds), and key (should drop then pick up)
     		else {

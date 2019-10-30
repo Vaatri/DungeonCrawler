@@ -10,8 +10,10 @@ public class Inventory {
 			this.inven = new ArrayList<>();
 		}
 		
-		public void addToInv(Entity e) {
-			System.out.println("Added "+e+ " into inventory");
+		public void addToInv(Entity e, Dungeon dungeon) {
+			if(e instanceof Key) {
+				((Key)e).unlockDoor(dungeon);
+			}
 			inven.add(e);
 		}
 		
@@ -33,5 +35,13 @@ public class Inventory {
 					return true;
 			}
 			return false;
+		}
+		
+		public void removeKey() {
+			for(Entity inInventory: inven) {
+				if(inInventory instanceof Key) {
+					inven.remove(inInventory);
+				}
+			}
 		}
 }

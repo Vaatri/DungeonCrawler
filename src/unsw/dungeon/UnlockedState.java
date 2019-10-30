@@ -11,6 +11,10 @@ public class UnlockedState implements DoorState{
     	player.move(x, y, direction);
     	// once a player goes through unlocked door, change its state to open
     	door.setState(door.getOpenState());
+    	
+    	//after used the key remove it from the inventory
+    	Inventory i = player.getInventory();
+    	i.removeKey();
     	// set ui of door to open door
     }
 }

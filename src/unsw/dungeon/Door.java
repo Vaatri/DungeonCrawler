@@ -55,4 +55,8 @@ public class Door extends Entity{
 	public void setOpenState(DoorState openState) {
 		this.openState = openState;
 	}
+	
+	public int getID() {
+		return keyID;
+	}
 }

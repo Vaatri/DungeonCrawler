@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 public class Boulder extends Entity{
 	public Boulder(int x, int y) {
         super(x, y);
@@ -22,4 +24,6 @@ public class Boulder extends Entity{
 		}
 		this.setXandY(x, y);
 	}
+	
+	
 }

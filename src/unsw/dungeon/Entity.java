@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -44,4 +46,13 @@ public class Entity {
     	x().set(xVal);
     	y().set(yVal);
     }
+    
+	public boolean checkIfBoulder(List<Entity> el) {
+		for(Entity e: el) {
+			if (e instanceof Boulder) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

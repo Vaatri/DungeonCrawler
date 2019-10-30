@@ -1,48 +1,49 @@
 package unsw.dungeon;
 
 public class Portal extends Entity {
-	PortalState blockedState;
-	PortalState unblockedState;
+//	PortalState blockedState;
+//	PortalState unblockedState;
 	PortalState state;
 	private int portalID;
 	public Portal(int x, int y, int portalID) {
         super(x, y);
-        blockedState = new BlockedState(this);
-        unblockedState = new UnblockedState(this);
-        state = unblockedState;
+        this.portalID = portalID;
+//        blockedState = new BlockedState(this);
+//        unblockedState = new UnblockedState(this);
+//        state = unblockedState;
     }
+	
+	public void teleport(Player player, Dungeon dungeon , int x, int y, String direction) {
+		for (Entity e : dungeon.getEntitiesList()) {
+			if (e instanceof Portal && !e.equals(this)) {
+				if (((Portal) e).getPortalID() == portalID) {
+					player.move(x, y, direction);
+					if(!checkBlocked(e.getX(), e.getY(), dungeon)) {
+						player.setXandY(e.getX(), e.getY());
+					}
+				}
+			}	
+		}
+	}
+	
+	public boolean checkBlocked(int x, int y, Dungeon dungeon) {
+		
+		for(Entity e: dungeon.getEntitiesList()) {
+			if(e instanceof Boulder) {
+				Boulder b = (Boulder)e;
+				if(b.getX() == x && b.getY() == y) return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getPortalID() {
 		return portalID;
 	}
 	public void setPortalID(int portalID) {
 		this.portalID = portalID;
 	}
-	public void teleport(Player p, Dungeon dungeon, int x, int y, String direction) {
-		state.teleport(p, dungeon, x, y, direction);
-	}
-	public PortalState getBlockedState() {
-		return blockedState;
-	}
-
-	public void setBlockedState(PortalState blockedState) {
-		this.blockedState = blockedState;
-	}
-
-	public PortalState getUnblockedState() {
-		return unblockedState;
-	}
-
-	public void setUnblockedState(PortalState unblockedState) {
-		this.unblockedState = unblockedState;
-	}
-
-	public PortalState getState() {
-		return state;
-	}
-
-	public void setState(PortalState state) {
-		this.state = state;
-	}
+]
 
 	
 }

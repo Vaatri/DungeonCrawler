@@ -100,4 +100,8 @@ public class Dungeon {
     	return false;
     }
     
+    public void removeEntity(Entity e) {
+    	entities.remove(e);
+    }
+    
 }

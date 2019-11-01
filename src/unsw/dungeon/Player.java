@@ -12,6 +12,7 @@ public class Player extends Entity {
 
     private Dungeon dungeon;
     private Inventory inven;
+    private int lives;
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -21,6 +22,7 @@ public class Player extends Entity {
         super(x, y);
         this.dungeon = dungeon;
         this.inven = new Inventory();
+        this.lives = 4;
     }
 
     public void moveUp() {
@@ -81,8 +83,9 @@ public class Player extends Entity {
 		if (b != null) {
 			if (dungeon.checkAdjacent(x, y, direction, b))
 				return;
-			b.moveBoulder(x, y, direction);
+			b.moveBoulder(x, y, direction, dungeon);
 		}
+		//if its a collectable
 		if(entityType != null) {
 			pickupHandler(x,y,direction,entityType);
 		}
@@ -103,6 +106,7 @@ public class Player extends Entity {
     public void pickupHandler(int x, int y, String direction, Entity e) {
     	if ((e instanceof Key) || (e instanceof Treasure) || (e instanceof Sword) || (e instanceof Potion)){ 
 	    	inventoryHandler(e);
+	    	dungeon.removeEntity(e);
     	}
     }
     
@@ -147,6 +151,14 @@ public class Player extends Entity {
 	            x().set(getX() + 1);
 			return;
 		}
+    }
+    
+    public void removeLife() {
+    	lives--;
+    }
+    
+    public void resetLives() {
+    	lives = 4;
     }
     
 }

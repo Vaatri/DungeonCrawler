@@ -41,6 +41,7 @@ public class Inventory {
 			for(Entity inInventory: inven) {
 				if(inInventory instanceof Key) {
 					inven.remove(inInventory);
+					break;
 				}
 			}
 		}

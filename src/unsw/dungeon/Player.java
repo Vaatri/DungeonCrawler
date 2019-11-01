@@ -8,7 +8,7 @@ import java.util.Optional;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity {
+public class Player extends Entity implements Immovable{
 
     private Dungeon dungeon;
     private Inventory inven;

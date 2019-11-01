@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Portal extends Entity {
+public class Portal extends Entity implements Immovable{
 //	PortalState blockedState;
 //	PortalState unblockedState;
 	PortalState state;

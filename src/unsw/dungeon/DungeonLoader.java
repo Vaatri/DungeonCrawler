@@ -39,7 +39,21 @@ public abstract class DungeonLoader {
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
+        
+        JSONObject jsonGoal = json.getJSONObject("goal-condition");
+        loadGoals(dungeon, jsonGoal);
+        
         return dungeon;
+    }
+    
+    private void loadGoals(Dungeon dungeon, JSONObject goal) {
+    	String goalType = goal.getString("goal");
+    	
+    	if(goalType.equals("AND")) {
+    		JSONArray jsonSubGoals = goal.getJSONArray("subgoals");
+    	} else {
+    		Goal g = new SingleGoal()
+    	}
     }
 
     private void loadEntity(Dungeon dungeon, JSONObject json) {
@@ -124,7 +138,6 @@ public abstract class DungeonLoader {
         	onLoad(sword);
         	entity = sword;
         	break;
-        	
         }
         dungeon.addEntity(entity);
     }

@@ -44,5 +44,8 @@ public class Portal extends Entity implements Immovable{
 		this.portalID = portalID;
 	}
 
-	
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		teleport(player, player.getDungeon(),x,y,direction);
+	}
 }

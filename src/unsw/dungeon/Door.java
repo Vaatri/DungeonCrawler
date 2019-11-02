@@ -22,8 +22,8 @@ public class Door extends Entity {
 		}
 		return false;
 	}
-	public void move(Player player, int x, int y, String direction) {
-    	state.move(player, x, y, direction);
+	public void react(Player player, int x, int y, String direction) {
+    	state.react(player,x,y,direction);
     }
 	public boolean isUnlocked() {
 		if(this.state == unlockedState ) {
@@ -58,5 +58,10 @@ public class Door extends Entity {
 	
 	public int getID() {
 		return keyID;
+	}
+	
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		react(player,x,y,direction);
 	}
 }

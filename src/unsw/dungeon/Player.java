@@ -110,50 +110,29 @@ public class Player extends Entity implements Immovable,Subject{
     	// entities that a player cannot move to: wall, blocked (on the other side) portal, 
     	// locked door, boulder in a unmoveable position
     	
-    	
+    	Boulder b = null;
     	if (entityList.size() == 0) {
     		// nothing is there
     		move(x, y, direction);
     		return;
     	}
     	
-		Boulder b = null;
-		Entity entityType = null;
-		//check if theres a boulder or not
+		//check if theres a boulder we need to move
 		for(Entity e: entityList) {
-			if (e instanceof Boulder) {
+			if(e instanceof Boulder) {
 				b = (Boulder)e;
-			} else {
-				entityType = e;
 			}
 		}
-		
-		//if its a wall then you can't move anyways.
-		if (entityType instanceof Wall) {
-			return;
-		}
-		//in the case of a boulder check if there is something blocking
+		//if theres a boulder that cant be moved we cant move
 		if (b != null) {
-			if (dungeon.checkAdjacent(x, y, direction, b))
+			if(dungeon.checkAdjacent(x, y, direction, b))
 				return;
-			b.moveBoulder(x, y, direction, dungeon);
 		}
-		//if its a collectable
-		if(entityType != null) {
-			pickupHandler(x,y,direction,entityType);
+		for(Entity e: entityList) {
+			e.collide(this, x, y, direction);
 		}
+		notifyObservers();
 		
-		if(entityType instanceof Door) {
-			Door d = (Door)entityType;
-			d.move(this, x, y, direction);
-		} else if (entityType instanceof Portal) {
-			Portal p = (Portal)entityType;
-			p.teleport(this, dungeon, x, y, direction);
-		} else {
-    		move(x,y,direction);
-    		notifyObservers();
-    	}
-    	
     }
     
     
@@ -192,25 +171,35 @@ public class Player extends Entity implements Immovable,Subject{
      * Will handle potential items that are picked up by the player.
      * @param e
      */
-    public void inventoryHandler(Entity e) {
-    	if(e instanceof Treasure) {
-    		inven.addToInv(e, dungeon);
-    		// trigger goal
-    		return;
-    	} else {
-    		// for key, sword and potion, add to inventory iff not in current inventory
-    		if (!inven.inInventory(e)) {
-    			if (e instanceof Potion){
-    				setState(this.getPotionState());
-    				state.setPotion((Potion)e);
-    			}
-    			inven.addToInv(e, dungeon);
-    		}
-    		// picking up potion (add extra 10 seconds), and key (should drop then pick up)
-    		else {
-    			
-    		}
-    	} //remove the object from the map.
+    public boolean inventoryHandler(Entity e) {
+    	
+    	if(inven.addToInv(e, dungeon)) {
+    		dungeon.removeEntity(e);
+    		return true;
+    	} else 
+    		return false;
+    	
+    	
+//    	//CHNGE THIS VVVVVVVVVVV
+//    	if(e instanceof Treasure) {
+//    		inven.addToInv(e, dungeon);
+//    		// trigger goal
+//    		return true;
+//    	} else {
+//    		// for key, sword and potion, add to inventory iff not in current inventory
+//    		if (!inven.inInventory(e)) {
+//    			if (e instanceof Potion){
+//    				setState(this.getPotionState());
+//    				state.setPotion((Potion)e);
+//    			}
+//    			inven.addToInv(e, dungeon);
+//    		}
+//    		// picking up potion (add extra 10 seconds), and key (should drop then pick up)
+//    		else {
+//    			
+//    		}
+//    	} //remove the object from the map.
+//    	return false;
     }
     
     

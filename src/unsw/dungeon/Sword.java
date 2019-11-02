@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Sword extends Entity{
+public class Sword extends Entity implements Collectable{
 	
 	private int attacksLeft;
 	
@@ -15,5 +15,11 @@ public class Sword extends Entity{
 	
 	public int checkAttacksLeft() {
 		return attacksLeft;
+	}
+	
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		player.inventoryHandler(this);
+		player.move(x, y, direction);
 	}
 }

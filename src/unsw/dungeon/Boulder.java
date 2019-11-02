@@ -39,7 +39,12 @@ public class Boulder extends Entity{
 				}
 			}
 		}
-		
+	}
+	
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		moveBoulder(x,y,direction,player.getDungeon());
+		player.move(x, y, direction);
 	}
 	
 }

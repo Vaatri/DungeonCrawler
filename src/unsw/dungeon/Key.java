@@ -1,6 +1,6 @@
 package unsw.dungeon;
 
-public class Key extends Entity{
+public class Key extends Entity implements Collectable{
 	
 	private int doorID;
 	
@@ -39,5 +39,13 @@ public class Key extends Entity{
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		if(player.inventoryHandler(this)) {
+			unlockDoor(player.getDungeon());
+		}	
+		player.move(x, y, direction);
 	}
 }

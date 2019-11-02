@@ -10,11 +10,14 @@ public class Inventory {
 			this.inven = new ArrayList<>();
 		}
 		
-		public void addToInv(Entity e, Dungeon dungeon) {
-			if(e instanceof Key) {
-				((Key)e).unlockDoor(dungeon);
+		public boolean addToInv(Entity e, Dungeon dungeon) {
+			
+			if (!inInventory(e)) {
+				inven.add(e);
+				System.out.println("Adding: "+e+" to inventory");
+				return true;
 			}
-			inven.add(e);
+			return false;
 		}
 		
 		

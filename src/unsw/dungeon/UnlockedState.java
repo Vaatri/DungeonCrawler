@@ -6,7 +6,7 @@ public class UnlockedState implements DoorState{
     public UnlockedState(Door door) {
         this.door = door;
     }
-    public void move(Player player, int x, int y, String direction) {
+    public void react(Player player, int x, int y, String direction) {
     	System.out.println("Door open, you may go through");
     	player.move(x, y, direction);
     	// once a player goes through unlocked door, change its state to open

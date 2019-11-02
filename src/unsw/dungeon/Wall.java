@@ -6,4 +6,6 @@ public class Wall extends Entity implements Immovable{
         super(x, y);
     }
 
+    
+
 }

@@ -55,4 +55,8 @@ public class Entity {
 		}
 		return false;
 	}
+	
+	public void collide(Player player, int x, int y, String direction) {
+		
+	}
 }

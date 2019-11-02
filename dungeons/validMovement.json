@@ -1,0 +1,66 @@
+{
+  "width": 6,
+  "height": 7,
+  "entities": [
+    {
+        "x": 1,
+        "y": 1,
+        "id": 1,
+        "type": "portal"
+    },
+    {
+        "x": 5,
+        "y": 1,
+        "id": 1,
+        "type": "portal"
+    },    
+    {
+      "x": 3,
+      "y": 3,
+      "id":1,
+      "type": "openDoor"
+    },
+    {
+        "x":3,
+        "y":2,
+        "type": "player"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "type": "exit"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "type": "treasure"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "id": 1,
+      "type": "key"
+    },
+    {
+      "x":2,
+      "y":4,
+      "type": "potion"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "type": "floorSwitch"
+    }
+],
+"goal-condition": {
+  "goal": "AND",
+  "subgoals": [
+    {
+      "goal": "enemies"
+    },
+    {
+      "goal": "treasure"
+    }
+  ]
+}
+}

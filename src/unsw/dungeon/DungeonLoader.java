@@ -137,7 +137,7 @@ public abstract class DungeonLoader {
     		String entityType = e.getType();
     		if(entityType.equals("enemy"))
     			entityType = "enemies";
-    		if(entityType.equals(g.getType())) {
+    		if(e.getType().equals(g.getType())) {
     			((Subject)e).registerObserver((Observer)g);
     		}
     	}
@@ -226,7 +226,9 @@ public abstract class DungeonLoader {
         	break;
         case "enemy":
         	Enemy enemy = new Enemy(x,y);
-        	dungeon.getPlayer().registerObserver(((Observer)enemy));
+        	if (dungeon.getPlayer() != null) {
+        		dungeon.getPlayer().registerObserver(((Observer)enemy));
+        	}
         	onLoad(enemy);
         	entity = enemy;
         	break;

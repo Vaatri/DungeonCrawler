@@ -16,6 +16,10 @@ public class Potion extends Entity implements Collectable {
 		return false;
 	}
 	
+	public int getDuration() {
+		return duration;
+	}
+	
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		if(player.inventoryHandler(this)) {

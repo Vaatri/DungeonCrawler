@@ -118,6 +118,20 @@ public class Dungeon {
     	return false;
     }
     
+    /**
+     * helper function for testing
+     * @return
+     */
+    public int countEnemies() {
+    	int count = 0;
+    	for(Entity e: entities) {
+    		if (e instanceof Enemy){
+    			count++;
+    		}
+    	}
+    	return count;
+    }
+    
     public void removeEntity(Entity e) {
     	entities.remove(e);
     }

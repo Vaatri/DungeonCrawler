@@ -52,7 +52,6 @@ public class ComplexGoal implements Goal {
 		
 		goalsSatisfied = goalsFinished;
 		if(goalsSatisfied >= neededToSatisfy) {
-			System.out.println("Complex Goal Completed");
 			return true;
 		}	
 		

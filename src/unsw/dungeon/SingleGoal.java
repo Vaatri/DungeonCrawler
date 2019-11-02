@@ -65,7 +65,6 @@ public class SingleGoal implements Goal, Observer {
 	@Override
 	public boolean checkCompleted() {
 		if (goalsSatisfied == neededToSatisfy) {
-			System.out.println("Single Goal Completed");
 			return true;
 		}else 
 			return false;

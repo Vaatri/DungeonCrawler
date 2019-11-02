@@ -47,6 +47,7 @@ public class FloorSwitch extends Entity implements Subject{
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		untriggerSwitch();
+		player.move(x, y, direction);
 	}
 	
 	

@@ -80,7 +80,7 @@ public abstract class DungeonLoader {
      * @param g
      */
     private void loadSingleGoal(Dungeon dungeon, String goalType, JSONArray entities, Goal g) {
-		Goal sg = new SingleGoal(goalType, "single",countEntities(goalType, entities));
+		Goal sg = new SingleGoal(goalType,countEntities(goalType, entities), 3);
 		g.addGoal(sg);
 		
     }
@@ -109,18 +109,22 @@ public abstract class DungeonLoader {
     			for(int j = 0; j < array.length(); j++) {
     				jsonObject = array.getJSONObject(j);
 					type = jsonObject.getString("goal");
-					Goal sg = new SingleGoal(type, "or",countEntities(type, entities));
+					Goal sg = new SingleGoal(type,countEntities(type, entities), 1);
+					System.out.println("Adding single goal"+ " "+ sg);
 					g.addGoal(sg);
 					attachObserver(dungeon, (SingleGoal)sg);
-					goalCount++;
+					goalCount += 1;
     			}
     		} else {
-	    		Goal sg = new SingleGoal(type, "and",countEntities(type, entities));
+	    		Goal sg = new SingleGoal(type ,countEntities(type, entities), 3);
+	    		System.out.println("Adding single goal"+ " "+ sg);
 	    		g.addGoal(sg);
 	    		attachObserver(dungeon, (SingleGoal)sg);
-	    		goalCount++;
+	    		goalCount += 3;
     		}
     	}
+    	
+    	System.out.println(goalCount);
     	g.setNeededToSatisfy(goalCount);
     }
     
@@ -137,7 +141,7 @@ public abstract class DungeonLoader {
     		String entityType = e.getType();
     		if(entityType.equals("enemy"))
     			entityType = "enemies";
-    		if(e.getType().equals(g.getType())) {
+    		if(entityType.equals(g.getType())) {
     			((Subject)e).registerObserver((Observer)g);
     		}
     	}

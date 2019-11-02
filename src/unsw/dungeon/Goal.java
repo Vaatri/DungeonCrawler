@@ -7,5 +7,6 @@ public interface Goal {
 	public void setNeededToSatisfy(int i);
 	public boolean checkCompleted();
 	public String getType();
+	public int getGoalPoints();
 	
 }

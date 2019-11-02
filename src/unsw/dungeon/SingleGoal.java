@@ -4,16 +4,15 @@ public class SingleGoal implements Goal, Observer {
 	
 	
 	private String type;
-	private String subType;
 	private int goalsSatisfied;
 	private int neededToSatisfy;
+	private int goalPoints;
 	
-	public SingleGoal(String type, String subType, int neededToSatisfy) {
+	public SingleGoal(String type, int neededToSatisfy, int gp) {
 		this.type = type;
-		this.subType = subType;
 		this.goalsSatisfied = 0;
 		this.neededToSatisfy = neededToSatisfy;
-		
+		this.goalPoints = gp;
 	}
 	
 	
@@ -68,6 +67,11 @@ public class SingleGoal implements Goal, Observer {
 			return true;
 		}else 
 			return false;
+	}
+	
+	@Override
+	public int getGoalPoints() {
+		return goalPoints;
 	}
 
 }

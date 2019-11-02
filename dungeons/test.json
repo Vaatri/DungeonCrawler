@@ -244,6 +244,11 @@
       "type": "enemy"
     },
     {
+      "x": 7,
+      "y": 1,
+      "type": "enemy"
+    },
+    {
       "x": 5,
       "y": 5,
       "type": "treasure"
@@ -251,10 +256,23 @@
     {
       "x":7,
       "y":4,
-      "type": "floorSwitch"
+      "type": "switch"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "type": "exit"
     }
 ],
-  "goal-condition": {
-    "goal": "exit"
-  }
+"goal-condition": {
+  "goal": "AND",
+  "subgoals": [
+    {
+      "goal": "enemies"
+    },
+    {
+      "goal": "treasure"
+    }
+  ]
+}
 }

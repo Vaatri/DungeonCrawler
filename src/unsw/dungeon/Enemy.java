@@ -63,6 +63,9 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 			System.out.println("player died");
 		}
 		else {
+			if(player.getState().equals(player.getSwordState())) {
+				
+			}
 			Dungeon d = player.getDungeon();
 			d.removeEntity(this);
 			this.setMoveOption(new MoveDead());

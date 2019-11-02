@@ -16,7 +16,7 @@ public class SwordState implements PlayerState{
 		return null;
 	}
 	
-//	@Override
+	@Override
 	public void setSword(Sword p) {
 		swordUsed = p;
 	}

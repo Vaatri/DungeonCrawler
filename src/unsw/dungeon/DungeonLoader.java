@@ -108,6 +108,9 @@ public abstract class DungeonLoader {
     
     public void attachObserver(Dungeon d, SingleGoal g) {
     	for(Entity e: d.getEntitiesList()) {
+    		if (e == null) {
+    			continue;
+    		}
     		if(e.getType().equals(g.getType())) {
     			((Subject)e).registerObserver((Observer)g);
     		}
@@ -185,7 +188,9 @@ public abstract class DungeonLoader {
         	break;
         case "enemy":
         	Enemy enemy = new Enemy(x,y);
-        	dungeon.getPlayer().registerObserver(((Observer)enemy));
+        	if (dungeon.getPlayer() != null) {
+        		dungeon.getPlayer().registerObserver(((Observer)enemy));
+        	}
         	onLoad(enemy);
         	entity = enemy;
         	break;

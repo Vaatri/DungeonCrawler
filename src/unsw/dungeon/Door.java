@@ -34,7 +34,7 @@ public class Door extends Entity {
 	public DoorState getState() {
 		return state;
 	}
-	void setState(DoorState state) {
+	public void setState(DoorState state) {
 		this.state = state;
 	}
 	public DoorState getLockedState() {

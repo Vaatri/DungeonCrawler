@@ -258,7 +258,6 @@ public class Player extends Entity implements Immovable,Subject{
     	//player takes a step.
     	if (getState().equals(getPotionState())) {
 			Potion p = state.getPotion();
-			System.out.println(p.getDuration());
 			p.decrementDuration();
 			//Depending if the player has a sword or not, it will
 			//return to the appropriate previous state after potion diminished.

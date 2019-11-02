@@ -46,7 +46,7 @@ class DungeonEnemyTest {
 		p.setXandY(1, 1);
 		p.moveRight();
 		assertTrue(p.getState().equals(p.getPlayerDeadState()));
-		System.out.println("Passed Player Empty Handed State!");
+		System.out.println("Passed Player Empty Handed State tests!");
 	}
 	
 	@Test
@@ -96,8 +96,8 @@ class DungeonEnemyTest {
 		//and sword is lost from inventory
 		assertTrue(s.checkAttacksLeft() == 0);
 		assertTrue(p.getState().equals(p.getEmptyHandState()));
-		assertTrue(!p.getInventory().hasSword());
-		System.out.println("Passed Player With Sword State");
+		assertFalse(p.getInventory().hasSword());
+		System.out.println("Passed Player With Sword State tests");
 	}
 	
 	@Test
@@ -130,6 +130,24 @@ class DungeonEnemyTest {
 		assertTrue(dungeon.countEnemies() == 1);
 		assertTrue(e.getMoveOption() instanceof MoveDead);
 		
+		//test when player has sword in inventory and potion expires
+		//state will be set to sword state.
+		p.moveDown();
+		p.moveDown();
+		p.moveDown();
+		Sword s = new Sword(1,2);
+		dungeon.addEntity(s);
+		p.moveUp();
+		p.moveRight();
+		p.moveUp();
+		p.moveUp();
+		assertTrue(potion.getDuration() == 0);
+		assertFalse(p.getInventory().inInventory(potion));
+		assertFalse(p.getState().equals(p.getEmptyHandState()));
+		assertFalse(p.getState().equals(p.getPotionState()));
+		assertTrue(p.getState().equals(p.getSwordState()));
+		
+		System.out.println("Passed Player Potion State Tests!");
 		
 
 	}

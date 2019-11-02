@@ -14,7 +14,6 @@ public class Inventory {
 			
 			if (!inInventory(e)) {
 				inven.add(e);
-				System.out.println("Adding: "+e+" to inventory");
 				return true;
 			}
 			return false;

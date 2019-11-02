@@ -59,4 +59,8 @@ public class Entity {
 	public void collide(Player player, int x, int y, String direction) {
 		
 	}
+	
+	public String getType() {
+		return "";
+	}
 }

@@ -7,11 +7,12 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	
 	MoveOption moveOption;
 	List<Observer> observerList = new ArrayList<Observer>();
-	
+	private String type;
 	
 	public Enemy(int x, int y) {
         super(x, y);
         moveOption = new MoveTowards();
+        this.type = "enemy";
         
 	}
 	public void moveEnemy(Player player) {
@@ -64,7 +65,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		else {
 			Dungeon d = player.getDungeon();
 			d.removeEntity(this);
-			setMoveOption(new MoveDead());
+			this.setMoveOption(new MoveDead());
 			player.move(x, y, direction);
 			notifyObservers();
 			System.out.println("enemy ded");
@@ -129,5 +130,10 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		for(Observer o : observerList) {
 			o.update(this);
 		}
+	}
+	
+	@Override
+	public String getType() {
+		return type;
 	}
 }

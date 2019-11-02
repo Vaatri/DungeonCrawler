@@ -19,6 +19,11 @@ public class SingleGoal implements Goal, Observer {
 	
 	
 	@Override
+	public String getType() {
+		return type;
+	}
+	
+	@Override
 	public void addGoal(Goal g) {
 		
 	}
@@ -39,14 +44,18 @@ public class SingleGoal implements Goal, Observer {
 	
 	@Override 
 	public void update(Subject obj) {
-		goalsSatisfied++;
+		if(type.equals(obj.getType())) {
+			goalsSatisfied++;
+		}	
+		checkCompleted();
 	}
 	
 	@Override
 	public boolean checkCompleted() {
-		if (goalsSatisfied == neededToSatisfy) 
+		if (goalsSatisfied == neededToSatisfy) {
+			System.out.println("Single Goal Completed");
 			return true;
-		else 
+		}else 
 			return false;
 	}
 

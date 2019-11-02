@@ -31,7 +31,7 @@ public class Player extends Entity implements Immovable,Subject{
         this.dungeon = dungeon;
         this.inven = new Inventory();
         this.lives = 4;
-        swordState = new SwordState(this);
+        swordState = new SwordState(this, null);
         potionState = new PotionState(this , null);
         playerDeadState = new PlayerDeadState(this);
         emptyHandState = new EmptyHandState(this);
@@ -49,6 +49,7 @@ public class Player extends Entity implements Immovable,Subject{
 			}
     		
     	}
+    	
     }
 	@Override
 	public void registerObserver(Observer o) {
@@ -227,6 +228,8 @@ public class Player extends Entity implements Immovable,Subject{
 				inven.removePotion();
 				notifyObservers();
 			}
+		} else if (getState().equals(getSwordState())) {
+			Sword s = swordState.getSword();
 		}
     }
     
@@ -241,6 +244,11 @@ public class Player extends Entity implements Immovable,Subject{
     
     public void resetLives() {
     	lives = 4;
+    }
+    
+    @Override
+    public String getType() {
+    	return "";
     }
     
 }

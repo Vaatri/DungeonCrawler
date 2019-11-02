@@ -17,6 +17,11 @@ public class ComplexGoal implements Goal {
 		
 	}
 
+	@Override
+	public String getType() {
+		return type;
+	}
+	
 	
 	@Override
 	public void addGoal(Goal g) {
@@ -46,8 +51,10 @@ public class ComplexGoal implements Goal {
 		}
 		
 		goalsSatisfied = goalsFinished;
-		if(goalsSatisfied >= neededToSatisfy)
+		if(goalsSatisfied >= neededToSatisfy) {
+			System.out.println("Complex Goal Completed");
 			return true;
+		}	
 		
 		return false;
 	}

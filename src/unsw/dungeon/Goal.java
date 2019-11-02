@@ -6,5 +6,6 @@ public interface Goal {
 	public void removeGoal();
 	public void setNeededToSatisfy(int i);
 	public boolean checkCompleted();
+	public String getType();
 	
 }

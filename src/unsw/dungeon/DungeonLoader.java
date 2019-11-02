@@ -43,12 +43,12 @@ public abstract class DungeonLoader {
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
         
+        
         return dungeon;
     }
     
     private void loadGoals(Dungeon dungeon, JSONObject goal, JSONArray jsonEntities) {
     	String goalType = goal.getString("goal");
-    	System.out.println(goalType);
     	int goalCount = 0;
     	Goal cG = new ComplexGoal("complex", 0);
     	
@@ -60,13 +60,16 @@ public abstract class DungeonLoader {
     		loadSingleGoal(dungeon, goalType, jsonEntities, cG);
     		cG.setNeededToSatisfy(++goalCount);
     	}
+
+    	dungeon.getPlayer().setPlayerGoals((ComplexGoal)cG);
     	
-    	System.out.println(cG);
+    	
     }
     
     private void loadSingleGoal(Dungeon dungeon, String goalType, JSONArray entities, Goal g) {
 		Goal sg = new SingleGoal(goalType, countEntities(goalType, entities));
 		g.addGoal(sg);
+		
     }
     
     private void loadComplexGoal(String goalType, Dungeon dungeon, JSONObject goal, JSONArray entities, Goal g) {
@@ -90,19 +93,26 @@ public abstract class DungeonLoader {
 					Goal sg = new SingleGoal(type, countEntities(type, entities));
 					System.out.println(sg);
 					g.addGoal(sg);
+					attachObserver(dungeon, (SingleGoal)sg);
 					goalCount++;
     			}
     		} else {
 	    		Goal sg = new SingleGoal(type, countEntities(type, entities));
-	    		System.out.println(sg +"outside OR");
 	    		g.addGoal(sg);
+	    		attachObserver(dungeon, (SingleGoal)sg);
 	    		goalCount++;
     		}
     	}
     	g.setNeededToSatisfy(goalCount);
     }
     
-
+    public void attachObserver(Dungeon d, SingleGoal g) {
+    	for(Entity e: d.getEntitiesList()) {
+    		if(e.getType().equals(g.getType())) {
+    			((Subject)e).registerObserver((Observer)g);
+    		}
+    	}
+    }
     private int countEntities(String type, JSONArray jsonEntities) {
     	int count = 0;
     	if(type.equals("boulders")) 

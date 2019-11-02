@@ -15,4 +15,13 @@ public class PotionState implements PlayerState{
 	public Potion getPotion() {
 		return potionUsed;
 	}
+	@Override
+	public Sword getSword() {
+		return null;
+	}
+	
+	@Override
+	public void setSword(Sword s) {
+		
+	}
 }

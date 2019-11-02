@@ -19,4 +19,14 @@ public class PlayerDeadState implements PlayerState {
 		return null;
 	}
 
+	@Override
+	public Sword getSword() {
+		return null;
+	}
+	
+	@Override
+	public void setSword(Sword s) {
+		
+	}
+	
 }

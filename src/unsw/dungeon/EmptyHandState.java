@@ -12,4 +12,13 @@ public class EmptyHandState implements PlayerState{
 	public Potion getPotion() {
 		return null;
 	}
+	@Override
+	public Sword getSword() {
+		return null;
+	}
+	
+	@Override
+	public void setSword(Sword s) {
+		
+	}
 }

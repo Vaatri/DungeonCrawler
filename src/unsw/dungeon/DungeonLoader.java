@@ -41,21 +41,83 @@ public abstract class DungeonLoader {
         }
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
-        loadGoals(dungeon, jsonGoal);
+        loadGoals(dungeon, jsonGoal, jsonEntities);
         
         return dungeon;
     }
     
-    private void loadGoals(Dungeon dungeon, JSONObject goal) {
+    private void loadGoals(Dungeon dungeon, JSONObject goal, JSONArray jsonEntities) {
     	String goalType = goal.getString("goal");
+    	System.out.println(goalType);
+    	int goalCount = 0;
+    	Goal cG = new ComplexGoal("complex", 0);
     	
-    	if(goalType.equals("AND")) {
-    		JSONArray jsonSubGoals = goal.getJSONArray("subgoals");
+    	
+    	//load in single goal type
+    	if(goalType.equals("AND") || goalType.equals("OR")){
+    		loadComplexGoal(goalType, dungeon, goal, jsonEntities, cG);
     	} else {
-    		Goal g = new SingleGoal()
+    		loadSingleGoal(dungeon, goalType, jsonEntities, cG);
+    		cG.setNeededToSatisfy(++goalCount);
     	}
+    	
+    	System.out.println(cG);
     }
+    
+    private void loadSingleGoal(Dungeon dungeon, String goalType, JSONArray entities, Goal g) {
+		Goal sg = new SingleGoal(goalType, countEntities(goalType, entities));
+		g.addGoal(sg);
+    }
+    
+    private void loadComplexGoal(String goalType, Dungeon dungeon, JSONObject goal, JSONArray entities, Goal g) {
+    	JSONArray array = goal.getJSONArray("subgoals");	
+    	JSONObject jsonObject;
+    	String type;
+    	int goalCount = 0;
+    	if(goalType.equals("OR")) goalCount--;
+    	
+    	for(int i = 0; i < array.length(); i++) {
+    		
+    		jsonObject = array.getJSONObject(i);
+    		type = jsonObject.getString("goal");
+    		
+    		if (type.equals("OR")) {
+    			array = jsonObject.getJSONArray("subgoals");
+    			goalCount--;
+    			for(int j = 0; j < array.length(); j++) {
+    				jsonObject = array.getJSONObject(j);
+					type = jsonObject.getString("goal");
+					Goal sg = new SingleGoal(type, countEntities(type, entities));
+					System.out.println(sg);
+					g.addGoal(sg);
+					goalCount++;
+    			}
+    		} else {
+	    		Goal sg = new SingleGoal(type, countEntities(type, entities));
+	    		System.out.println(sg +"outside OR");
+	    		g.addGoal(sg);
+	    		goalCount++;
+    		}
+    	}
+    	g.setNeededToSatisfy(goalCount);
+    }
+    
 
+    private int countEntities(String type, JSONArray jsonEntities) {
+    	int count = 0;
+    	if(type.equals("boulders")) 
+    		type = "switch";
+    	
+    	for(int i = 0; i < jsonEntities.length(); i++) {
+    		JSONObject jo = jsonEntities.getJSONObject(i);
+    		String entityType = jo.getString("type");
+    		if (type.equals(entityType))
+    			count++;
+    		
+    	}
+    	
+    	return count;
+    }
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
@@ -88,7 +150,7 @@ public abstract class DungeonLoader {
         	onLoad(portal);
         	entity = portal;
         	break;
-        case "floorSwitch":
+        case "switch":
         	FloorSwitch floorSwitch = new FloorSwitch(x,y);
         	onLoad(floorSwitch);
         	entity = floorSwitch;

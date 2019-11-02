@@ -7,28 +7,47 @@ public class SingleGoal implements Goal, Observer {
 	
 	
 	private String type;
-	private int 
+	private int goalsSatisfied;
+	private int neededToSatisfy;
 	
-	
-	public SingleGoal(String type) {
+	public SingleGoal(String type, int neededToSatisfy) {
 		this.type = type;
+		this.goalsSatisfied = 0;
+		this.neededToSatisfy = neededToSatisfy;
 		
 	}
 	
-	@Override
-	public boolean goalSatisfied() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
-	public void addGoal() {
+	public void addGoal(Goal g) {
 		
 	}
 	
 	@Override
 	public void removeGoal() {
 		
+	}
+	
+	@Override
+	public void setNeededToSatisfy(int i) {
+		neededToSatisfy = i;
+	}
+	
+	public String toString() {
+		return "goal type: "+type+" "+neededToSatisfy;
+	}
+	
+	@Override 
+	public void update(Subject obj) {
+		goalsSatisfied++;
+	}
+	
+	@Override
+	public boolean checkCompleted() {
+		if (goalsSatisfied == neededToSatisfy) 
+			return true;
+		else 
+			return false;
 	}
 
 }

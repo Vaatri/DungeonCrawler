@@ -17,7 +17,8 @@ public class Player extends Entity implements Immovable,Subject{
     PlayerState potionState;
     PlayerState emptyHandState;
     PlayerState state;
-
+    private ComplexGoal playerGoals;
+    
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
     /**
      * Create a player positioned in square (x,y)
@@ -34,6 +35,7 @@ public class Player extends Entity implements Immovable,Subject{
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
         addObserverList();
+        this.playerGoals = null;
     }
     public void addObserverList() {
     	// add all the enemies on the dungeon in observer list;
@@ -249,6 +251,11 @@ public class Player extends Entity implements Immovable,Subject{
 			return;
 		}
     }
+    
+    public void setPlayerGoals(ComplexGoal g) {
+    	playerGoals = g;
+    }
+    
     
     public void removeLife() {
     	lives--;

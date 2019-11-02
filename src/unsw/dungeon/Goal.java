@@ -2,8 +2,9 @@ package unsw.dungeon;
 
 public interface Goal {
 	
-	public boolean goalSatisfied();
-	public void addGoal();
+	public void addGoal(Goal g);
 	public void removeGoal();
+	public void setNeededToSatisfy(int i);
+	public boolean checkCompleted();
 	
 }

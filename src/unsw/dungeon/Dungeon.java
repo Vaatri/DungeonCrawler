@@ -63,7 +63,6 @@ public class Dungeon {
     
     public void removeEntityFromMap(Entity e) {
     	//todo 
-    	System.out.println("hello");
     	//remove the bitch
     }
     

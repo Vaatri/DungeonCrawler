@@ -53,15 +53,21 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return(Math.abs(player.getX() - (this.getX()+1)) + Math.abs(player.getY() - this.getY()));
 	}
 	
-	public void collide(Player player) {
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
 		if (player.getState().equals(player.getEmptyHandState())) {
 			//to do
-			System.out.println("u died");
+			player.move(x, y, direction);
+			player.setState(player.getPlayerDeadState());
+			System.out.println("player died");
 		}
 		else {
 			Dungeon d = player.getDungeon();
 			d.removeEntity(this);
+			setMoveOption(new MoveDead());
+			player.move(x, y, direction);
 			notifyObservers();
+			System.out.println("enemy ded");
 		}
 	}
 	
@@ -91,19 +97,20 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	@Override
 	public void update(Subject obj) {
 		// do something when a player notifies that it has picked up/dropped a potion/ sword
-		System.out.println("inside update function in enemy with state " + ((Player)obj).getState());
-		if (((Player)obj).getState().equals(((Player)obj).getEmptyHandState())) {
-			//setMoveOption(new MoveTowards);
-			this.setMoveOption(new MoveTowards());
-			moveEnemy(((Player)obj));
-		}
-		else if (((Player)obj).getState().equals(((Player)obj).getPotionState())){
-			this.setMoveOption(new MoveAway());
-			moveEnemy(((Player)obj));
-		}
-		else if (((Player)obj).getState().equals(((Player)obj).getSwordState())){
-			this.setMoveOption(new MoveAway());
-			moveEnemy(((Player)obj));
+		if(!(getMoveOption() instanceof MoveDead)) {
+			if (((Player)obj).getState().equals(((Player)obj).getEmptyHandState())) {
+				//setMoveOption(new MoveTowards);
+				this.setMoveOption(new MoveTowards());
+				moveEnemy(((Player)obj));
+			}
+			else if (((Player)obj).getState().equals(((Player)obj).getPotionState())){
+				this.setMoveOption(new MoveAway());
+				moveEnemy(((Player)obj));
+			}
+			else if (((Player)obj).getState().equals(((Player)obj).getSwordState())){
+				this.setMoveOption(new MoveTowards());
+				moveEnemy(((Player)obj));
+			}
 		}
 	}
 	

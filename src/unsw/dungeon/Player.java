@@ -8,11 +8,17 @@ import java.util.Optional;
  * @author Robert Clifton-Everest
  *
  */
-public class Player extends Entity implements Immovable{
+public class Player extends Entity implements Immovable,Subject{
 
     private Dungeon dungeon;
     private Inventory inven;
     private int lives;
+    PlayerState swordState;
+    PlayerState potionState;
+    PlayerState emptyHandState;
+    PlayerState state;
+
+    ArrayList<Observer> listObservers = new ArrayList<Observer>();
     /**
      * Create a player positioned in square (x,y)
      * @param x
@@ -23,7 +29,44 @@ public class Player extends Entity implements Immovable{
         this.dungeon = dungeon;
         this.inven = new Inventory();
         this.lives = 4;
+        swordState = new SwordState(this);
+        potionState = new PotionState(this , null);
+        emptyHandState = new EmptyHandState(this);
+        state = emptyHandState;
+        addObserverList();
     }
+    public void addObserverList() {
+    	// add all the enemies on the dungeon in observer list;
+    	for (Entity e: dungeon.getEntitiesList()) {
+    		
+			if (e instanceof Enemy) {
+				System.out.println("added enemy" + e);
+				registerObserver(((Observer)e));
+			}
+    		
+    	}
+    }
+	@Override
+	public void registerObserver(Observer o) {
+		if(! listObservers.contains(o)) { 
+			listObservers.add(o); 
+			System.out.println("added enemy " + o);
+		}
+	}
+
+	@Override
+	public void removeObserver(Observer o) {
+		listObservers.remove(o);
+	}
+
+	@Override
+	public void notifyObservers() {
+		System.out.println("inside notify function");
+		for( Observer obs : listObservers) {
+			obs.update(this);
+			System.out.println("notified " + obs);
+		}
+	}
 
     public void moveUp() {
         movementHandler(this.getX(), this.getY() - 1, "up"); 
@@ -35,7 +78,15 @@ public class Player extends Entity implements Immovable{
         movementHandler(this.getX(), this.getY() + 1, "down"); 
     }
 
-    public void moveLeft() {
+    public Dungeon getDungeon() {
+		return dungeon;
+	}
+
+	public void setDungeon(Dungeon dungeon) {
+		this.dungeon = dungeon;
+	}
+
+	public void moveLeft() {
 //        if (getX() > 0)
 //            x().set(getX() - 1);
         movementHandler(this.getX() - 1, this.getY(), "left"); 
@@ -98,12 +149,37 @@ public class Player extends Entity implements Immovable{
 			p.teleport(this, dungeon, x, y, direction);
 		} else {
     		move(x,y,direction);
+    		notifyObservers();
     	}
     	
     }
     
     
-    public void pickupHandler(int x, int y, String direction, Entity e) {
+    public PlayerState getSwordState() {
+		return swordState;
+	}
+	public void setSwordState(PlayerState swordState) {
+		this.swordState = swordState;
+	}
+	public PlayerState getPotionState() {
+		return potionState;
+	}
+	public void setPotionState(PlayerState potionState) {
+		this.potionState = potionState;
+	}
+	public PlayerState getEmptyHandState() {
+		return emptyHandState;
+	}
+	public void setEmptyHandState(PlayerState emptyHandState) {
+		this.emptyHandState = emptyHandState;
+	}
+	public PlayerState getState() {
+		return state;
+	}
+	public void setState(PlayerState state) {
+		this.state = state;
+	}
+	public void pickupHandler(int x, int y, String direction, Entity e) {
     	if ((e instanceof Key) || (e instanceof Treasure) || (e instanceof Sword) || (e instanceof Potion)){ 
 	    	inventoryHandler(e);
 	    	dungeon.removeEntity(e);
@@ -122,6 +198,10 @@ public class Player extends Entity implements Immovable{
     	} else {
     		// for key, sword and potion, add to inventory iff not in current inventory
     		if (!inven.inInventory(e)) {
+    			if (e instanceof Potion){
+    				setState(this.getPotionState());
+    				state.setPotion((Potion)e);
+    			}
     			inven.addToInv(e, dungeon);
     		}
     		// picking up potion (add extra 10 seconds), and key (should drop then pick up)
@@ -133,7 +213,24 @@ public class Player extends Entity implements Immovable{
     
     
     public void move(int x, int y, String direction) {
-		switch(direction) {
+		notifyObservers();
+		if (getState().equals(getPotionState())) {
+			Potion p = state.getPotion();
+			p.decrementDuration();
+			System.out.println("decremented");
+			if (p.emptyPotion()) {
+				if (inven.hasSword()) {
+					setState(getSwordState());
+				}
+				else {
+					setState(getEmptyHandState());
+				}
+				System.out.println("empty");
+				inven.removePotion();
+				notifyObservers();
+			}
+		}
+    	switch(direction) {
 		case("up"):
 			if (getY() > 0)
 	            y().set(getY() - 1);

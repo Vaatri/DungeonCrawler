@@ -45,4 +45,19 @@ public class Inventory {
 				}
 			}
 		}
+		public boolean hasSword() {
+			for(Entity inInventory: inven) {
+				if (inInventory instanceof Sword) {
+					return true;
+				}
+			}return false;
+		}
+		public void removePotion() {
+			for(Entity inInventory: inven) {
+				if (inInventory instanceof Potion) {
+					inven.remove(inInventory);
+					break;
+				}
+			}
+		}
 }

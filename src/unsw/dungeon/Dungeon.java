@@ -72,10 +72,11 @@ public class Dungeon {
     }
     
     public boolean checkAdjacent(int x, int y, String direction, Boulder b) {
+    	//System.out.println("checkAdjacent: "+ x+" "+y);
     	//check for anything adjacent to the boulder that we want to push
 		for(Entity e: entities) {	
     		if ((e instanceof Boulder && !e.equals(b)) || (e instanceof Enemy) || 
-    			(e instanceof Door) || (e instanceof Exit) || (e instanceof Wall)) {
+    			(e instanceof Door) || (e instanceof Player)|| (e instanceof Exit) || (e instanceof Wall)) {
 				switch(direction) {
 				case("up"):
 					if (e.getX() == x && e.getY() == (y-1))

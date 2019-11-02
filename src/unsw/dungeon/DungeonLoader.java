@@ -99,6 +99,7 @@ public abstract class DungeonLoader {
         	break;
         case "enemy":
         	Enemy enemy = new Enemy(x,y);
+        	dungeon.getPlayer().registerObserver(((Observer)enemy));
         	onLoad(enemy);
         	entity = enemy;
         	break;

@@ -57,12 +57,42 @@ public class Inventory {
 			}return false;
 		}
 		
-		public Key hasKey() {
+		public Key getKey() {
 			for(Entity e: inven) {
 				if(e instanceof Key) {
 					return (Key)e;
 				}
 			}
 			return null;
+		}
+		public boolean hasKey() {
+			for (Entity inInventory: inven) {
+				if (inInventory instanceof Key) {
+					return true;
+				}
+			}return false;
+		}
+		public boolean hasPotion() {
+			for (Entity inInventory: inven) {
+				if(inInventory instanceof Potion) {
+					return true;
+				}
+			}return false;
+		}
+		public boolean hasTreasure() {
+			for(Entity inInventory: inven) {
+				if(inInventory instanceof Treasure) {
+					return true;
+				}
+			}return false;
+		}
+		public int howManyTreasure() {
+			int count = 0;
+			for (Entity inInventory: inven) {
+				if (inInventory instanceof Treasure) {
+					count++;
+				}
+			}
+			return count;
 		}
 }

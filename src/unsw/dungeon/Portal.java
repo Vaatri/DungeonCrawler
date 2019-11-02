@@ -13,6 +13,14 @@ public class Portal extends Entity implements Immovable{
 //        state = unblockedState;
     }
 	
+	public PortalState getState() {
+		return state;
+	}
+
+	public void setState(PortalState state) {
+		this.state = state;
+	}
+
 	public void teleport(Player player, Dungeon dungeon , int x, int y, String direction) {
 		for (Entity e : dungeon.getEntitiesList()) {
 			if (e instanceof Portal && !e.equals(this)) {

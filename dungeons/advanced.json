@@ -599,14 +599,14 @@
     }
   ],
   "goal-condition": {
-    "goal": "AND",
-    "subgoals": [
-      {
-        "goal": "enemies"
-      },
-      {
-        "goal": "treasure"
+    "goal": "AND", "subgoals":
+    [ { "goal": "exit" },
+      { "goal": "OR", "subgoals":
+        [ {"goal": "enemies" },
+          {"goal": "treasure" }
+        ]
       }
     ]
+  
   }
 }

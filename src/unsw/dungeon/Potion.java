@@ -22,5 +22,6 @@ public class Potion extends Entity implements Collectable {
 			player.setState(player.getPotionState());
 			player.getState().setPotion(this);
 		}	
+		player.move(x, y, direction);
 	}
 }

@@ -56,28 +56,33 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
-		if (player.getState().equals(player.getEmptyHandState())) {
-			//to do
-			player.move(x, y, direction);
+		if(player.getState().equals(player.getEmptyHandState()))
+			killPlayer(player);
+		else 
+			dieByPlayer(player);
+		player.move(x, y, direction);
+	}
+	
+	public void killPlayer(Player player) {
 			player.setState(player.getPlayerDeadState());
 			System.out.println("player died");
-		}
-		else {
-			if(player.getState().equals(player.getSwordState())) {
-				
-			}
-			Dungeon d = player.getDungeon();
-			d.removeEntity(this);
-			this.setMoveOption(new MoveDead());
-			player.move(x, y, direction);
-			notifyObservers();
-			System.out.println("enemy ded");
-		}
+	}
+	
+	public void dieByPlayer(Player player) {
+		player.stateHandler();
+		Dungeon d = player.getDungeon();
+		d.removeEntity(this);
+		this.setMoveOption(new MoveDead());
+		notifyObservers();
+		SwordState ss = (SwordState)player.getSwordState();
+		ss.useSword();
+		System.out.println("enemy ded");
 	}
 	
 	public void move(String direction, Player player) {
 		int dungeonHeight = player.getDungeon().getHeight();
 		int dungeonWidth = player.getDungeon().getWidth();
+		System.out.println(moveOption);
 		switch(direction) {
 		case("up"):
 			if (getY() > 0)
@@ -130,6 +135,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	
 	@Override
 	public void notifyObservers() {
+		System.out.println(observerList);
 		for(Observer o : observerList) {
 			o.update(this);
 		}

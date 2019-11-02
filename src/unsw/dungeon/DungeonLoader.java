@@ -47,6 +47,12 @@ public abstract class DungeonLoader {
         return dungeon;
     }
     
+    /**
+     * A handler function that will load all the goals indicated by the JSON file
+     * @param dungeon
+     * @param goal
+     * @param jsonEntities
+     */
     private void loadGoals(Dungeon dungeon, JSONObject goal, JSONArray jsonEntities) {
     	String goalType = goal.getString("goal");
     	int goalCount = 0;
@@ -60,18 +66,33 @@ public abstract class DungeonLoader {
     		loadSingleGoal(dungeon, goalType, jsonEntities, cG);
     		cG.setNeededToSatisfy(++goalCount);
     	}
-
+    	
     	dungeon.getPlayer().setPlayerGoals((ComplexGoal)cG);
     	
     	
     }
     
+    /**
+     * This function will handle single goals
+     * @param dungeon
+     * @param goalType
+     * @param entities
+     * @param g
+     */
     private void loadSingleGoal(Dungeon dungeon, String goalType, JSONArray entities, Goal g) {
-		Goal sg = new SingleGoal(goalType, countEntities(goalType, entities));
+		Goal sg = new SingleGoal(goalType, "single",countEntities(goalType, entities));
 		g.addGoal(sg);
 		
     }
     
+    /**
+     * This function will handle complex goals such as "AND" and "OR
+     * @param goalType
+     * @param dungeon
+     * @param goal
+     * @param entities
+     * @param g
+     */
     private void loadComplexGoal(String goalType, Dungeon dungeon, JSONObject goal, JSONArray entities, Goal g) {
     	JSONArray array = goal.getJSONArray("subgoals");	
     	JSONObject jsonObject;
@@ -80,24 +101,21 @@ public abstract class DungeonLoader {
     	if(goalType.equals("OR")) goalCount--;
     	
     	for(int i = 0; i < array.length(); i++) {
-    		
     		jsonObject = array.getJSONObject(i);
     		type = jsonObject.getString("goal");
-    		
     		if (type.equals("OR")) {
     			array = jsonObject.getJSONArray("subgoals");
     			goalCount--;
     			for(int j = 0; j < array.length(); j++) {
     				jsonObject = array.getJSONObject(j);
 					type = jsonObject.getString("goal");
-					Goal sg = new SingleGoal(type, countEntities(type, entities));
-					System.out.println(sg);
+					Goal sg = new SingleGoal(type, "or",countEntities(type, entities));
 					g.addGoal(sg);
 					attachObserver(dungeon, (SingleGoal)sg);
 					goalCount++;
     			}
     		} else {
-	    		Goal sg = new SingleGoal(type, countEntities(type, entities));
+	    		Goal sg = new SingleGoal(type, "and",countEntities(type, entities));
 	    		g.addGoal(sg);
 	    		attachObserver(dungeon, (SingleGoal)sg);
 	    		goalCount++;
@@ -106,28 +124,54 @@ public abstract class DungeonLoader {
     	g.setNeededToSatisfy(goalCount);
     }
     
+    
+    /**
+     * This function will attach goal Observers to the entities
+     * that are required for completing a goal.
+     * @param d
+     * @param g
+     */
     public void attachObserver(Dungeon d, SingleGoal g) {
     	for(Entity e: d.getEntitiesList()) {
-    		if(e.getType().equals(g.getType())) {
+    		if(e == null) continue;
+    		String entityType = e.getType();
+    		if(entityType.equals("enemy"))
+    			entityType = "enemies";
+    		if(entityType.equals(g.getType())) {
     			((Subject)e).registerObserver((Observer)g);
     		}
     	}
     }
+    
+    /**
+     * This will return the amount of Entities specified by "type
+     * @param type
+     * @param jsonEntities
+     * @return
+     */
     private int countEntities(String type, JSONArray jsonEntities) {
     	int count = 0;
     	if(type.equals("boulders")) 
     		type = "switch";
+    	else if (type.equals("enemies"))
+			type = "enemy";
     	
     	for(int i = 0; i < jsonEntities.length(); i++) {
     		JSONObject jo = jsonEntities.getJSONObject(i);
     		String entityType = jo.getString("type");
-    		if (type.equals(entityType))
+    		if (type.equals(entityType)) {
     			count++;
+    		}	
     		
     	}
-    	
     	return count;
     }
+    
+    /**
+     * Load entities from given json object.
+     * @param dungeon
+     * @param json
+     */
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
@@ -146,15 +190,12 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
-        // TODO Handle other possible entities
         case "treasure":
         	Treasure treasure = new Treasure(x,y);
         	onLoad(treasure);
         	entity = treasure;
         	break;
         case "portal":
-        	//need to make a function that links two portals.
-        	//maybe add an id for each portal in json
         	int portalID = json.getInt("id");
         	Portal portal = new Portal(x,y, portalID);
         	onLoad(portal);

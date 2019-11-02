@@ -24,4 +24,9 @@ public class SwordState implements PlayerState{
 	public Sword getSword() {
 		return swordUsed;
 	}
+	
+	public void useSword() {
+		if(swordUsed != null)
+			swordUsed.useSword();
+	}
 }

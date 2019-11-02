@@ -40,14 +40,15 @@ public class Inventory {
 			return false;
 		}
 		
-		public void removeKey() {
-			for(Entity inInventory: inven) {
-				if(inInventory instanceof Key) {
-					inven.remove(inInventory);
+		public void removeItem(Entity e) {
+			for(Entity in: inven) {
+				if(in.equals(e)) {
+					inven.remove(e);
 					break;
 				}
 			}
 		}
+		
 		public boolean hasSword() {
 			for(Entity inInventory: inven) {
 				if (inInventory instanceof Sword) {
@@ -55,12 +56,13 @@ public class Inventory {
 				}
 			}return false;
 		}
-		public void removePotion() {
-			for(Entity inInventory: inven) {
-				if (inInventory instanceof Potion) {
-					inven.remove(inInventory);
-					break;
+		
+		public Key hasKey() {
+			for(Entity e: inven) {
+				if(e instanceof Key) {
+					return (Key)e;
 				}
 			}
+			return null;
 		}
 }

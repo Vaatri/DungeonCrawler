@@ -22,6 +22,7 @@ public class Sword extends Entity implements Collectable{
 		player.inventoryHandler(this);
 		if(player.getState().equals(player.getEmptyHandState())) {
 			player.setState(player.getSwordState());
+			player.getState().setSword(this);
 		}
 		player.move(x, y, direction);
 	}

@@ -15,21 +15,52 @@ public class FloorSwitch extends Entity implements Subject{
         this.type = "switch";
     }
 	
+	/**
+	 * Trigger switch to be on.
+	 */
 	public void triggerSwitch() {
 		triggered = true;
 	}
 	
+	/**
+	 * Trigger switch to be off.
+	 */
 	public void untriggerSwitch() {
-		triggered = false;
+		if(triggered == true) {
+			triggered = false;
+			notifyObservers();
+		}
 	}
 	
+	/**
+	 * return Trigger Status
+	 * @return
+	 */
 	public boolean getTriggerStatus() {
 		return triggered;
 	}
 	
+	/**
+	 * If a player walks onto a switch, that can only mean that a switch
+	 * is untriggered.
+	 */
+	@Override
+	public void collide(Player player, int x, int y, String direction) {
+		untriggerSwitch();
+	}
+	
+	
+	/**
+	 * Set the switches trigger status to triggered and notify observers.
+	 * @param dungeon
+	 */
+	public void setTriggerStatus(Dungeon dungeon) {
+		triggerSwitch();
+		notifyObservers();
+	}
+	
 	@Override
 	public void registerObserver(Observer o) {
-		System.out.println("adding observer: "+o);
 		observerList.add(o);
 	}
 	

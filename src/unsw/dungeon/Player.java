@@ -2,7 +2,7 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 import java.util.Optional;
-
+import java.util.List;
 /**
  * The player entity
  * @author Robert Clifton-Everest
@@ -39,6 +39,10 @@ public class Player extends Entity implements Immovable,Subject{
         addObserverList();
         this.playerGoals = null;
     }
+    
+    /**
+     * Add all enemies within the dungeon to players observer List.
+     */
     public void addObserverList() {
     	// add all the enemies on the dungeon in observer list;
     	for (Entity e: dungeon.getEntitiesList()) {
@@ -51,11 +55,14 @@ public class Player extends Entity implements Immovable,Subject{
     	}
     	
     }
+    
+    /**
+     * helper function for addObserverList();
+     */
 	@Override
 	public void registerObserver(Observer o) {
 		if(! listObservers.contains(o)) { 
 			listObservers.add(o); 
-			System.out.println("added enemy " + o);
 		}
 	}
 
@@ -105,17 +112,29 @@ public class Player extends Entity implements Immovable,Subject{
     	return inven;
     }
     
+    /**
+     * This method will handle all movement from player.
+     * The player will respond depending on what entity it will interact with given the 
+     * direction the player wants to go too, 
+     * @param x
+     * @param y
+     * @param direction
+     */
     public void movementHandler(int x, int y, String direction) {
     	
-    	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);
-    	// entities that a player cannot move to: wall, blocked (on the other side) portal, 
-    	// locked door, boulder in a unmoveable position
     	
+    	//find all the entities within the coordinate player wants to move too.
+    	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);    	
+    	
+    
     	Boulder b = null;
+    
+    	//if there is no entity in the block player wants to move too
+    	//check the current location and then move
     	if (entityList.size() == 0) {
     		// nothing is there
     		move(x, y, direction);
-    		return;
+    		checkCurrentLocation();
     	}
     	
 		//check if theres a boulder we need to move
@@ -129,12 +148,31 @@ public class Player extends Entity implements Immovable,Subject{
 			if(dungeon.checkAdjacent(x, y, direction, b))
 				return;
 		}
+		//else interact with entity
 		for(Entity e: entityList) {
 			e.collide(this, x, y, direction);
 		}
+		//check if entity was used within a goal
+		playerGoals.checkCompleted();
 		
     }
     
+    /**
+     * This function is used to check enemies location.
+     * A player and an enemy can meet at the same coordinate
+     * Rather than the player checking if the enemy is within an adjacent block.
+     */
+	public void checkCurrentLocation(){
+		ArrayList<Entity> el = dungeon.getEntityAtLocation(getX(), getY());
+		for(Entity e: el) {
+			if(!(e instanceof Enemy)) continue;
+			if(getState().equals(getEmptyHandState())) {
+				((Enemy)e).killPlayer(this);
+			} else {
+				((Enemy)e).dieByPlayer(this);
+			}
+		}
+	}
     
     public PlayerState getPlayerDeadState() {
     	return playerDeadState;
@@ -166,12 +204,6 @@ public class Player extends Entity implements Immovable,Subject{
 	public void setState(PlayerState state) {
 		this.state = state;
 	}
-	public void pickupHandler(int x, int y, String direction, Entity e) {
-    	if ((e instanceof Key) || (e instanceof Treasure) || (e instanceof Sword) || (e instanceof Potion)){ 
-	    	inventoryHandler(e);
-	    	dungeon.removeEntity(e);
-    	}
-    }
     
     /**
      * Will handle potential items that are picked up by the player.
@@ -188,7 +220,13 @@ public class Player extends Entity implements Immovable,Subject{
     	
     }
     
-    
+    /**
+     * This will handle the change in coordinates when the player moves
+     * It will also handle change and observers.
+     * @param x
+     * @param y
+     * @param direction
+     */
     public void move(int x, int y, String direction) {
 		notifyObservers();
 		stateHandler();
@@ -212,11 +250,18 @@ public class Player extends Entity implements Immovable,Subject{
 		}
     }
     
+    /**
+     * Depending on the players state, this function will dictate the states
+     * active time.
+     */
     public void stateHandler() {
+    	//if player is currently within a potion state, it will diminish each time
+    	//player takes a step.
     	if (getState().equals(getPotionState())) {
 			Potion p = state.getPotion();
 			p.decrementDuration();
-			System.out.println("decremented");
+			//Depending if the player has a sword or not, it will
+			//return to the appropriate previous state after potion diminished.
 			if (p.emptyPotion()) {
 				if (inven.hasSword()) {
 					setState(getSwordState());
@@ -224,12 +269,16 @@ public class Player extends Entity implements Immovable,Subject{
 				else {
 					setState(getEmptyHandState());
 				}
-				System.out.println("empty");
-				inven.removePotion();
+				inven.removeItem(p);
 				notifyObservers();
 			}
+		//A SwordState should never fall back into a PotionState.
 		} else if (getState().equals(getSwordState())) {
 			Sword s = swordState.getSword();
+			if(s.checkAttacksLeft() == 0) {
+				setState(getEmptyHandState());
+				inven.removeItem(s);
+			}
 		}
     }
     

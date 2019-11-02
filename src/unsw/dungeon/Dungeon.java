@@ -49,6 +49,12 @@ public class Dungeon {
         entities.add(entity);
     }
     
+    /**
+     * This will return a List of entities at a coordinate.
+     * @param x
+     * @param y
+     * @return
+     */
     public ArrayList<Entity> getEntityAtLocation(int x, int y) {
     	ArrayList<Entity> entityList = new ArrayList<Entity>();
     	for(Entity e: entities) {
@@ -66,10 +72,22 @@ public class Dungeon {
     	//remove the bitch
     }
     
+    /**
+     * return a list of entities from dungeon
+     * @return
+     */
     public List<Entity> getEntitiesList(){
     	return entities;
     }
     
+    /**
+     * This will check a given direction's adjacent block for an immovable entity.
+     * @param x
+     * @param y
+     * @param direction
+     * @param b
+     * @return
+     */
     public boolean checkAdjacent(int x, int y, String direction, Boulder b) {
     	//System.out.println("checkAdjacent: "+ x+" "+y);
     	//check for anything adjacent to the boulder that we want to push

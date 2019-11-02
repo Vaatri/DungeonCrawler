@@ -1,17 +1,16 @@
 package unsw.dungeon;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SingleGoal implements Goal, Observer {
 	
 	
 	private String type;
+	private String subType;
 	private int goalsSatisfied;
 	private int neededToSatisfy;
 	
-	public SingleGoal(String type, int neededToSatisfy) {
+	public SingleGoal(String type, String subType, int neededToSatisfy) {
 		this.type = type;
+		this.subType = subType;
 		this.goalsSatisfied = 0;
 		this.neededToSatisfy = neededToSatisfy;
 		
@@ -44,9 +43,22 @@ public class SingleGoal implements Goal, Observer {
 	
 	@Override 
 	public void update(Subject obj) {
-		if(type.equals(obj.getType())) {
+		String subjectType = obj.getType();
+		if (subjectType.equals("enemy")) {
+			subjectType = "enemies";
+		}
+		if(subjectType.equals("switch")) {
+			FloorSwitch fs = (FloorSwitch)obj;
+			if(fs.getTriggerStatus())
+				goalsSatisfied++;
+			else if (!fs.getTriggerStatus())
+				goalsSatisfied--;
+		}
+		
+		if(type.equals(subjectType) && !subjectType.equals("switch")) {
 			goalsSatisfied++;
 		}	
+		
 		checkCompleted();
 	}
 	

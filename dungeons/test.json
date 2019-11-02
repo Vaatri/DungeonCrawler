@@ -254,6 +254,11 @@
       "type": "treasure"
     },
     {
+      "x": 8,
+      "y": 5,
+      "type": "treasure"
+    },
+    {
       "x":7,
       "y":4,
       "type": "switch"
@@ -265,13 +270,12 @@
     }
 ],
 "goal-condition": {
-  "goal": "AND",
-  "subgoals": [
-    {
-      "goal": "enemies"
-    },
-    {
-      "goal": "treasure"
+  "goal": "AND", "subgoals":
+  [ { "goal": "switch" },
+    { "goal": "OR", "subgoals":
+      [ {"goal": "enemies" },
+        {"goal": "treasure" }
+      ]
     }
   ]
 }

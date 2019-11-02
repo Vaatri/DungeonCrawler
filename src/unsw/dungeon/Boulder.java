@@ -26,19 +26,19 @@ public class Boulder extends Entity{
 		//if boulder was previously on trigger, then we need to untrigger the switch if moving of
 		
 		this.setXandY(x, y);
+		checkTrigger(dungeon,x,y);
 	}
 	
 	
 	public void checkTrigger(Dungeon dungeon, int x, int y) {
-		for(Entity e: dungeon.getEntitiesList()) {
+		for (Entity e: dungeon.getEntitiesList()) {
 			if(e instanceof FloorSwitch) {
-				if(e.getX() == x && e.getY() == y) {
-					if(((FloorSwitch)e).getTriggerStatus()) {
-						
-					}
-				}
+				if(x == e.getX() && y == e.getY())
+					((FloorSwitch)e).setTriggerStatus(dungeon);
+				break;
 			}
 		}
+		
 	}
 	
 	@Override

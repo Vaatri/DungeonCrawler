@@ -41,6 +41,10 @@ public class Key extends Entity implements Collectable{
 		return null;
 	}
 	
+	/**
+	 * In event of collision with player, if player already has a key in its inventory, key will remain on the floor
+	 * otherwise it will be picked up, placed in Players inventory, and linked door will be set to unlocked state.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		if(player.inventoryHandler(this)) {

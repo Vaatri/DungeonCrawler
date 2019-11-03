@@ -1,6 +1,10 @@
 package unsw.dungeon;
 
 public class MoveTowards implements MoveOption{
+	/**
+	 * When enemy is using MoveTowards strategy pattern, it will find the shortest distance to player
+	 * and move towards that direction when player moves.
+	 */
 	public void moveDirection(Player player, Enemy enemy) {
 		int smallest = 100; //fix
 		String direction = "";

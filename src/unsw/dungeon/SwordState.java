@@ -25,6 +25,11 @@ public class SwordState implements PlayerState{
 		return swordUsed;
 	}
 	
+	
+	/**
+	 * If player has a sword in inventory, is in swordState, and collides with an enemy
+	 * it will call this function to use the sword within the function.
+	 */
 	public void useSword() {
 		if(swordUsed != null)
 			swordUsed.useSword();

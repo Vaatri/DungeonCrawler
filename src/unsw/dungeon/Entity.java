@@ -56,6 +56,13 @@ public class Entity {
 		return false;
 	}
 	
+	/**
+	 * Handler function when player collides with an entity
+	 * @param player
+	 * @param x
+	 * @param y
+	 * @param direction
+	 */
 	public void collide(Player player, int x, int y, String direction) {
 		
 	}

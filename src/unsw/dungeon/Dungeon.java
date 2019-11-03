@@ -69,7 +69,6 @@ public class Dungeon {
     
     public void removeEntityFromMap(Entity e) {
     	//todo 
-    	//remove the bitch
     }
     
     /**

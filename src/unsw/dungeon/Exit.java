@@ -13,6 +13,9 @@ public class Exit extends Entity implements Subject{
         this.type = "exit";
     }
 	
+	/**
+	 * when the player collides with an exit, exit goal is triggered.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		player.move(x, y, direction);

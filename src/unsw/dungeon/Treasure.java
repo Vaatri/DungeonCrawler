@@ -14,6 +14,10 @@ public class Treasure extends Entity implements Collectable, Subject{
 		
 	}
 	
+	/**
+	 * In event of collision with player, the Treasure will be added to players
+	 * inventory, and goal observers will be notified.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		player.inventoryHandler(this);

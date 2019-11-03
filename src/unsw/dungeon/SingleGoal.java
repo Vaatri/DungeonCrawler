@@ -48,6 +48,10 @@ public class SingleGoal implements Goal, Observer {
 		return "goal type: "+type+" "+neededToSatisfy;
 	}
 	
+	/**
+	 * depending on the subject, it will update the number of entity it requires for the
+	 * Single goal to be satisfied.
+	 */
 	@Override 
 	public void update(Subject obj) {
 		String subjectType = obj.getType();
@@ -69,6 +73,9 @@ public class SingleGoal implements Goal, Observer {
 		checkCompleted();
 	}
 	
+	/**
+	 * return true if SingleGoal is completed
+	 */
 	@Override
 	public boolean checkCompleted() {
 		if (goalsSatisfied == neededToSatisfy) {

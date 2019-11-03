@@ -21,8 +21,14 @@ public class Player extends Entity implements Immovable,Subject{
     private ComplexGoal playerGoals;
     
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
+    
     /**
-     * Create a player positioned in square (x,y)
+     * Player will contain the dungeon its in.
+     * Player has an inventory
+     * Player has a total amount of lives
+     * Player has various states depending on its equipment
+     * Player has a List of Goals it wants to complete.
+     * @param dungeon
      * @param x
      * @param y
      */
@@ -82,8 +88,6 @@ public class Player extends Entity implements Immovable,Subject{
     }
 
     public void moveDown() {
-//        if (getY() < dungeon.getHeight() - 1)
-//            y().set(getY() + 1);
         movementHandler(this.getX(), this.getY() + 1, "down"); 
     }
 
@@ -96,14 +100,10 @@ public class Player extends Entity implements Immovable,Subject{
 	}
 
 	public void moveLeft() {
-//        if (getX() > 0)
-//            x().set(getX() - 1);
         movementHandler(this.getX() - 1, this.getY(), "left"); 
     }
 
     public void moveRight() {
-//        if (getX() < dungeon.getWidth() - 1)
-//            x().set(getX() + 1);
         movementHandler(this.getX() + 1, this.getY(), "right"); 
     }
     

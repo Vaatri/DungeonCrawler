@@ -11,6 +11,14 @@ public class ComplexGoal implements Goal {
 	private int neededToSatisfy;
 	private int goalPoints;
 	
+	/**
+	 * Complex goal contains a list of single goals
+	 * The type of goal it is.
+	 * The amount of goals that have been satisfied
+	 * The amount of goals that need to be satisfied
+	 * @param type
+	 * @param neededToSatisfy
+	 */
 	public ComplexGoal(String type, int neededToSatisfy) {
 		this.type = type;
 		this.goalsSatisfied = 0;
@@ -46,6 +54,11 @@ public class ComplexGoal implements Goal {
 		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
 	}
 	
+	/**
+	 * this will check all of the single Goals within complex goal's list
+	 * and see if there are the required goals satisfied.
+	 * if all required goals are satisfied, this will return true.
+	 */
 	@Override
 	public boolean checkCompleted() {
 		int goalsFinished = 0;

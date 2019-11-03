@@ -17,6 +17,11 @@ public class Sword extends Entity implements Collectable{
 		return attacksLeft;
 	}
 	
+	
+	/**
+	 * in the event of collision with a Sword. If player doesn't have a sword in its inventory, it will pick it up,
+	 * place it in players inventory, and change player state. Then move the player.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		player.inventoryHandler(this);

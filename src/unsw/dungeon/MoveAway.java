@@ -1,6 +1,11 @@
 package unsw.dungeon;
 
 public class MoveAway implements MoveOption {
+	/**
+	 * When Player consumes a potion and state is set to PotionState, enemy will
+	 * adopt MoveAway function, which will find the furthest distance from player
+	 * and move towards that direction.
+	 */
 	public void moveDirection(Player player, Enemy enemy) {
 		int biggest = enemy.distanceUp(player);
 		String direction = "up";

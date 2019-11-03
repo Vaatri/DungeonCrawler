@@ -15,6 +15,10 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
         this.type = "enemy";
         
 	}
+	/**
+	 * this will move the enemy depending on its movement stratergy
+	 * @param player
+	 */
 	public void moveEnemy(Player player) {
 		moveOption.moveDirection(player, this);
 	}
@@ -26,6 +30,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		this.moveOption = moveOption;
 	}
 	
+	/**
+	 * find the distance from enemy to player
+	 * @param player
+	 * @return
+	 */
 	public int distanceUp(Player player) {
 		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "up", null)) {
 			return -1;
@@ -33,6 +42,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - (this.getY()-1)));
 	}
 	
+	/**
+	 * find the distance from enemy to player
+	 * @param player
+	 * @return
+	 */
 	public int distanceDown(Player player) { 
 		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "down", null)) {
 			return -1;
@@ -40,6 +54,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - (this.getY()+1)));
 	}
 	
+	/**
+	 * find the distance from enemy to player
+	 * @param player
+	 * @return
+	 */
 	public int distanceLeft(Player player) { 
 		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "left", null)) {
 			return -1;
@@ -47,6 +66,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return(Math.abs(player.getX() - (this.getX()-1)) + Math.abs(player.getY() - this.getY()));
 	}
 	
+	/**
+	 * find the distance from enemy to player
+	 * @param player
+	 * @return
+	 */
 	public int distanceRight(Player player) {
 		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "right", null)) {
 			return -1;
@@ -54,6 +78,9 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return(Math.abs(player.getX() - (this.getX()+1)) + Math.abs(player.getY() - this.getY()));
 	}
 	
+	/**
+	 * depending on player state, enemy will either die from the enemy, or kill the enemy.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		if(player.getState().equals(player.getEmptyHandState()))
@@ -63,10 +90,19 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		player.move(x, y, direction);
 	}
 	
+	/**
+	 * if player is empty handed, then player state will be seat to Dead.
+	 * @param player
+	 */
 	public void killPlayer(Player player) {
 			player.setState(player.getPlayerDeadState());
 	}
 	
+	/**
+	 * if player has sword or potion and collides with enemy.  Enemy will die and its 
+	 * movement pattern set to Dead.
+	 * @param player
+	 */
 	public void dieByPlayer(Player player) {
 		Dungeon d = player.getDungeon();
 		d.removeEntity(this);
@@ -76,6 +112,12 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		ss.useSword();
 	}
 	
+	
+	/**
+	 * Similar move function that player uses.
+	 * @param direction
+	 * @param player
+	 */
 	public void move(String direction, Player player) {
 		int dungeonHeight = player.getDungeon().getHeight();
 		int dungeonWidth = player.getDungeon().getWidth();
@@ -99,6 +141,10 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		}
     }
 	
+	/**
+	 * Update will handle change in movement Strategy when player consumes a potion, or if 
+	 * that potion duration expires.
+	 */
 	@Override
 	public void update(Subject obj) {
 		// do something when a player notifies that it has picked up/dropped a potion/ sword

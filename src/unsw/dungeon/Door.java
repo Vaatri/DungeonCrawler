@@ -16,15 +16,31 @@ public class Door extends Entity {
         openState = new OpenState(this);
         state = lockedState;
     }
+	/**
+	 * check if door is locked.
+	 * @return
+	 */
 	public boolean isLocked() {
 		if(this.state == lockedState ) {
 			return true;
 		}
 		return false;
 	}
+	
+	/**
+	 * react to player colliding with door.
+	 * @param player
+	 * @param x
+	 * @param y
+	 * @param direction
+	 */
 	public void react(Player player, int x, int y, String direction) {
     	state.react(player,x,y,direction);
     }
+	/**
+	 * check if door is unlocked.
+	 * @return
+	 */
 	public boolean isUnlocked() {
 		if(this.state == unlockedState ) {
 			return true;
@@ -60,6 +76,11 @@ public class Door extends Entity {
 		return keyID;
 	}
 	
+	/**
+	 * Player interaction with door will depend on door's current state. If door is locked, then player
+	 * will not pass. If door is unlocked, Door state is changed to open, and player will pass through. 
+	 * If Door is open, player will pass through.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		react(player,x,y,direction);

@@ -6,6 +6,14 @@ public class Boulder extends Entity{
         super(x, y);
     }
 	
+	/**
+	 * in the case of a player colliding with a Boulder, the boulder must in the same direction it was pushed
+	 * from. This will check if the boulder has collided with a trigger.
+	 * @param x
+	 * @param y
+	 * @param direction
+	 * @param dungeon
+	 */
 	public void moveBoulder(int x, int y, String direction, Dungeon dungeon) {
 		switch(direction) {
 		case("up"):
@@ -29,7 +37,12 @@ public class Boulder extends Entity{
 		checkTrigger(dungeon,x,y);
 	}
 	
-	
+	/**
+	 * If the boulder collides with a trigger, then it must trigger the switch
+	 * @param dungeon
+	 * @param x
+	 * @param y
+	 */
 	public void checkTrigger(Dungeon dungeon, int x, int y) {
 		for (Entity e: dungeon.getEntitiesList()) {
 			if(e instanceof FloorSwitch) {
@@ -42,6 +55,9 @@ public class Boulder extends Entity{
 		
 	}
 	
+	/**
+	 * move the boulder, then move the player.
+	 */
 	@Override
 	public void collide(Player player, int x, int y, String direction) {
 		moveBoulder(x,y,direction,player.getDungeon());

@@ -10,39 +10,29 @@
     {
         "x": 0,
         "y": 1,
-        "type":"boulder"
+        "type":"treasure"
     },
     {
         "x": 1,
         "y": 1,
-        "type":"boulder"
+        "type":"treasure"
     },
     {
         "x": 2,
         "y": 1,
-        "type":"boulder"
+        "type":"treasure"
     },
     {
         "x": 2,
         "y": 2,
-        "type": "switch"
-    },
-    {
-        "x": 0,
-        "y": 2,
-        "type":"switch"
-    },
-    {
-        "x": 1,
-        "y": 2,
-        "type":"switch"
+        "type":"exit"
     }
 
 
 ],
 "goal-condition": {
     "goal": "AND", "subgoals":
-    [ { "goal": "switch" },
+    [ { "goal": "treasure" },
         { "goal": "exit"}
     ]  
     }

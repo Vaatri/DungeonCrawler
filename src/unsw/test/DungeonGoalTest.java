@@ -239,7 +239,6 @@ class DungeonGoalTest {
 		p.moveDown();
 		assertTrue(treasureGoal.checkCompleted());
 		assertFalse(exitGoal.checkCompleted());
-		assertTrue(cG.checkCompleted());
 		
 		p.moveUp();
 		p.moveRight();
@@ -263,7 +262,6 @@ class DungeonGoalTest {
 		p.moveRight();
 		assertFalse(treasureGoal.checkCompleted());
 		assertTrue(exitGoal.checkCompleted());
-		assertTrue(cG.checkCompleted());
 		
 		p.moveLeft();
 		p.moveDown();
@@ -295,7 +293,6 @@ class DungeonGoalTest {
 		p2.moveDown();
 		assertTrue(enemyGoal.checkCompleted());
 		assertFalse(switchGoal.checkCompleted());
-		assertTrue(cG2.checkCompleted());
 		
 		p2.moveUp();
 		p2.moveRight();
@@ -303,31 +300,113 @@ class DungeonGoalTest {
 		assertTrue(switchGoal.checkCompleted());
 		assertTrue(cG2.checkCompleted());
 		
+		//test 4 differnt OR Goals
+		dungeonLoader = new DungeonTestLoader("testORAll.json");
+		dungeon = dungeonLoader.load();	
+		p = dungeon.getPlayer();
+		cG = p.getPlayerGoals();
+		
+		
+		enemyGoal = (SingleGoal)cG.getGoalList().get(0);
+		switchGoal = (SingleGoal)cG.getGoalList().get(1);
+		treasureGoal = (SingleGoal)cG.getGoalList().get(2);
+		exitGoal = (SingleGoal)cG.getGoalList().get(3);
+		assertEquals(switchGoal.getType(), "switch");
+		assertEquals(enemyGoal.getType(), "enemies");
+		assertEquals(treasureGoal.getType(), "treasure");
+		assertEquals(exitGoal.getType(), "exit");
+		
+		assertFalse(enemyGoal.checkCompleted());
+		assertFalse(switchGoal.checkCompleted());
+		assertFalse(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		
+		s = new Sword(1,2);
+		dungeon.addEntity(s);
+		p.getInventory().addToInv(s, dungeon);
+		p.setState(p.getSwordState());
+		p.getState().setSword(s);
+		
+		p.moveDown();
+		assertTrue(enemyGoal.checkCompleted());
+		assertFalse(switchGoal.checkCompleted());
+		assertFalse(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
 		
 	}
 	
 	@Test
 	void testValidANDGoalType() throws FileNotFoundException {
-		DungeonTestLoader dungeonLoader = new DungeonTestLoader("testSingleGoalEenemy.json");
+		DungeonTestLoader dungeonLoader = new DungeonTestLoader("testANDTreasureExit.json");
 		Dungeon dungeon = dungeonLoader.load();	
 		Player p = dungeon.getPlayer();
 		ComplexGoal cG = p.getPlayerGoals();
+		
+		SingleGoal treasureGoal = (SingleGoal)cG.getGoalList().get(0);
+		assertEquals(treasureGoal.getType(), "treasure");
+		SingleGoal exitGoal = (SingleGoal)cG.getGoalList().get(1);
+		
+		assertFalse(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		
+		p.moveDown();
+		assertTrue(treasureGoal.getGoalsSatisfied() == 1);
+		assertFalse(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		p.moveRight();
+		assertTrue(treasureGoal.getGoalsSatisfied() == 2);
+		assertFalse(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		p.moveRight();
+		assertTrue(treasureGoal.getGoalsSatisfied() == 3);
+		assertTrue(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		p.moveDown();
+		p.moveRight();
+		assertTrue(treasureGoal.getGoalsSatisfied() == 3);
+		assertTrue(treasureGoal.checkCompleted());
+		assertTrue(exitGoal.checkCompleted());
+		assertTrue(cG.checkCompleted());
+		
 	}
 	
 	@Test
 	void testValidANDORGoalType() throws FileNotFoundException {
-		DungeonTestLoader dungeonLoader = new DungeonTestLoader("testSingleGoalEenemy.json");
+		DungeonTestLoader dungeonLoader = new DungeonTestLoader("testAndOr.json");
 		Dungeon dungeon = dungeonLoader.load();	
 		Player p = dungeon.getPlayer();
 		ComplexGoal cG = p.getPlayerGoals();
+		
+		SingleGoal treasureGoal = (SingleGoal)cG.getGoalList().get(1);
+		SingleGoal exitGoal = (SingleGoal)cG.getGoalList().get(0);
+		SingleGoal switchGoal = (SingleGoal)cG.getGoalList().get(2);
+		assertEquals(switchGoal.getType(), "switch");
+		assertEquals(treasureGoal.getType(), "treasure");
+		assertEquals(exitGoal.getType(), "exit");
+		
+		
+		p.moveRight();
+		assertTrue(treasureGoal.checkCompleted());
+		assertFalse(exitGoal.checkCompleted());
+		assertFalse(switchGoal.checkCompleted());
+		assertFalse(cG.checkCompleted());
+		
+		p.moveRight();
+		p.moveUp();
+		p.moveUp();
+		assertTrue(treasureGoal.checkCompleted());
+		assertTrue(exitGoal.checkCompleted());
+		assertFalse(switchGoal.checkCompleted());
+		assertTrue(cG.checkCompleted());
+		
+		
 	}
 	
-	@Test
-	void testValidMaxGoalAmount() throws FileNotFoundException {
-		DungeonTestLoader dungeonLoader = new DungeonTestLoader("testSingleGoalEenemy.json");
-		Dungeon dungeon = dungeonLoader.load();	
-		Player p = dungeon.getPlayer();
-		ComplexGoal cG = p.getPlayerGoals();
-	}
+
 	
 }

@@ -271,11 +271,10 @@
 ],
 "goal-condition": {
   "goal": "AND", "subgoals":
-  [ { "goal": "switch" },
-    { "goal": "exit"},
+  [ { "goal": "exit"},
     { "goal": "OR", "subgoals":
-      [ {"goal": "enemies" },
-        {"goal": "treasure" }
+      [ {"goal": "treasure" },
+        {"goal": "switch"}
       ]
     }
   ]

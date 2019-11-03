@@ -114,17 +114,16 @@ public abstract class DungeonLoader {
 					Goal sg = new SingleGoal(type,countEntities(type, entities), 1);
 					g.addGoal(sg);
 					attachObserver(dungeon, (SingleGoal)sg);
-					goalCount++;
+					goalCount += 1;
     			}
     			break;
     		} else {
 	    		Goal sg = new SingleGoal(type ,countEntities(type, entities), 3);
 	    		g.addGoal(sg);
 	    		attachObserver(dungeon, (SingleGoal)sg);
-	    		goalCount++;
+	    		goalCount += 3;
     		}
     	}
-    	System.out.println(goalCount);
     	g.setNeededToSatisfy(goalCount);
     }
     private void loadAndGoal(Dungeon dungeon, JSONObject goal, JSONArray entities, Goal g) {

@@ -33,9 +33,10 @@ public class Boulder extends Entity{
 	public void checkTrigger(Dungeon dungeon, int x, int y) {
 		for (Entity e: dungeon.getEntitiesList()) {
 			if(e instanceof FloorSwitch) {
-				if(x == e.getX() && y == e.getY())
+				if(x == e.getX() && y == e.getY()) {
 					((FloorSwitch)e).setTriggerStatus(dungeon);
-				break;
+					break;
+				}	
 			}
 		}
 		

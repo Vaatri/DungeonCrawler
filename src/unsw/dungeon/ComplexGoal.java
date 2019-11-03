@@ -18,6 +18,10 @@ public class ComplexGoal implements Goal {
 		this.goalPoints = 0;
 	}
 
+	public List<Goal> getGoalList(){
+		return goalList;
+	}
+	
 	@Override
 	public String getType() {
 		return type;
@@ -53,7 +57,6 @@ public class ComplexGoal implements Goal {
 		
 		goalsSatisfied = goalsFinished;
 		if(goalsSatisfied >= neededToSatisfy) {
-			System.out.println("Complex goal complete");
 			return true;
 		}	
 		

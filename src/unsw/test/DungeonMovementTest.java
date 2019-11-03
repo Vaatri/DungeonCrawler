@@ -17,6 +17,9 @@ class DungeonMovementTest {
 		DungeonTestLoader dungeonLoader = new DungeonTestLoader("validMovement.json");
 		Dungeon dungeon = dungeonLoader.load();
 		Player p = dungeon.getPlayer();
+		Door d = new Door(3,3, 1);
+		dungeon.addEntity(d);
+		d.setState(d.getOpenState());
 		// test portal1 works
 		p.setXandY(1, 0);
 		p.moveDown();

@@ -111,6 +111,10 @@ public class Player extends Entity implements Immovable,Subject{
     	return inven;
     }
     
+    public ComplexGoal getPlayerGoals() {
+    	return playerGoals;
+    }
+    
     /**
      * This method will handle all movement from player.
      * The player will respond depending on what entity it will interact with given the 

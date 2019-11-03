@@ -36,6 +36,14 @@ public class SingleGoal implements Goal, Observer {
 		neededToSatisfy = i;
 	}
 	
+	public int getNeededToSatisfy() {
+		return neededToSatisfy;
+	}
+	
+	public int getGoalsSatisfied() {
+		return goalsSatisfied;
+	}
+	
 	public String toString() {
 		return "goal type: "+type+" "+neededToSatisfy;
 	}

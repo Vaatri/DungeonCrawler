@@ -1,0 +1,38 @@
+Entity:
+	- dungeon: Dungeon
+	boolean checkCollide() { return true; } <-- is overriden by each entity
+	
+Boulder:
+	boolean checkCollide() {
+		dx = player.x() - x()
+		dy = player.y() - y()
+		if (dx == -1) {
+			e = dungeon.getEntitiesAt(x+1, y)
+			return e.checkCollide()
+		} else if (dx == 1) {
+			e = dungeon.getEntitiesAt(x-1, y)
+			return e.checkCollide()
+		} 
+	}
+	
+	void onCollide() {
+		// move player forward
+		// move boulder forward
+	}
+	
+Wall:
+	@Overrides
+	boolean checkCollide() {
+		return false;
+	}
+
+Treasure:
+	@Override
+	boolean checkCollide() {
+		return true; 
+	}
+	
+	void onCollide() {
+		// delete myself
+		// update inventory: numTreasure++; 
+	}

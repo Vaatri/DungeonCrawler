@@ -4,9 +4,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -20,6 +22,8 @@ import javafx.scene.layout.GridPane;
 public class DungeonControllerLoader extends DungeonLoader {
 
     private List<ImageView> entities;
+    private List<Label> goals;
+    private List<ImageView> playerInventory;
 
     //Images
     private Image playerImage;
@@ -40,6 +44,8 @@ public class DungeonControllerLoader extends DungeonLoader {
             throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
+        goals = new ArrayList<>();
+        playerInventory = new ArrayList<>();
         playerImage = new Image("/human_new.png");
         wallImage = new Image("/brick_brown_0.png");
         treasureImage = new Image("/gold_pile.png");
@@ -73,6 +79,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Treasure treasure) {
     	ImageView view = new ImageView(treasureImage);
     	addEntity(treasure, view);
+    	addToInventory(view);
     }
     @Override
     public void onLoad(Portal portal) {
@@ -130,6 +137,10 @@ public class DungeonControllerLoader extends DungeonLoader {
         trackPosition(entity, view);
         entities.add(view);
     }
+    
+    private void addToInventory(ImageView view) {
+    	playerInventory.add(view);
+    }
 
     /**
      * Set a node in a GridPane to have its position track the position of an
@@ -167,8 +178,40 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @throws FileNotFoundException
      */
     public DungeonController loadController() throws FileNotFoundException {
-        return new DungeonController(load(), entities);
+        return new DungeonController(load(), entities, goals, playerInventory);
     }
 
+	@Override
+	public void onLoad(Goal goal) {
+
+		String goalType = "Optional: ";
+		if(goal.getMandatory()) {
+			goalType = "Mandatory: ";
+		}
+		Label l = new Label(goalType+goal.getType()+" 0/"+goal.getNeededToSatisfy());
+		addGoal(goal, l);
+		
+		
+	}
+
+	private void addGoal(Goal goal, Label label) {
+		goals.add(label);
+		trackGoals(goal, label);
+	}
+	
+	private void trackGoals(Goal goal, Label label) {
+		goal.propertyGS().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				String goalType = "Optional: ";
+				if(goal.getMandatory()) {
+					goalType = "Mandatory: ";
+				}
+				if (newValue.intValue() <= goal.getNeededToSatisfy())
+					label.setText(goalType+goal.getType()+" "+newValue.intValue()+"/"+goal.getNeededToSatisfy());
+			}
+		});
+	}
+	
 
 }

@@ -1,11 +1,15 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 public class Portal extends Entity implements Immovable{
 
 	private int portalID;
+	private boolean teleported;
 	public Portal(int x, int y, int portalID) {
         super(x, y);
         this.portalID = portalID;
+        this.teleported = false;
     }
 	
 	
@@ -19,16 +23,13 @@ public class Portal extends Entity implements Immovable{
 	 * @param y
 	 * @param direction
 	 */
-	public void teleport(Player player, Dungeon dungeon , int x, int y, String direction) {
-		for (Entity e : dungeon.getEntitiesList()) {
-			if (e instanceof Portal && !e.equals(this)) {
-				if (((Portal) e).getPortalID() == portalID) {
-					player.move(x, y, direction);
-					if(!checkBlocked(e.getX(), e.getY(), dungeon)) {
-						player.setXandY(e.getX(), e.getY());
-					}
-				}
-			}	
+	public void teleport() {
+		Player player = getDungeon().getPlayer();
+		Portal p = getDungeon().findLinkedPortal(this);
+		
+		if(!checkBlocked(p.getX(),p.getY())) {
+			player.setXandY(p.getX(), p.getY());
+			p.setTeleported();
 		}
 	}
 	
@@ -39,14 +40,13 @@ public class Portal extends Entity implements Immovable{
 	 * @param dungeon
 	 * @return
 	 */
-	public boolean checkBlocked(int x, int y, Dungeon dungeon) {
-		
-		for(Entity e: dungeon.getEntitiesList()) {
-			if(e instanceof Boulder) {
-				Boulder b = (Boulder)e;
-				if(b.getX() == x && b.getY() == y) return true;
-			}
+	public boolean checkBlocked(int x, int y) {
+		Dungeon d = getDungeon();
+		List<Entity> atLoc = d.getEntityAtLocation(x, y);
+		if(atLoc.size() == 2 || getTeleported()) {
+			return true;
 		}
+		
 		return false;
 	}
 	
@@ -58,7 +58,26 @@ public class Portal extends Entity implements Immovable{
 	}
 
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		teleport(player, player.getDungeon(),x,y,direction);
+	public void collide() {
+		Player p = getDungeon().getPlayer();
+		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
+			teleport();
+		}
+	}
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		resetPortal();
+		return true; 
+	}
+	
+	public void setTeleported() {
+		teleported = true;
+	}
+	public void resetPortal() {
+		teleported = false;
+	}
+	
+	public boolean getTeleported() {
+		return teleported;
 	}
 }

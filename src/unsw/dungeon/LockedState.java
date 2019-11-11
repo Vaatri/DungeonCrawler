@@ -6,7 +6,11 @@ public class LockedState implements DoorState{
     public LockedState(Door door) {
         this.door = door;
     }
-    public void react(Player player, int x, int y, String direction) {
+    public void react() {
     	System.out.println("Door is locked, you can't move!");
     }
+	@Override
+	public boolean checkCollision() {
+		return false;
+	}
 }

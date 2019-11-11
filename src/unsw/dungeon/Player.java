@@ -19,7 +19,7 @@ public class Player extends Entity implements Immovable,Subject{
     PlayerState playerDeadState;
     PlayerState state;
     private ComplexGoal playerGoals;
-    
+      
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
     
     /**
@@ -125,57 +125,21 @@ public class Player extends Entity implements Immovable,Subject{
      */
     public void movementHandler(int x, int y, String direction) {
     	
-    	
-    	//find all the entities within the coordinate player wants to move too.
-    	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);    	
-    	
-    
-    	Boulder b = null;
-    
-    	//if there is no entity in the block player wants to move too
-    	//check the current location and then move
-    	if (entityList.size() == 0) {
-    		// nothing is there
-    		move(x, y, direction);
-    		checkCurrentLocation();
+    	//refactor
+    	//check if there will be a collision
+    	//if there is and we can move, then move
+    	//otherwise do nothing.
+    	if (dungeon.checkCollision(x,y,direction)) {
+    		move(x,y,direction);
     	}
+    	dungeon.handleCollision();
     	
-		//check if theres a boulder we need to move
-		for(Entity e: entityList) {
-			if(e instanceof Boulder) {
-				b = (Boulder)e;
-			}
+		if(playerGoals.checkCompleted()) {
+			System.out.println("You win!");
 		}
-		//if theres a boulder that cant be moved we cant move
-		if (b != null) {
-			if(dungeon.checkAdjacent(x, y, direction, b))
-				return;
-		}
-		//else interact with entity
-		for(Entity e: entityList) {
-			e.collide(this, x, y, direction);
-		}
-		//check if entity was used within a goal
-		playerGoals.checkCompleted();
 		
     }
     
-    /**
-     * This function is used to check enemies location.
-     * A player and an enemy can meet at the same coordinate
-     * Rather than the player checking if the enemy is within an adjacent block.
-     */
-	public void checkCurrentLocation(){
-		ArrayList<Entity> el = dungeon.getEntityAtLocation(getX(), getY());
-		for(Entity e: el) {
-			if(!(e instanceof Enemy)) continue;
-			if(getState().equals(getEmptyHandState())) {
-				((Enemy)e).killPlayer(this);
-			} else {
-				((Enemy)e).dieByPlayer(this);
-			}
-		}
-	}
     
     public PlayerState getPlayerDeadState() {
     	return playerDeadState;
@@ -208,20 +172,6 @@ public class Player extends Entity implements Immovable,Subject{
 		this.state = state;
 	}
     
-    /**
-     * Will handle potential items that are picked up by the player.
-     * @param e
-     */
-    public boolean inventoryHandler(Entity e) {
-    	
-    	if(inven.addToInv(e, dungeon)) {
-    		dungeon.removeEntity(e);
-    		return true;
-    	} else 
-    		return false;
-    	
-    	
-    }
     
     /**
      * This will handle the change in coordinates when the player moves
@@ -272,7 +222,7 @@ public class Player extends Entity implements Immovable,Subject{
 				else {
 					setState(getEmptyHandState());
 				}
-				inven.removeItem(p);
+//				inven.removeItem(p);
 				notifyObservers();
 			}
 		//A SwordState should never fall back into a PotionState.
@@ -280,7 +230,7 @@ public class Player extends Entity implements Immovable,Subject{
 			Sword s = swordState.getSword();
 			if(s.checkAttacksLeft() == 0) {
 				setState(getEmptyHandState());
-				inven.removeItem(s);
+//				inven.removeItem(s);
 			}
 		}
     }
@@ -302,5 +252,31 @@ public class Player extends Entity implements Immovable,Subject{
     public String getType() {
     	return "";
     }
+	
+	public void pickUpSword(Sword s) {
+		if(inven.getSword() == null) {
+			inven.setSword(s);
+			dungeon.removeEntity(s);
+		}
+	}
+	public void pickUpKey(Key k) {
+		if(inven.getKey() == null) {
+			inven.setKey(k);
+			dungeon.removeEntity(k);
+		}
+	}
+	public void pickUpPotion(Potion p) {
+		if(inven.getPotion() == null) {
+			inven.setPotion(p);
+			dungeon.removeEntity(p);
+		}
+	}
+	public void pickUpTreasure(Treasure t) {
+		if(inven.getSword() == null) {
+			inven.setTreasure(t);
+			dungeon.removeEntity(t);
+		}
+	}
+  
     
 }

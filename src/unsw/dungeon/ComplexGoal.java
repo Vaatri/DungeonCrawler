@@ -3,13 +3,17 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class ComplexGoal implements Goal {
 
 	List<Goal> goalList = new ArrayList<Goal>();
 	private String type;
-	private int goalsSatisfied;
-	private int neededToSatisfy;
-	private int goalPoints;
+	private IntegerProperty AndGoalsSatisfied;
+	private IntegerProperty totalAndGoals;
+	private boolean OrSatisfied;
 	
 	/**
 	 * Complex goal contains a list of single goals
@@ -19,11 +23,11 @@ public class ComplexGoal implements Goal {
 	 * @param type
 	 * @param neededToSatisfy
 	 */
-	public ComplexGoal(String type, int neededToSatisfy) {
+	public ComplexGoal(String type) {
 		this.type = type;
-		this.goalsSatisfied = 0;
-		this.neededToSatisfy = neededToSatisfy;
-		this.goalPoints = 0;
+		this.AndGoalsSatisfied = new SimpleIntegerProperty(0);
+		this.OrSatisfied = false;
+		this.totalAndGoals = new SimpleIntegerProperty(0);
 	}
 
 	public List<Goal> getGoalList(){
@@ -45,14 +49,9 @@ public class ComplexGoal implements Goal {
 	public void removeGoal() {
 		
 	}
-	@Override
-	public void setNeededToSatisfy(int i) {
-		neededToSatisfy = i;
-	}
-	
-	public String toString() {
-		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
-	}
+//	public String toString() {
+//		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
+//	}
 	
 	/**
 	 * this will check all of the single Goals within complex goal's list
@@ -61,23 +60,69 @@ public class ComplexGoal implements Goal {
 	 */
 	@Override
 	public boolean checkCompleted() {
-		int goalsFinished = 0;
 		for(Goal g : goalList) {
-			if (g.checkCompleted()) {
-				goalsFinished += g.getGoalPoints();
-			}
+			g.setCompleted(this);
 		}
 		
-		goalsSatisfied = goalsFinished;
-		if(goalsSatisfied >= neededToSatisfy) {
+		if(totalAndGoals == AndGoalsSatisfied && OrSatisfied)
 			return true;
-		}	
 		
 		return false;
 	}
+
+	@Override
+	public void setNeededToSatisfy(int i) {
+		// TODO Auto-generated method stub
+		totalAndGoals.set(i);
+	}
 	
 	@Override
-	public int getGoalPoints() {
-		return goalPoints;
+	public int getNeededToSatisfy() {
+		return totalAndGoals.get();
 	}
+	
+
+	@Override
+	public int getGoalsSatisfied() {
+		// TODO Auto-generated method stub
+		return AndGoalsSatisfied.get();
+	}
+
+	@Override
+	public void addSatisfied() {
+		// TODO Auto-generated method stub
+		AndGoalsSatisfied.add(getGoalsSatisfied()+1);
+	}
+
+	@Override
+	public void setCompleted(Goal g) {
+		// TODO Auto-generated method stub
+		OrSatisfied = true;
+	}
+	
+	@Override
+	public IntegerProperty propertyNTS() {
+		// TODO Auto-generated method stub
+		return totalAndGoals;
+	}
+
+
+	@Override
+	public IntegerProperty propertyGS() {
+		// TODO Auto-generated method stub
+		return AndGoalsSatisfied;
+	}
+
+	@Override
+	public boolean getMandatory() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public BooleanProperty getMandoProperty() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

@@ -1,18 +1,25 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class SingleGoal implements Goal, Observer {
 	
 	
 	private String type;
-	private int goalsSatisfied;
-	private int neededToSatisfy;
-	private int goalPoints;
+	private IntegerProperty goalsSatisfied;
+	private IntegerProperty neededToSatisfy;
+	private GoalCriteria goalCriteria;
+	private BooleanProperty mandatory;
 	
-	public SingleGoal(String type, int neededToSatisfy, int gp) {
+	public SingleGoal(String type, int neededToSatisfy, GoalCriteria gc, boolean mandatory) {
 		this.type = type;
-		this.goalsSatisfied = 0;
-		this.neededToSatisfy = neededToSatisfy;
-		this.goalPoints = gp;
+		this.goalsSatisfied = new SimpleIntegerProperty(0);
+		this.neededToSatisfy = new SimpleIntegerProperty(neededToSatisfy);
+		this.goalCriteria = gc;
+		this.mandatory = new SimpleBooleanProperty(mandatory);
 	}
 	
 	
@@ -33,19 +40,31 @@ public class SingleGoal implements Goal, Observer {
 	
 	@Override
 	public void setNeededToSatisfy(int i) {
-		neededToSatisfy = i;
+		neededToSatisfy.set(i);
 	}
 	
+	@Override
 	public int getNeededToSatisfy() {
-		return neededToSatisfy;
+		return neededToSatisfy.get();
 	}
 	
+	@Override
 	public int getGoalsSatisfied() {
-		return goalsSatisfied;
+		return goalsSatisfied.get();
 	}
 	
 	public String toString() {
 		return "goal type: "+type+" "+neededToSatisfy;
+	}
+	
+	@Override
+	public boolean getMandatory() {
+		return mandatory.get();
+	}
+	
+	@Override
+	public BooleanProperty getMandoProperty() {
+		return mandatory;
 	}
 	
 	/**
@@ -61,13 +80,13 @@ public class SingleGoal implements Goal, Observer {
 		if(subjectType.equals("switch")) {
 			FloorSwitch fs = (FloorSwitch)obj;
 			if(fs.getTriggerStatus())
-				goalsSatisfied++;
+				addSatisfied();
 			else if (!fs.getTriggerStatus())
-				goalsSatisfied--;
+				goalsSatisfied.set(getGoalsSatisfied() - 1);
 		}
 		
 		if(type.equals(subjectType) && !subjectType.equals("switch")) {
-			goalsSatisfied++;
+			addSatisfied();
 		}	
 		
 		checkCompleted();
@@ -80,13 +99,42 @@ public class SingleGoal implements Goal, Observer {
 	public boolean checkCompleted() {
 		if (goalsSatisfied == neededToSatisfy) {
 			return true;
-		}else 
+		}else {
 			return false;
+		}	
 	}
 	
+
+
 	@Override
-	public int getGoalPoints() {
-		return goalPoints;
+	public void setCompleted(Goal g) {
+		// TODO Auto-generated method stub
+		if (checkCompleted())
+			goalCriteria.setCompleted(g);
 	}
 
+
+	@Override
+	public void addSatisfied() {
+		// TODO Auto-generated method stub
+		goalsSatisfied.set(getGoalsSatisfied() + 1);
+		
+	}
+
+
+	@Override
+	public IntegerProperty propertyNTS() {
+		// TODO Auto-generated method stub
+		return neededToSatisfy;
+	}
+
+
+	@Override
+	public IntegerProperty propertyGS() {
+		// TODO Auto-generated method stub
+		return goalsSatisfied;
+	}
+
+
+	
 }

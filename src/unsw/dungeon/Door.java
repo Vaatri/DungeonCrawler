@@ -6,8 +6,8 @@ public class Door extends Entity {
 	DoorState lockedState;
 	DoorState unlockedState;
 	DoorState openState;
-	
 	DoorState state;
+	
 	public Door(int x, int y, int keyID) {
         super(x, y);
         this.keyID = keyID;
@@ -34,8 +34,8 @@ public class Door extends Entity {
 	 * @param y
 	 * @param direction
 	 */
-	public void react(Player player, int x, int y, String direction) {
-    	state.react(player,x,y,direction);
+	public void react() {
+    	state.react();
     }
 	/**
 	 * check if door is unlocked.
@@ -82,7 +82,16 @@ public class Door extends Entity {
 	 * If Door is open, player will pass through.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		react(player,x,y,direction);
+	public void collide() {
+		react();
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String direction) {
+		//check the entity that is colliding
+		if(!getDungeon().checkIfBoulder(x, y, direction)) {
+			return false;
+		}
+		return state.checkCollision();
 	}
 }

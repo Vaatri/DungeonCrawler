@@ -13,15 +13,13 @@ public class UnlockedState implements DoorState{
      * Door will be set to an unlocked state, but will only be open when
      * the Player collides the door.
      */
-    public void react(Player player, int x, int y, String direction) {
-    	System.out.println("Door open, you may go through");
-    	player.move(x, y, direction);
-    	// once a player goes through unlocked door, change its state to open
+    public void react() {
     	door.setState(door.getOpenState());
-    	
-    	//after used the key remove it from the inventory
-    	Inventory i = player.getInventory();
-    	i.removeItem(i.getKey());
-    	// set ui of door to open door
     }
+
+	@Override
+	public boolean checkCollision() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

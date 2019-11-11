@@ -23,12 +23,15 @@ public class Sword extends Entity implements Collectable{
 	 * place it in players inventory, and change player state. Then move the player.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		player.inventoryHandler(this);
-		if(player.getState().equals(player.getEmptyHandState())) {
-			player.setState(player.getSwordState());
-			player.getState().setSword(this);
+	public void collide() {
+		Player p = getDungeon().getPlayer();
+		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
+			p.pickUpSword(this);
 		}
-		player.move(x, y, direction);
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		return true; 
 	}
 }

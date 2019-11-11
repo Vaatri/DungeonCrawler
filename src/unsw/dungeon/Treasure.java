@@ -1,17 +1,22 @@
 package unsw.dungeon;
 
 import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.util.ArrayList;
 
 public class Treasure extends Entity implements Collectable, Subject{
 
 	private String type;
+	private BooleanProperty inInven;
 	List<Observer> observerList = new ArrayList<Observer>();
 	
 	public Treasure(int x, int y) {
 		super(x,y);
 		this.type = "treasure";
-		
+		this.inInven = new SimpleBooleanProperty(false);
 	}
 	
 	/**
@@ -19,9 +24,11 @@ public class Treasure extends Entity implements Collectable, Subject{
 	 * inventory, and goal observers will be notified.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		player.inventoryHandler(this);
-		player.move(x, y, direction);
+	public void collide() {
+		Player p = getDungeon().getPlayer();
+		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
+			p.pickUpTreasure(this);
+		}
 		notifyObservers();
 	}
 	@Override
@@ -42,9 +49,31 @@ public class Treasure extends Entity implements Collectable, Subject{
 		}
 	}
 	
-	@Override
+	@Override 
 	public String getType() {
 		return type;
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		return true; 
+	}
+	
+	@Override
+	public boolean inInventory() {
+		return inInven.get();
+	}
+	@Override
+	public BooleanProperty inInventoryProp() {
+		return inInven;
+	}
+	@Override
+	public void setInInvenProp() {
+		inInven.set(true);
+	}
+	@Override
+	public void removeInInvenProp() {
+		inInven.set(false);
 	}
 
 }

@@ -92,6 +92,6 @@ public class Door extends Entity {
 		if(!getDungeon().checkIfBoulder(x, y, direction)) {
 			return false;
 		}
-		return true;
+		return state.checkCollision();
 	}
 }

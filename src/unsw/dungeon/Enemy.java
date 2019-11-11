@@ -84,6 +84,8 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	@Override
 	public void collide() {
 		Player player = getDungeon().getPlayer();
+		if(!checkPos(getX(),getY(),player.getX(), player.getY())) return;
+		
 		if(player.getState().equals(player.getEmptyHandState()))
 			killPlayer(player);
 		else 

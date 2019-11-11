@@ -1,11 +1,15 @@
 package unsw.dungeon;
 
+import java.util.List;
+
 public class Portal extends Entity implements Immovable{
 
 	private int portalID;
+	private boolean teleported;
 	public Portal(int x, int y, int portalID) {
         super(x, y);
         this.portalID = portalID;
+        this.teleported = false;
     }
 	
 	
@@ -21,14 +25,11 @@ public class Portal extends Entity implements Immovable{
 	 */
 	public void teleport() {
 		Player player = getDungeon().getPlayer();
-		for (Entity e : getDungeon().getEntitiesList()) {
-			if (e instanceof Portal && !e.equals(this)) {
-				if (((Portal) e).getPortalID() == portalID) {
-					if(!checkBlocked(e.getX(), e.getY())) {
-						player.setXandY(e.getX(), e.getY());
-					}
-				}
-			}	
+		Portal p = getDungeon().findLinkedPortal(this);
+		
+		if(!checkBlocked(p.getX(),p.getY())) {
+			player.setXandY(p.getX(), p.getY());
+			p.setTeleported();
 		}
 	}
 	
@@ -40,11 +41,12 @@ public class Portal extends Entity implements Immovable{
 	 * @return
 	 */
 	public boolean checkBlocked(int x, int y) {
-		
-		for(Entity e: getDungeon().getEntitiesList()) {
-			if(e.getX() == x && e.getY() == y) return true;
-			
+		Dungeon d = getDungeon();
+		List<Entity> atLoc = d.getEntityAtLocation(x, y);
+		if(atLoc.size() == 2 || getTeleported()) {
+			return true;
 		}
+		
 		return false;
 	}
 	
@@ -64,6 +66,18 @@ public class Portal extends Entity implements Immovable{
 	}
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
+		resetPortal();
 		return true; 
+	}
+	
+	public void setTeleported() {
+		teleported = true;
+	}
+	public void resetPortal() {
+		teleported = false;
+	}
+	
+	public boolean getTeleported() {
+		return teleported;
 	}
 }

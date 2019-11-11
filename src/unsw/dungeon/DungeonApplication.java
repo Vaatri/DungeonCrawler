@@ -24,9 +24,10 @@ public class DungeonApplication extends Application {
         Scene scene = new Scene(root);
         root.requestFocus();
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Dungeon Crawlers");
         primaryStage.show();
 
-    }
+    } 
 
     public static void main(String[] args) {
         launch(args);

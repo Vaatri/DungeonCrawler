@@ -1,18 +1,21 @@
 package unsw.dungeon;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class SingleGoal implements Goal, Observer {
 	
 	
 	private String type;
-	private int goalsSatisfied;
-	private int neededToSatisfy;
+	private IntegerProperty goalsSatisfied;
+	private IntegerProperty neededToSatisfy;
 	private GoalCriteria goalCriteria;
 	private boolean completed;
 	
 	public SingleGoal(String type, int neededToSatisfy, GoalCriteria gc) {
 		this.type = type;
-		this.goalsSatisfied = 0;
-		this.neededToSatisfy = neededToSatisfy;
+		this.goalsSatisfied = new SimpleIntegerProperty(0);
+		this.neededToSatisfy = new SimpleIntegerProperty(neededToSatisfy);
 		this.goalCriteria = gc;
 		this.completed = false;
 	}
@@ -35,16 +38,17 @@ public class SingleGoal implements Goal, Observer {
 	
 	@Override
 	public void setNeededToSatisfy(int i) {
-		neededToSatisfy = i;
+		neededToSatisfy.set(i);
 	}
 	
+	@Override
 	public int getNeededToSatisfy() {
-		return neededToSatisfy;
+		return neededToSatisfy.get();
 	}
 	
 	@Override
 	public int getGoalsSatisfied() {
-		return goalsSatisfied;
+		return goalsSatisfied.get();
 	}
 	
 	public String toString() {
@@ -66,7 +70,7 @@ public class SingleGoal implements Goal, Observer {
 			if(fs.getTriggerStatus())
 				addSatisfied();
 			else if (!fs.getTriggerStatus())
-				goalsSatisfied--;
+				goalsSatisfied.set(getGoalsSatisfied() - 1);
 		}
 		
 		if(type.equals(subjectType) && !subjectType.equals("switch")) {
@@ -101,8 +105,22 @@ public class SingleGoal implements Goal, Observer {
 	@Override
 	public void addSatisfied() {
 		// TODO Auto-generated method stub
-		goalsSatisfied++;
+		goalsSatisfied.set(getGoalsSatisfied() + 1);
 		
+	}
+
+
+	@Override
+	public IntegerProperty propertyNTS() {
+		// TODO Auto-generated method stub
+		return neededToSatisfy;
+	}
+
+
+	@Override
+	public IntegerProperty propertyGS() {
+		// TODO Auto-generated method stub
+		return goalsSatisfied;
 	}
 
 

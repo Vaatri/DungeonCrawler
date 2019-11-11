@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -20,6 +21,7 @@ import javafx.scene.layout.GridPane;
 public class DungeonControllerLoader extends DungeonLoader {
 
     private List<ImageView> entities;
+    private List<Label> goals;
 
     //Images
     private Image playerImage;
@@ -40,6 +42,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
+        goals = new ArrayList<>();
         playerImage = new Image("/human_new.png");
         wallImage = new Image("/brick_brown_0.png");
         treasureImage = new Image("/gold_pile.png");
@@ -167,8 +170,30 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @throws FileNotFoundException
      */
     public DungeonController loadController() throws FileNotFoundException {
-        return new DungeonController(load(), entities);
+        return new DungeonController(load(), entities, goals);
     }
 
+	@Override
+	public void onLoad(Goal goal) {
+		// TODO Auto-generated method stub
+		Label l = new Label(goal.getType()+" 0/"+goal.getNeededToSatisfy());
+		addGoal(goal, l);
+		
+		
+	}
+
+	private void addGoal(Goal goal, Label label) {
+		goals.add(label);
+		trackGoals(goal, label);
+	}
+	
+	private void trackGoals(Goal goal, Label label) {
+		goal.propertyGS().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				label.setText(goal.getType()+" "+newValue.intValue()+"/"+goal.getNeededToSatisfy());
+			}
+		});
+	}
 
 }

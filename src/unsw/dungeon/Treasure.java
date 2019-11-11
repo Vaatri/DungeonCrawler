@@ -20,7 +20,7 @@ public class Treasure extends Entity implements Collectable, Subject{
 	public void collide() {
 		Player p = getDungeon().getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
-			p.pickup(this);
+			p.pickUpTreasure(this);
 		}
 		notifyObservers();
 	}

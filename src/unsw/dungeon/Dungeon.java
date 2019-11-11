@@ -66,11 +66,25 @@ public class Dungeon {
     		for(int row = 0; row < height; row++) {
     			ArrayList<Entity> entityAtLoc = getEntityAtLocation(col, row);
     			if(entityAtLoc.size()>1) {
+    				System.out.println(entityAtLoc.get(0));
+    				System.out.println(entityAtLoc.get(1));
     				entityAtLoc.get(0).collide();
     				entityAtLoc.get(1).collide();
     			}
     		}	
     	}
+    }
+    
+    public Portal findLinkedPortal(Portal p) {
+    	for(Entity e: entities) {
+    		if(e instanceof Portal && !e.equals(p)) {
+    			if(((Portal)e).getPortalID() == p.getPortalID()) {
+    				return ((Portal)e);
+    			}
+    		}
+    	}
+    	
+    	return null;
     }
     
     /**

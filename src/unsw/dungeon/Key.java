@@ -50,8 +50,13 @@ public class Key extends Entity implements Collectable{
 	public void collide() {
 		Player p = dungeon.getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
-			p.pickup(this);
+			p.pickUpKey(this);
 			unlockDoor();
 		}
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		return true; 
 	}
 }

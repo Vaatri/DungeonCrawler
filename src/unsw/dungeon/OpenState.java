@@ -12,4 +12,10 @@ public class OpenState implements DoorState{
      */
     public void react() {
     }
+
+	@Override
+	public boolean checkCollision() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

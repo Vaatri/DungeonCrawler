@@ -9,4 +9,8 @@ public class LockedState implements DoorState{
     public void react() {
     	System.out.println("Door is locked, you can't move!");
     }
+	@Override
+	public boolean checkCollision() {
+		return false;
+	}
 }

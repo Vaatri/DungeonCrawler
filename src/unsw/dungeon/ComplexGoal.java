@@ -3,12 +3,15 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 public class ComplexGoal implements Goal {
 
 	List<Goal> goalList = new ArrayList<Goal>();
 	private String type;
-	private int AndGoalsSatisfied;
-	private int totalAndGoals;
+	private IntegerProperty AndGoalsSatisfied;
+	private IntegerProperty totalAndGoals;
 	private boolean OrSatisfied;
 	
 	/**
@@ -21,9 +24,9 @@ public class ComplexGoal implements Goal {
 	 */
 	public ComplexGoal(String type) {
 		this.type = type;
-		this.AndGoalsSatisfied = 0;
+		this.AndGoalsSatisfied = new SimpleIntegerProperty(0);
 		this.OrSatisfied = false;
-		this.totalAndGoals = 0;
+		this.totalAndGoals = new SimpleIntegerProperty(0);
 	}
 
 	public List<Goal> getGoalList(){
@@ -74,26 +77,44 @@ public class ComplexGoal implements Goal {
 	@Override
 	public void setNeededToSatisfy(int i) {
 		// TODO Auto-generated method stub
-		totalAndGoals = i;
+		totalAndGoals.set(i);
+	}
+	
+	@Override
+	public int getNeededToSatisfy() {
+		return totalAndGoals.get();
 	}
 	
 
 	@Override
 	public int getGoalsSatisfied() {
 		// TODO Auto-generated method stub
-		return AndGoalsSatisfied;
+		return AndGoalsSatisfied.get();
 	}
 
 	@Override
 	public void addSatisfied() {
 		// TODO Auto-generated method stub
-		AndGoalsSatisfied++;
+		AndGoalsSatisfied.add(getGoalsSatisfied()+1);
 	}
 
 	@Override
 	public void setCompleted(Goal g) {
 		// TODO Auto-generated method stub
 		OrSatisfied = true;
+	}
+	
+	@Override
+	public IntegerProperty propertyNTS() {
+		// TODO Auto-generated method stub
+		return totalAndGoals;
+	}
+
+
+	@Override
+	public IntegerProperty propertyGS() {
+		// TODO Auto-generated method stub
+		return AndGoalsSatisfied;
 	}
 	
 }

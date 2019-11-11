@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import javafx.beans.property.IntegerProperty;
+
 public interface Goal {
 	
 	public void addGoal(Goal g);
@@ -10,4 +12,7 @@ public interface Goal {
 	public String getType();
 	public int getGoalsSatisfied();
 	public void setCompleted(Goal g);
+	public int getNeededToSatisfy();
+	public IntegerProperty propertyNTS();
+	public IntegerProperty propertyGS();
 }

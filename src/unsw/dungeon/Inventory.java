@@ -157,8 +157,8 @@ public class Inventory {
 			return treasure;
 		}
 
-		public void setTreasure(int treasure) {
-			this.treasure = treasure;
+		public void setTreasure() {
+			this.treasure++;
 		}
 
 		public Potion getPotion() {

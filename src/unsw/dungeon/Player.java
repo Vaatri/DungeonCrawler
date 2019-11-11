@@ -134,26 +134,12 @@ public class Player extends Entity implements Immovable,Subject{
     	}
     	dungeon.handleCollision();
     	
-		playerGoals.checkCompleted();
+		if(playerGoals.checkCompleted()) {
+			System.out.println("You win!");
+		}
 		
     }
     
-    /**
-     * This function is used to check enemies location.
-     * A player and an enemy can meet at the same coordinate
-     * Rather than the player checking if the enemy is within an adjacent block.
-     */
-	public void checkCurrentLocation(){
-		ArrayList<Entity> el = dungeon.getEntityAtLocation(getX(), getY());
-		for(Entity e: el) {
-			if(!(e instanceof Enemy)) continue;
-			if(getState().equals(getEmptyHandState())) {
-				((Enemy)e).killPlayer(this);
-			} else {
-				((Enemy)e).dieByPlayer(this);
-			}
-		}
-	}
     
     public PlayerState getPlayerDeadState() {
     	return playerDeadState;
@@ -186,20 +172,6 @@ public class Player extends Entity implements Immovable,Subject{
 		this.state = state;
 	}
     
-    /**
-     * Will handle potential items that are picked up by the player.
-     * @param e
-     */
-    public boolean inventoryHandler(Collectable c) {
-    	
-//    	if(inven.addToInv(c, dungeon)) {
-//    		dungeon.removeEntity(c);
-//    		return true;
-//    	} else 
-//    		return false;
-    	return true;
-    	
-    }
     
     /**
      * This will handle the change in coordinates when the player moves
@@ -281,10 +253,30 @@ public class Player extends Entity implements Immovable,Subject{
     	return "";
     }
 	
-	public void pickup(Entity e) {
-		
+	public void pickUpSword(Sword s) {
+		if(inven.getSword() == null) {
+			inven.setSword(s);
+			dungeon.removeEntity(s);
+		}
 	}
-
+	public void pickUpKey(Key k) {
+		if(inven.getKey() == null) {
+			inven.setKey(k);
+			dungeon.removeEntity(k);
+		}
+	}
+	public void pickUpPotion(Potion p) {
+		if(inven.getPotion() == null) {
+			inven.setPotion(p);
+			dungeon.removeEntity(p);
+		}
+	}
+	public void pickUpTreasure(Treasure t) {
+		if(inven.getSword() == null) {
+			inven.setTreasure();
+			dungeon.removeEntity(t);
+		}
+	}
   
     
 }

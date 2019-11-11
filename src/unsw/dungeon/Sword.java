@@ -26,7 +26,7 @@ public class Sword extends Entity implements Collectable{
 	public void collide() {
 		Player p = getDungeon().getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
-			p.pickup(this);
+			p.pickUpSword(this);
 		}
 	}
 	

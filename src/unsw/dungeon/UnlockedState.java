@@ -16,4 +16,10 @@ public class UnlockedState implements DoorState{
     public void react() {
     	door.setState(door.getOpenState());
     }
+
+	@Override
+	public boolean checkCollision() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 }

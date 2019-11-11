@@ -273,7 +273,7 @@ public class Player extends Entity implements Immovable,Subject{
 	}
 	public void pickUpTreasure(Treasure t) {
 		if(inven.getSword() == null) {
-			inven.setTreasure();
+			inven.setTreasure(t);
 			dungeon.removeEntity(t);
 		}
 	}

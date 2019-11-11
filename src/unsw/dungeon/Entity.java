@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -68,6 +69,20 @@ public class Entity {
 		
 	}
 	
+	public boolean inInventory() {
+		return false;
+	}
+	
+	public BooleanProperty inInventoryProp() {
+		return null;
+	}
+	
+	public void setInInvenProp() {
+		
+	}
+	public void removeInInvenProp() {
+		
+	}
 	
 	public boolean checkCollision(int x, int y, String dir) {
 		return false;

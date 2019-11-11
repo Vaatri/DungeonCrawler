@@ -3,6 +3,7 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -48,11 +49,6 @@ public class ComplexGoal implements Goal {
 	public void removeGoal() {
 		
 	}
-//	@Override
-//	public void setNeededToSatisfy(int i) {
-//		neededToSatisfy = i;
-//	}
-//	
 //	public String toString() {
 //		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
 //	}
@@ -115,6 +111,18 @@ public class ComplexGoal implements Goal {
 	public IntegerProperty propertyGS() {
 		// TODO Auto-generated method stub
 		return AndGoalsSatisfied;
+	}
+
+	@Override
+	public boolean getMandatory() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public BooleanProperty getMandoProperty() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

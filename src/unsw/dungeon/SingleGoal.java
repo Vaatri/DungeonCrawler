@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class SingleGoal implements Goal, Observer {
@@ -10,14 +12,14 @@ public class SingleGoal implements Goal, Observer {
 	private IntegerProperty goalsSatisfied;
 	private IntegerProperty neededToSatisfy;
 	private GoalCriteria goalCriteria;
-	private boolean completed;
+	private BooleanProperty mandatory;
 	
-	public SingleGoal(String type, int neededToSatisfy, GoalCriteria gc) {
+	public SingleGoal(String type, int neededToSatisfy, GoalCriteria gc, boolean mandatory) {
 		this.type = type;
 		this.goalsSatisfied = new SimpleIntegerProperty(0);
 		this.neededToSatisfy = new SimpleIntegerProperty(neededToSatisfy);
 		this.goalCriteria = gc;
-		this.completed = false;
+		this.mandatory = new SimpleBooleanProperty(mandatory);
 	}
 	
 	
@@ -53,6 +55,16 @@ public class SingleGoal implements Goal, Observer {
 	
 	public String toString() {
 		return "goal type: "+type+" "+neededToSatisfy;
+	}
+	
+	@Override
+	public boolean getMandatory() {
+		return mandatory.get();
+	}
+	
+	@Override
+	public BooleanProperty getMandoProperty() {
+		return mandatory;
 	}
 	
 	/**

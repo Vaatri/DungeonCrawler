@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 
 public interface Goal {
@@ -15,4 +16,6 @@ public interface Goal {
 	public int getNeededToSatisfy();
 	public IntegerProperty propertyNTS();
 	public IntegerProperty propertyGS();
+	public boolean getMandatory();
+	public BooleanProperty getMandoProperty();
 }

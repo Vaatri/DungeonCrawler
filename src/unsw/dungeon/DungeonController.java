@@ -28,7 +28,10 @@ public class DungeonController {
     private Pane statusContainer;
     
     @FXML
-    private GridPane objectives;
+    private GridPane orObjectives;
+    
+    @FXML
+    private GridPane andObjectives;
     
     @FXML
     private GridPane inventory;
@@ -39,16 +42,18 @@ public class DungeonController {
     private List<ImageView> initialEntities;
     
     private List<Label> dungeonGoals;
+    private List<ImageView> playerInventory;
 
     private Player player;
 
     private Dungeon dungeon;
 
-    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals) {
+    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals, List<ImageView> playerInventory) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
         this.dungeonGoals = new ArrayList<>(dungeonGoals);
+        this.playerInventory = new ArrayList<>(playerInventory);
     }
 
     @FXML
@@ -66,15 +71,41 @@ public class DungeonController {
             squares.getChildren().add(entity);
         
         createObjectives();
-        inventory.add(new Label("Player Inventory"), 0, 0);
-        
+//        createInventory();
     }
     
     private void createObjectives() {
-    	objectives.add(new Label("Player Objectives"), 0, 0);
-    	int rowCount = 1;
+  
+    	int andRowCount = 0;
+    	int orRowCount = 0;
     	for(Label goal: dungeonGoals) {
-    		objectives.add(goal, 0, rowCount++);
+    		if(goal.getText().contains("Optional")){
+    			orObjectives.add(goal, 0, orRowCount++);
+    		} else {
+    			andObjectives.add(goal, 0, andRowCount++);
+    		}
+    	}
+    }
+    
+    private void createInventory() {
+    	ImageView treasureImage = new ImageView(new Image("/gold_pile.png"));
+    	ImageView potionImage = new ImageView (new Image("/bubbly.png"));
+        ImageView keyImage = new ImageView(new Image("/key.png"));
+        ImageView swordImage = new ImageView(new Image("/greatsword_1_new.png"));
+        int treasureCount = 0;
+        int potionCount = 0;
+        int keyCount = 0;
+        int swordCount = 0;
+    	for(ImageView items: playerInventory) {
+    		if(items == treasureImage) 
+    			inventory.add(treasureImage, treasureCount++, 3);
+    		if(items == potionImage)
+    			inventory.add(potionImage, potionCount++, 1);
+    		if(items == swordImage)
+    			inventory.add(swordImage, swordCount++, 0);
+    		if(items == keyImage)
+    			inventory.add(keyImage, keyCount, 2);
+    		inventory.getChildren().add(items);
     	}
     }
 

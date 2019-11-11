@@ -80,7 +80,7 @@ public abstract class DungeonLoader {
      * @param g
      */
     private void loadSingleGoal(Dungeon dungeon, String goalType, JSONArray entities, Goal g) {
-		Goal sg = new SingleGoal(goalType,countEntities(goalType, entities),new AndGoal());
+		Goal sg = new SingleGoal(goalType,countEntities(goalType, entities),new AndGoal(), true);
 		onLoad(sg);
 		attachObserver(dungeon, (SingleGoal)sg);
 		g.addGoal(sg);
@@ -109,14 +109,14 @@ public abstract class DungeonLoader {
     			for(int j = 0; j < array.length(); j++) {
     				jsonObject = array.getJSONObject(j);
 					type = jsonObject.getString("goal");
-					Goal sg = new SingleGoal(type,countEntities(type, entities), new OrGoal());
+					Goal sg = new SingleGoal(type,countEntities(type, entities), new OrGoal(), false);
 					onLoad(sg);
 					g.addGoal(sg);
 					attachObserver(dungeon, (SingleGoal)sg);
     			}
     			break;
     		} else {
-	    		Goal sg = new SingleGoal(type ,countEntities(type, entities), new AndGoal());
+	    		Goal sg = new SingleGoal(type ,countEntities(type, entities), new AndGoal(), true);
 	    		onLoad(sg);
 	    		g.addGoal(sg);
 	    		attachObserver(dungeon, (SingleGoal)sg);

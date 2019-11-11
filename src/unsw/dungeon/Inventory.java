@@ -8,78 +8,14 @@ public class Inventory {
 		private Key key;
 		private int treasure;
 		private Potion potion;
-		//refactor
-		//private ArrayList<Collectable> inven;
-//		private boolean hasSword;
-//		private boolean hasPotion;
-//		private boolean hasKey;
-		
 		
 		public Inventory() {
-//			this.inven = new ArrayList<>();
 			this.sword = null;
 			this.key = null;
 			this.treasure = 0;
 			this.potion = null;
-//			this.hasSword = false;
-//			this.hasPotion = false;
 		}
 		
-//		/**
-//		 * Add entity into player inventory
-//		 * @param e
-//		 * @param dungeon
-//		 * @return
-//		 */
-//		public boolean addToInv(Collectable c, Dungeon dungeon) {
-//			
-//			if (!inInventory(e)) {
-//				inven.add(e);
-//				return true;
-//			}
-//			return false;
-//			
-//			
-//			//refactoring 
-////			if(c.getInside() != null) {
-////				inven.add(c);
-////				
-////			}
-//		}
-//		
-//		
-//		/**
-//		 * Check if there are any keys, swords, or potions already existing in players inventory.
-//		 * It will return true if there are any instances of the object within it.
-//		 * @param e
-//		 * @return
-//		 */
-//		public boolean inInventory(Entity e) {
-//			
-//			for(Entity inInventory: inven) {
-//				if(inInventory instanceof Key && e instanceof Key)
-//					return true;
-//				if(inInventory instanceof Sword && e instanceof Sword) 
-//					return true;
-//				if(inInventory instanceof Potion && e instanceof Potion)
-//					return true;
-//			}
-//			return false;
-//		}
-		
-		
-//		/**
-//		 * Remove the item passed in as an arguement
-//		 * @param e
-//		 */
-//		public void removeItem(Entity e) {
-//			for(Entity in: inven) {
-//				if(in.equals(e)) {
-//					inven.remove(e);
-//					break;
-//				}
-//			}
-//		}
 		/**
 		 * return true if player has sword in inventory
 		 * @return
@@ -123,14 +59,6 @@ public class Inventory {
 		 * @return
 		 */
 		public boolean hasTreasure() {
-//			for(Entity inInventory: inven) {
-//				if(inInventory instanceof Treasure) {
-//					return true;
-//				}
-//			}return false;
-			
-			
-			//refactor
 			if (treasure == 0)
 				return false;
 			else 
@@ -157,7 +85,8 @@ public class Inventory {
 			return treasure;
 		}
 
-		public void setTreasure() {
+		public void setTreasure(Treasure t) {
+			t.setInInvenProp();
 			this.treasure++;
 		}
 

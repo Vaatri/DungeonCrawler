@@ -7,5 +7,8 @@ public class Wall extends Entity implements Immovable{
     }
 
     
-
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		return false;
+	}
 }

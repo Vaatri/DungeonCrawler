@@ -7,20 +7,28 @@ public class Exit extends Entity implements Subject{
 	
 	List<Observer> observerList = new ArrayList<Observer>();
 	private String type;
-	
-	public Exit(int x, int y) {
+	private Dungeon dungeon;
+	public Exit(int x, int y, Dungeon d) {
         super(x, y);
         this.type = "exit";
+        this.dungeon = d;
     }
 	
 	/**
 	 * when the player collides with an exit, exit goal is triggered.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		player.move(x, y, direction);
-		System.out.println(observerList);
+	public void collide() {
 		notifyObservers();
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		//check the entity that is colliding
+		if(!dungeon.checkIfBoulder(x, y, dir)) {
+			return false;
+		}
+		return true;
 	}
 	
 	@Override

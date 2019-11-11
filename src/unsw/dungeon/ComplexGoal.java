@@ -7,9 +7,9 @@ public class ComplexGoal implements Goal {
 
 	List<Goal> goalList = new ArrayList<Goal>();
 	private String type;
-	private int goalsSatisfied;
-	private int neededToSatisfy;
-	private int goalPoints;
+	private int AndGoalsSatisfied;
+	private int totalAndGoals;
+	private boolean OrSatisfied;
 	
 	/**
 	 * Complex goal contains a list of single goals
@@ -19,11 +19,11 @@ public class ComplexGoal implements Goal {
 	 * @param type
 	 * @param neededToSatisfy
 	 */
-	public ComplexGoal(String type, int neededToSatisfy) {
+	public ComplexGoal(String type) {
 		this.type = type;
-		this.goalsSatisfied = 0;
-		this.neededToSatisfy = neededToSatisfy;
-		this.goalPoints = 0;
+		this.AndGoalsSatisfied = 0;
+		this.OrSatisfied = false;
+		this.totalAndGoals = 0;
 	}
 
 	public List<Goal> getGoalList(){
@@ -45,14 +45,14 @@ public class ComplexGoal implements Goal {
 	public void removeGoal() {
 		
 	}
-	@Override
-	public void setNeededToSatisfy(int i) {
-		neededToSatisfy = i;
-	}
-	
-	public String toString() {
-		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
-	}
+//	@Override
+//	public void setNeededToSatisfy(int i) {
+//		neededToSatisfy = i;
+//	}
+//	
+//	public String toString() {
+//		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
+//	}
 	
 	/**
 	 * this will check all of the single Goals within complex goal's list
@@ -61,23 +61,39 @@ public class ComplexGoal implements Goal {
 	 */
 	@Override
 	public boolean checkCompleted() {
-		int goalsFinished = 0;
 		for(Goal g : goalList) {
-			if (g.checkCompleted()) {
-				goalsFinished += g.getGoalPoints();
-			}
+			g.setCompleted(this);
 		}
 		
-		goalsSatisfied = goalsFinished;
-		if(goalsSatisfied >= neededToSatisfy) {
+		if(totalAndGoals == AndGoalsSatisfied && OrSatisfied)
 			return true;
-		}	
 		
 		return false;
 	}
-	
+
 	@Override
-	public int getGoalPoints() {
-		return goalPoints;
+	public void setNeededToSatisfy(int i) {
+		// TODO Auto-generated method stub
+		totalAndGoals = i;
 	}
+	
+
+	@Override
+	public int getGoalsSatisfied() {
+		// TODO Auto-generated method stub
+		return AndGoalsSatisfied;
+	}
+
+	@Override
+	public void addSatisfied() {
+		// TODO Auto-generated method stub
+		AndGoalsSatisfied++;
+	}
+
+	@Override
+	public void setCompleted(Goal g) {
+		// TODO Auto-generated method stub
+		OrSatisfied = true;
+	}
+	
 }

@@ -19,7 +19,7 @@ public class Player extends Entity implements Immovable,Subject{
     PlayerState playerDeadState;
     PlayerState state;
     private ComplexGoal playerGoals;
-    
+      
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
     
     /**
@@ -125,37 +125,15 @@ public class Player extends Entity implements Immovable,Subject{
      */
     public void movementHandler(int x, int y, String direction) {
     	
-    	
-    	//find all the entities within the coordinate player wants to move too.
-    	ArrayList<Entity> entityList = dungeon.getEntityAtLocation(x, y);    	
-    	
-    
-    	Boulder b = null;
-    
-    	//if there is no entity in the block player wants to move too
-    	//check the current location and then move
-    	if (entityList.size() == 0) {
-    		// nothing is there
-    		move(x, y, direction);
-    		checkCurrentLocation();
+    	//refactor
+    	//check if there will be a collision
+    	//if there is and we can move, then move
+    	//otherwise do nothing.
+    	if (dungeon.checkCollision(x,y,direction)) {
+    		move(x,y,direction);
     	}
+    	dungeon.handleCollision();
     	
-		//check if theres a boulder we need to move
-		for(Entity e: entityList) {
-			if(e instanceof Boulder) {
-				b = (Boulder)e;
-			}
-		}
-		//if theres a boulder that cant be moved we cant move
-		if (b != null) {
-			if(dungeon.checkAdjacent(x, y, direction, b))
-				return;
-		}
-		//else interact with entity
-		for(Entity e: entityList) {
-			e.collide(this, x, y, direction);
-		}
-		//check if entity was used within a goal
 		playerGoals.checkCompleted();
 		
     }
@@ -212,14 +190,14 @@ public class Player extends Entity implements Immovable,Subject{
      * Will handle potential items that are picked up by the player.
      * @param e
      */
-    public boolean inventoryHandler(Entity e) {
+    public boolean inventoryHandler(Collectable c) {
     	
-    	if(inven.addToInv(e, dungeon)) {
-    		dungeon.removeEntity(e);
-    		return true;
-    	} else 
-    		return false;
-    	
+//    	if(inven.addToInv(c, dungeon)) {
+//    		dungeon.removeEntity(c);
+//    		return true;
+//    	} else 
+//    		return false;
+    	return true;
     	
     }
     
@@ -272,7 +250,7 @@ public class Player extends Entity implements Immovable,Subject{
 				else {
 					setState(getEmptyHandState());
 				}
-				inven.removeItem(p);
+//				inven.removeItem(p);
 				notifyObservers();
 			}
 		//A SwordState should never fall back into a PotionState.
@@ -280,7 +258,7 @@ public class Player extends Entity implements Immovable,Subject{
 			Sword s = swordState.getSword();
 			if(s.checkAttacksLeft() == 0) {
 				setState(getEmptyHandState());
-				inven.removeItem(s);
+//				inven.removeItem(s);
 			}
 		}
     }
@@ -302,5 +280,11 @@ public class Player extends Entity implements Immovable,Subject{
     public String getType() {
     	return "";
     }
+	
+	public void pickup(Entity e) {
+		
+	}
+
+  
     
 }

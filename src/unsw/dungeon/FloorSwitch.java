@@ -45,9 +45,17 @@ public class FloorSwitch extends Entity implements Subject{
 	 * is untriggered.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
+	public void collide() {
 		untriggerSwitch();
-		player.move(x, y, direction);
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		//check the entity that is colliding
+		if(!getDungeon().checkIfBoulder(x, y, dir)) {
+			setTriggerStatus();
+		}
+		return true;
 	}
 	
 	
@@ -55,7 +63,7 @@ public class FloorSwitch extends Entity implements Subject{
 	 * Set the switches trigger status to triggered and notify observers.
 	 * @param dungeon
 	 */
-	public void setTriggerStatus(Dungeon dungeon) {
+	public void setTriggerStatus() {
 		triggerSwitch();
 		notifyObservers();
 	}

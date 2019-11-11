@@ -3,6 +3,7 @@ package unsw.dungeon;
 public class Potion extends Entity implements Collectable {
 	
 	private int duration;
+	
 	public Potion(int x, int y) {
         super(x, y);
         this.duration = 10;
@@ -38,12 +39,42 @@ public class Potion extends Entity implements Collectable {
 	 * if player collides with potion, player state will be set to
 	 * PotionState. State will include the item used that induced the state.
 	 */
+//	@Override
+//	public void collide(Player player, int x, int y, String direction) {
+//		if(player.inventoryHandler(this)) {
+//			player.setState(player.getPotionState());
+//			player.getState().setPotion(this);
+//		}	
+//		player.move(x, y, direction);
+//	}
+	
+	
+	
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		if(player.inventoryHandler(this)) {
-			player.setState(player.getPotionState());
-			player.getState().setPotion(this);
-		}	
-		player.move(x, y, direction);
+	public boolean checkCollision(int x, int y, String dir) {
+		return true; 
 	}
+	
+	//refactoring
+	@Override
+	public void collide() {
+		Player p = getDungeon().getPlayer();
+		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
+			p.pickup(this);
+		}
+	}
+	
+//	public boolean inInventory() {
+//	
+//  }
+
+//public void setInside(Inventory inventory) {
+//    inside = inventory;
+//}
+
+//public Inventory getInside() {
+//	  return inside;
+//}
+	
+	
 }

@@ -6,13 +6,15 @@ public class SingleGoal implements Goal, Observer {
 	private String type;
 	private int goalsSatisfied;
 	private int neededToSatisfy;
-	private int goalPoints;
+	private GoalCriteria goalCriteria;
+	private boolean completed;
 	
-	public SingleGoal(String type, int neededToSatisfy, int gp) {
+	public SingleGoal(String type, int neededToSatisfy, GoalCriteria gc) {
 		this.type = type;
 		this.goalsSatisfied = 0;
 		this.neededToSatisfy = neededToSatisfy;
-		this.goalPoints = gp;
+		this.goalCriteria = gc;
+		this.completed = false;
 	}
 	
 	
@@ -40,6 +42,7 @@ public class SingleGoal implements Goal, Observer {
 		return neededToSatisfy;
 	}
 	
+	@Override
 	public int getGoalsSatisfied() {
 		return goalsSatisfied;
 	}
@@ -61,13 +64,13 @@ public class SingleGoal implements Goal, Observer {
 		if(subjectType.equals("switch")) {
 			FloorSwitch fs = (FloorSwitch)obj;
 			if(fs.getTriggerStatus())
-				goalsSatisfied++;
+				addSatisfied();
 			else if (!fs.getTriggerStatus())
 				goalsSatisfied--;
 		}
 		
 		if(type.equals(subjectType) && !subjectType.equals("switch")) {
-			goalsSatisfied++;
+			addSatisfied();
 		}	
 		
 		checkCompleted();
@@ -80,13 +83,28 @@ public class SingleGoal implements Goal, Observer {
 	public boolean checkCompleted() {
 		if (goalsSatisfied == neededToSatisfy) {
 			return true;
-		}else 
+		}else {
 			return false;
+		}	
 	}
 	
+
+
 	@Override
-	public int getGoalPoints() {
-		return goalPoints;
+	public void setCompleted(Goal g) {
+		// TODO Auto-generated method stub
+		if (checkCompleted())
+			goalCriteria.setCompleted(g);
 	}
 
+
+	@Override
+	public void addSatisfied() {
+		// TODO Auto-generated method stub
+		goalsSatisfied++;
+		
+	}
+
+
+	
 }

@@ -82,12 +82,12 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * depending on player state, enemy will either die from the enemy, or kill the enemy.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
+	public void collide() {
+		Player player = getDungeon().getPlayer();
 		if(player.getState().equals(player.getEmptyHandState()))
 			killPlayer(player);
 		else 
 			dieByPlayer(player);
-		player.move(x, y, direction);
 	}
 	
 	/**
@@ -185,5 +185,14 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	@Override
 	public String getType() {
 		return type;
+	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String direction) {
+		//check the entity that is colliding
+		if(!getDungeon().checkIfBoulder(x, y, direction)) {
+			return false;
+		}
+		return true;
 	}
 }

@@ -1,7 +1,10 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
 
 public class Boulder extends Entity{
+	
+	
 	public Boulder(int x, int y) {
         super(x, y);
     }
@@ -32,7 +35,6 @@ public class Boulder extends Entity{
 		
 		//we have to check if boulder is on a trigger or not
 		//if boulder was previously on trigger, then we need to untrigger the switch if moving of
-		
 		this.setXandY(x, y);
 		checkTrigger(dungeon,x,y);
 	}
@@ -47,7 +49,7 @@ public class Boulder extends Entity{
 		for (Entity e: dungeon.getEntitiesList()) {
 			if(e instanceof FloorSwitch) {
 				if(x == e.getX() && y == e.getY()) {
-					((FloorSwitch)e).setTriggerStatus(dungeon);
+					((FloorSwitch)e).setTriggerStatus();
 					break;
 				}	
 			}
@@ -59,9 +61,37 @@ public class Boulder extends Entity{
 	 * move the boulder, then move the player.
 	 */
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		moveBoulder(x,y,direction,player.getDungeon());
-		player.move(x, y, direction);
+	public void collide() {
+		
 	}
+	
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		int checkX = x;
+		int checkY = y;
+		switch(dir){
+		case"up":
+			checkY -= 1;
+			break;
+		case"down":
+			checkY += 1;
+			break;
+		case"left":
+			checkX -= 1;
+			break;
+		case "right":
+			checkX += 1;
+			break;
+		}
+		ArrayList<Entity> el = getDungeon().getEntityAtLocation(checkX, checkY);
+		for(Entity e: el) {
+			if (e instanceof Boulder || !e.checkCollision(checkX, checkY, dir))
+				return false;
+		}
+		moveBoulder(x,y,dir,getDungeon());
+		return true;
+	}
+	
+	
 	
 }

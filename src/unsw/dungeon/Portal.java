@@ -19,12 +19,12 @@ public class Portal extends Entity implements Immovable{
 	 * @param y
 	 * @param direction
 	 */
-	public void teleport(Player player, Dungeon dungeon , int x, int y, String direction) {
-		for (Entity e : dungeon.getEntitiesList()) {
+	public void teleport() {
+		Player player = getDungeon().getPlayer();
+		for (Entity e : getDungeon().getEntitiesList()) {
 			if (e instanceof Portal && !e.equals(this)) {
 				if (((Portal) e).getPortalID() == portalID) {
-					player.move(x, y, direction);
-					if(!checkBlocked(e.getX(), e.getY(), dungeon)) {
+					if(!checkBlocked(e.getX(), e.getY())) {
 						player.setXandY(e.getX(), e.getY());
 					}
 				}
@@ -39,13 +39,11 @@ public class Portal extends Entity implements Immovable{
 	 * @param dungeon
 	 * @return
 	 */
-	public boolean checkBlocked(int x, int y, Dungeon dungeon) {
+	public boolean checkBlocked(int x, int y) {
 		
-		for(Entity e: dungeon.getEntitiesList()) {
-			if(e instanceof Boulder) {
-				Boulder b = (Boulder)e;
-				if(b.getX() == x && b.getY() == y) return true;
-			}
+		for(Entity e: getDungeon().getEntitiesList()) {
+			if(e.getX() == x && e.getY() == y) return true;
+			
 		}
 		return false;
 	}
@@ -58,7 +56,14 @@ public class Portal extends Entity implements Immovable{
 	}
 
 	@Override
-	public void collide(Player player, int x, int y, String direction) {
-		teleport(player, player.getDungeon(),x,y,direction);
+	public void collide() {
+		Player p = getDungeon().getPlayer();
+		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
+			teleport();
+		}
+	}
+	@Override
+	public boolean checkCollision(int x, int y, String dir) {
+		return true; 
 	}
 }

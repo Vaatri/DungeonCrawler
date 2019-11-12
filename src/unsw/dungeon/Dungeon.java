@@ -3,10 +3,10 @@
  */
 package unsw.dungeon;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 /**
  * A dungeon in the interactive dungeon player.
  *
@@ -16,20 +16,45 @@ import java.util.Optional;
  * @author Robert Clifton-Everest
  *
  */
-public class Dungeon {
+public class Dungeon{
 
-    private int width, height;
+    
+	private int width, height;
     private List<Entity> entities;
     private Player player;
+    String filename;
+    DungeonController dungeonController;
+    
+    public DungeonController getDungeonController() {
+		return dungeonController;
+	}
 
-    public Dungeon(int width, int height) {
+
+	public void setDungeonController(DungeonController dungeonController) {
+		this.dungeonController = dungeonController;
+		System.out.println("dungeon's controller set as " + dungeonController);
+		
+	}
+
+
+
+
+	public Dungeon(int width, int height, String filename) throws FileNotFoundException  {
+    	
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+        this.filename = filename;
+        this.dungeonController = null;
+        System.out.println("Creating dungeon with controller " + dungeonController);
+        
     }
 
-    public int getWidth() {
+
+
+
+	public int getWidth() {
         return width;
     }
 
@@ -152,10 +177,11 @@ public class Dungeon {
     	}
     	return entityList;
     }
-    
+    /*
     public void removeEntityFromMap(Entity e) {
-    	//todo 
-    }
+    	entities.remove(e);
+    	System.out.println("removed "+ e + " from map");
+    }*/
     
     /**
      * return a list of entities from dungeon
@@ -217,8 +243,10 @@ public class Dungeon {
     	return count;
     }
     
-    public void removeEntity(Entity e) {
-    	entities.remove(e);
+    public void removeEntity(Entity e, Player player) throws FileNotFoundException {
+    	System.out.println(dungeonController);
+    	getDungeonController().removeObject(e, player);
     }
+
     
 }

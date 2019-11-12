@@ -15,9 +15,9 @@ public class DungeonApplication extends Application {
         primaryStage.setTitle("Dungeon");
 
         DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
-
-        DungeonController controller = dungeonLoader.loadController();
-
+        
+        DungeonController controller = dungeonLoader.loadController("test.json");
+        dungeonLoader.setDungeonController(controller);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
@@ -26,6 +26,7 @@ public class DungeonApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dungeon Crawlers");
         primaryStage.show();
+        
 
     } 
 

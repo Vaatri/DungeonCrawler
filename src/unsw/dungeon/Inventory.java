@@ -66,7 +66,7 @@ public class Inventory {
 		}
 		
 		/**
-		 * return how much Treasure is in palyer inventory
+		 * return how many Treasure is in player inventory
 		 * @return
 		 */
 		public int howManyTreasure() {

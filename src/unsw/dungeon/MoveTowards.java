@@ -6,7 +6,7 @@ public class MoveTowards implements MoveOption{
 	 * and move towards that direction when player moves.
 	 */
 	public void moveDirection(Player player, Enemy enemy) {
-		int smallest = 100; //fix
+		int smallest = Integer.MAX_VALUE;
 		String direction = "";
 		if ((enemy.distanceUp(player) <= smallest) && enemy.distanceUp(player) >= 0) {
 			smallest = enemy.distanceUp(player);

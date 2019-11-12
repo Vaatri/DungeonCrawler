@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
-public class PlayerDeadState implements PlayerState {
+public class PlayerDeadState {
+//implements PlayerState {
 
 	Player player;
 	

@@ -7,6 +7,20 @@ public class PotionState implements PlayerState{
 		this.player = player;
 		this.potionUsed = potionUsed;
 	}
+	/**
+	 * decrement potion usage
+	 */
+	public void handle() {
+		potionUsed.decrementDuration(player);
+	}
+	/**
+	 * decrements potion usage then kills enemy
+	 */
+	public void metEnemy(Enemy enemy) {
+		potionUsed.decrementDuration(player);
+		enemy.die(player);
+		
+	}
 	@Override
 	public void setPotion(Potion p) {
 		potionUsed = p;
@@ -14,14 +28,5 @@ public class PotionState implements PlayerState{
 	@Override
 	public Potion getPotion() {
 		return potionUsed;
-	}
-	@Override
-	public Sword getSword() {
-		return null;
-	}
-	
-	@Override
-	public void setSword(Sword s) {
-		
 	}
 }

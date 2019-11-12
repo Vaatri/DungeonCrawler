@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
@@ -65,7 +66,7 @@ public class Entity {
 	 * @param y
 	 * @param direction
 	 */
-	public void collide() {
+	public void collide(){
 		
 	}
 	

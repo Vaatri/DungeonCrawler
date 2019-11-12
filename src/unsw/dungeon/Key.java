@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.io.FileNotFoundException;
+
 public class Key extends Entity implements Collectable{
 	
 	private int doorID;
@@ -50,7 +52,12 @@ public class Key extends Entity implements Collectable{
 	public void collide() {
 		Player p = dungeon.getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
-			p.pickUpKey(this);
+			try {
+				p.pickUpKey(this);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			unlockDoor();
 		}
 	}

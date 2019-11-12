@@ -73,7 +73,15 @@ public class DungeonController {
         createObjectives();
 //        createInventory();
     }
-    
+	public void removeObject(Entity entity, Player player) {
+    	Image ground = new Image("/dirt_0_new.png");
+    	Image playerImage = new Image("/human_new.png");
+    	squares.getChildren().remove(entity);
+    	//squares.getChildren().add(null);
+    	squares.add(new ImageView(ground), entity.getX(), entity.getY());
+    	
+    	//squares.add(new ImageView(player), entity.getX(), entity.getY());
+    }
     private void createObjectives() {
   
     	int andRowCount = 0;

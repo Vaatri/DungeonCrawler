@@ -85,19 +85,9 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	public void collide() {
 		Player player = getDungeon().getPlayer();
 		if(!checkPos(getX(),getY(),player.getX(), player.getY())) return;
-		
-		if(player.getState().equals(player.getEmptyHandState()))
-			killPlayer(player);
-		else 
-			dieByPlayer(player);
-	}
-	
-	/**
-	 * if player is empty handed, then player state will be seat to Dead.
-	 * @param player
-	 */
-	public void killPlayer(Player player) {
-			player.setState(player.getPlayerDeadState());
+		// when a player collides with an enemy,
+		// enemy/player will die depending on player's state
+		player.metEnemy(this);
 	}
 	
 	/**
@@ -105,13 +95,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * movement pattern set to Dead.
 	 * @param player
 	 */
-	public void dieByPlayer(Player player) {
+	public void die(Player player) {
 		Dungeon d = player.getDungeon();
 		d.removeEntity(this);
-		this.setMoveOption(new MoveDead());
 		notifyObservers();
-		SwordState ss = (SwordState)player.getSwordState();
-		ss.useSword();
+		System.out.println("You have killed an enemy");
 	}
 	
 	
@@ -150,21 +138,17 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	@Override
 	public void update(Subject obj) {
 		// do something when a player notifies that it has picked up/dropped a potion/ sword
-		if(!(getMoveOption() instanceof MoveDead)) {
-			if (((Player)obj).getState().equals(((Player)obj).getEmptyHandState())) {
-				//setMoveOption(new MoveTowards);
-				this.setMoveOption(new MoveTowards());
-				moveEnemy(((Player)obj));
-			}
-			else if (((Player)obj).getState().equals(((Player)obj).getPotionState())){
-				this.setMoveOption(new MoveAway());
-				moveEnemy(((Player)obj));
-			}
-			else if (((Player)obj).getState().equals(((Player)obj).getSwordState())){
-				this.setMoveOption(new MoveTowards());
-				moveEnemy(((Player)obj));
-			}
+		
+		if (((Player)obj).getState().equals(((Player)obj).getPotionState())){
+			this.setMoveOption(new MoveAway());
+			System.out.println("is moving away");
+			moveEnemy(((Player)obj));
 		}
+		else {
+			this.setMoveOption(new MoveTowards());
+			moveEnemy(((Player)obj));
+		}
+		
 	}
 	
 	@Override

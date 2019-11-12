@@ -99,4 +99,10 @@ public class DungeonTestLoader extends DungeonLoader{
         return new DungeonController(load(), entities);
     }
 
+	@Override
+	public void onLoad(Goal goal) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

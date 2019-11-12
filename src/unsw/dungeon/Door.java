@@ -43,6 +43,7 @@ public class Door extends Entity {
 	 */
 	public boolean isUnlocked() {
 		if(this.state == unlockedState ) {
+			
 			return true;
 		}
 		return false;

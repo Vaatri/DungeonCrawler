@@ -1,5 +1,7 @@
 package unsw.dungeon;
 
+import java.io.FileNotFoundException;
+
 public class Potion extends Entity implements Collectable {
 	
 	private int duration;
@@ -13,8 +15,12 @@ public class Potion extends Entity implements Collectable {
 	 * Every Time player moves within Potion State
 	 * potion duration will decrement.
 	 */
-	public void decrementDuration() {
+	public void decrementDuration(Player player) {
 		duration--;
+		if (emptyPotion()) {
+			player.setState(player.getEmptyHandState());
+			player.notifyObservers();
+		}
 	}
 	
 	/**
@@ -35,8 +41,6 @@ public class Potion extends Entity implements Collectable {
 		return duration;
 	}
 	
-	
-	
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		return true; 
@@ -47,7 +51,12 @@ public class Potion extends Entity implements Collectable {
 	public void collide() {
 		Player p = getDungeon().getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
-			p.pickUpPotion(this);
+			try {
+				p.pickUpPotion(this);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
@@ -13,10 +14,8 @@ public class Player extends Entity implements Immovable,Subject{
     private Dungeon dungeon;
     private Inventory inven;
     private int lives;
-    PlayerState swordState;
     PlayerState potionState;
     PlayerState emptyHandState;
-    PlayerState playerDeadState;
     PlayerState state;
     private ComplexGoal playerGoals;
       
@@ -37,9 +36,7 @@ public class Player extends Entity implements Immovable,Subject{
         this.dungeon = dungeon;
         this.inven = new Inventory();
         this.lives = 4;
-        swordState = new SwordState(this, null);
         potionState = new PotionState(this , null);
-        playerDeadState = new PlayerDeadState(this);
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
         addObserverList();
@@ -56,9 +53,7 @@ public class Player extends Entity implements Immovable,Subject{
 			if (e instanceof Enemy) {
 				registerObserver(((Observer)e));
 			}
-    		
     	}
-    	
     }
     
     /**
@@ -140,19 +135,6 @@ public class Player extends Entity implements Immovable,Subject{
 		
     }
     
-    
-    public PlayerState getPlayerDeadState() {
-    	return playerDeadState;
-    }
-    public void setPlayerDeadState(PlayerState playerDeadState) {
-    	this.playerDeadState = playerDeadState;
-    }
-    public PlayerState getSwordState() {
-		return swordState;
-	}
-	public void setSwordState(PlayerState swordState) {
-		this.swordState = swordState;
-	}
 	public PlayerState getPotionState() {
 		return potionState;
 	}
@@ -208,37 +190,20 @@ public class Player extends Entity implements Immovable,Subject{
      * active time.
      */
     public void stateHandler() {
-    	//if player is currently within a potion state, it will diminish each time
-    	//player takes a step.
-    	if (getState().equals(getPotionState())) {
-			Potion p = state.getPotion();
-			p.decrementDuration();
-			//Depending if the player has a sword or not, it will
-			//return to the appropriate previous state after potion diminished.
-			if (p.emptyPotion()) {
-				if (inven.hasSword()) {
-					setState(getSwordState());
-				}
-				else {
-					setState(getEmptyHandState());
-				}
-//				inven.removeItem(p);
-				notifyObservers();
-			}
-		//A SwordState should never fall back into a PotionState.
-		} else if (getState().equals(getSwordState())) {
-			Sword s = swordState.getSword();
-			if(s.checkAttacksLeft() == 0) {
-				setState(getEmptyHandState());
-//				inven.removeItem(s);
-			}
-		}
+    	// handle player's state
+    	state.handle();
     }
     
+    /**
+     * Depending on the player's state, it will take action upon collision with the enemy
+     * @param enemy
+     */
+    public void metEnemy(Enemy enemy) {
+    	state.metEnemy(enemy);
+    }
     public void setPlayerGoals(ComplexGoal g) {
     	playerGoals = g;
     }
-    
     
     public void removeLife() {
     	lives--;
@@ -256,26 +221,45 @@ public class Player extends Entity implements Immovable,Subject{
 	public void pickUpSword(Sword s) {
 		if(inven.getSword() == null) {
 			inven.setSword(s);
-			dungeon.removeEntity(s);
+			try {
+				dungeon.removeEntity(s, this);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	public void pickUpKey(Key k) {
+	public void pickUpKey(Key k) throws FileNotFoundException {
 		if(inven.getKey() == null) {
 			inven.setKey(k);
-			dungeon.removeEntity(k);
+			dungeon.removeEntity(k, this);
 		}
 	}
-	public void pickUpPotion(Potion p) {
+	/**
+	 * When potion is picked up, it will store potion in the inventory, 
+	 * remove from the map and set its state to potionState
+	 * @param p
+	 * @throws FileNotFoundException 
+	 */
+	public void pickUpPotion(Potion p) throws FileNotFoundException {
 		if(inven.getPotion() == null) {
 			inven.setPotion(p);
-			dungeon.removeEntity(p);
+			dungeon.removeEntity(p, this);
+			potionState = new PotionState(this, p);
+			setState(this.getPotionState());
+			System.out.println("Picked up a potion");
 		}
 	}
 	public void pickUpTreasure(Treasure t) {
-		if(inven.getSword() == null) {
+		//if(inven.getSword() == null) {
 			inven.setTreasure(t);
-			dungeon.removeEntity(t);
-		}
+			try {
+				dungeon.removeEntity(t, this);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		//}
 	}
   
     

@@ -9,12 +9,18 @@ public class Sword extends Entity implements Collectable{
         this.attacksLeft = 5;
     }
 	
-	public void useSword() {
+	public void useSword(Inventory i) {
 		attacksLeft--;
+		if (emptySword()) {
+			i.removeSword();
+		}
 	}
 	
-	public int checkAttacksLeft() {
-		return attacksLeft;
+	public boolean emptySword() {
+		if (attacksLeft == 0) {
+			return true;
+		}
+		return false;
 	}
 	
 	

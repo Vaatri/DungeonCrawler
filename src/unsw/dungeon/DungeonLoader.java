@@ -17,23 +17,34 @@ import org.json.JSONTokener;
  *
  */
 public abstract class DungeonLoader {
+	DungeonController dungeonController;
+	Dungeon dungeon;
+    public DungeonController getDungeonController() {
+		return dungeonController;
+	}
 
-    private JSONObject json;
+	public void setDungeonController(DungeonController dungeonController) {
+		
+	}
+
+	private JSONObject json;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
+        
     }
 
     /**
      * Parses the JSON to create a dungeon.
      * @return
+     * @throws FileNotFoundException 
      */
-    public Dungeon load() {
+    public Dungeon load(String filename) throws FileNotFoundException {
         int width = json.getInt("width");
         int height = json.getInt("height");
-
-        Dungeon dungeon = new Dungeon(width, height);
-
+        
+        Dungeon dungeon = new Dungeon(width, height, filename);
+        //this.dungeon = dungeon;
         JSONArray jsonEntities = json.getJSONArray("entities");
 
         for (int i = 0; i < jsonEntities.length(); i++) {
@@ -42,10 +53,18 @@ public abstract class DungeonLoader {
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
-        
-        
+        //dungeon.setDungeonLoader(this);
+        //dungeon.setDungeonControllerLoader(dungeonControllerLoader);
+        this.dungeon = dungeon;
+        System.out.println("seting loader's dungeon as "+ this.dungeon);
         return dungeon;
     }
+    
+   /*
+    public DungeonController loadController(String filename) throws FileNotFoundException {
+    	System.out.println("shouldnt be here");
+        return null;
+    }*/
     
     /**
      * A handler function that will load all the goals indicated by the JSON file
@@ -144,7 +163,7 @@ public abstract class DungeonLoader {
     		}
     	}
     }
-    
+   
     /**
      * This will return the amount of Entities specified by "type
      * @param type
@@ -278,6 +297,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Sword sword);
     
     public abstract void onLoad(Goal goal);
-    
+
+	
+ 
 
 }

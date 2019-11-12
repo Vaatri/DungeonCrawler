@@ -20,7 +20,7 @@ import javafx.scene.layout.GridPane;
  *
  */
 public class DungeonControllerLoader extends DungeonLoader {
-
+	
     private List<ImageView> entities;
     private List<Label> goals;
     private List<ImageView> playerInventory;
@@ -43,6 +43,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
         super(filename);
+        dungeon = null;
+        this.dungeonController = null;
         entities = new ArrayList<>();
         goals = new ArrayList<>();
         playerInventory = new ArrayList<>();
@@ -132,7 +134,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     	ImageView view = new ImageView(swordImage);
     	addEntity(sword, view);
     }
-
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(view);
@@ -155,6 +156,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private void trackPosition(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
+        
         entity.x().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
@@ -177,9 +179,22 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @return
      * @throws FileNotFoundException
      */
-    public DungeonController loadController() throws FileNotFoundException {
-        return new DungeonController(load(), entities, goals, playerInventory);
+    public DungeonController loadController(String filename) throws FileNotFoundException {
+    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory);
+        return dungeonController;
     }
+    
+
+	public DungeonController getDungeonController() {
+		return dungeonController;
+	}
+
+	public void setDungeonController(DungeonController dungeonController) {
+		this.dungeonController = dungeonController;
+		System.out.println("dungeon loader's controller set as " + dungeonController);
+		this.dungeon.setDungeonController(dungeonController);
+		System.out.println("setting dungeon's controller now...");
+	}
 
 	@Override
 	public void onLoad(Goal goal) {
@@ -212,6 +227,8 @@ public class DungeonControllerLoader extends DungeonLoader {
 			}
 		});
 	}
+
+	
 	
 
 }

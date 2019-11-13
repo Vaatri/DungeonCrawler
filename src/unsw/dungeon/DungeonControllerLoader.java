@@ -81,6 +81,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Treasure treasure) {
     	ImageView view = new ImageView(treasureImage);
     	addEntity(treasure, view);
+    	trackCollectables(treasure, view);
     	addToInventory(view);
     }
     @Override
@@ -123,16 +124,19 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Potion potion) {
     	ImageView view = new ImageView(potionImage);
     	addEntity(potion, view);
+    	trackCollectables(potion, view);
     }
     @Override
     public void onLoad(Key key) {
     	ImageView view = new ImageView(keyImage);
     	addEntity(key, view);
+    	trackCollectables(key, view);
     }
     @Override
     public void onLoad(Sword sword) {
     	ImageView view = new ImageView(swordImage);
     	addEntity(sword, view);
+    	trackCollectables(sword, view);
     }
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
@@ -229,6 +233,16 @@ public class DungeonControllerLoader extends DungeonLoader {
 	}
 
 	
-	
+	private void trackCollectables(Collectable c, Node node) {
+		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					System.out.println("hello");
+					node.setVisible(false);
+				}
+			}
+		});
+	}
 
 }

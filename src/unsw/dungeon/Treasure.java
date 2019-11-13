@@ -68,12 +68,9 @@ public class Treasure extends Entity implements Collectable, Subject{
 		return inInven;
 	}
 	@Override
-	public void setInInvenProp() {
-		inInven.set(true);
+	public void setInInvenProp(boolean b) {
+		inInven.set(b);
 	}
-	@Override
-	public void removeInInvenProp() {
-		inInven.set(false);
-	}
+
 
 }

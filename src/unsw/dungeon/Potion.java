@@ -2,13 +2,18 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Potion extends Entity implements Collectable {
 	
 	private int duration;
+	private BooleanProperty inInventory;
 	
 	public Potion(int x, int y) {
         super(x, y);
         this.duration = 10;
+        this.inInventory = new SimpleBooleanProperty(false);
     }
 	
 	/**
@@ -58,6 +63,25 @@ public class Potion extends Entity implements Collectable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public boolean inInventory() {
+		// TODO Auto-generated method stub
+		return inInventory.getValue();
+	}
+
+	@Override
+	public BooleanProperty inInventoryProp() {
+		// TODO Auto-generated method stub
+		return inInventory;
+	}
+
+	@Override
+	public void setInInvenProp(boolean b) {
+		// TODO Auto-generated method stub
+		this.inInventory.set(b);
+		
 	}
 	
 	

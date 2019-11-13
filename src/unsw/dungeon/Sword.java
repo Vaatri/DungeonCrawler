@@ -1,12 +1,17 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Sword extends Entity implements Collectable{
 	
 	private int attacksLeft;
+	private BooleanProperty inInventory;
 	
 	public Sword(int x, int y) {
         super(x, y);
         this.attacksLeft = 5;
+        this.inInventory = new SimpleBooleanProperty(false);
     }
 	
 	public void useSword(Inventory i) {
@@ -39,5 +44,24 @@ public class Sword extends Entity implements Collectable{
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		return true; 
+	}
+
+	@Override
+	public boolean inInventory() {
+		// TODO Auto-generated method stub
+		return inInventory.get();
+	}
+
+	@Override
+	public BooleanProperty inInventoryProp() {
+		// TODO Auto-generated method stub
+		return inInventory;
+	}
+
+	@Override
+	public void setInInvenProp(boolean b) {
+		// TODO Auto-generated method stub
+		this.inInventory.set(b);
+		
 	}
 }

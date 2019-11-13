@@ -221,18 +221,21 @@ public class Player extends Entity implements Immovable,Subject{
 	public void pickUpSword(Sword s) {
 		if(inven.getSword() == null) {
 			inven.setSword(s);
-			try {
-				dungeon.removeEntity(s, this);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			dungeon.removeEntity(s);
+//			try {
+//				dungeon.removeEntity(s, this);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		}
 	}
 	public void pickUpKey(Key k) throws FileNotFoundException {
 		if(inven.getKey() == null) {
 			inven.setKey(k);
-			dungeon.removeEntity(k, this);
+			dungeon.removeEntity(k);
+			System.out.println("Picked up key");
+//			dungeon.removeEntity(k, this);
 		}
 	}
 	/**
@@ -244,7 +247,8 @@ public class Player extends Entity implements Immovable,Subject{
 	public void pickUpPotion(Potion p) throws FileNotFoundException {
 		if(inven.getPotion() == null) {
 			inven.setPotion(p);
-			dungeon.removeEntity(p, this);
+			dungeon.removeEntity(p);
+//			dungeon.removeEntity(p, this);
 			potionState = new PotionState(this, p);
 			setState(this.getPotionState());
 			System.out.println("Picked up a potion");
@@ -253,12 +257,13 @@ public class Player extends Entity implements Immovable,Subject{
 	public void pickUpTreasure(Treasure t) {
 		//if(inven.getSword() == null) {
 			inven.setTreasure(t);
-			try {
-				dungeon.removeEntity(t, this);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			dungeon.removeEntity(t);
+//			try {
+//				dungeon.removeEntity(t, this);
+//			} catch (FileNotFoundException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 		//}
 	}
   

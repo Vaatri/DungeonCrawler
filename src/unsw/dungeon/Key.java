@@ -2,14 +2,20 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Key extends Entity implements Collectable{
 	
 	private int doorID;
 	private Dungeon dungeon;
+	private BooleanProperty inInventory;
+	
 	public Key(int x, int y, int doorID, Dungeon dung) {
         super(x, y);
         this.doorID = doorID;
         this.dungeon = dung;
+        this.inInventory = new SimpleBooleanProperty(false);
     }
 	
 	public void unlockDoor() {
@@ -65,5 +71,24 @@ public class Key extends Entity implements Collectable{
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		return true; 
+	}
+
+	@Override
+	public boolean inInventory() {
+		// TODO Auto-generated method stub
+		return inInventory.get();
+	}
+
+	@Override
+	public BooleanProperty inInventoryProp() {
+		// TODO Auto-generated method stub
+		return inInventory;
+	}
+
+	@Override
+	public void setInInvenProp(boolean b) {
+		// TODO Auto-generated method stub
+		this.inInventory.set(b);
+		
 	}
 }

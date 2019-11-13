@@ -77,8 +77,9 @@ public class Inventory {
 			return sword;
 		}
 
-		public void setSword(Sword sword) {
-			this.sword = sword;
+		public void setSword(Sword s) {
+			s.setInInvenProp(true);
+			this.sword = s;
 		}
 
 		public int getTreasure() {
@@ -86,7 +87,7 @@ public class Inventory {
 		}
 
 		public void setTreasure(Treasure t) {
-			t.setInInvenProp();
+			t.setInInvenProp(true);
 			this.treasure++;
 		}
 
@@ -94,13 +95,15 @@ public class Inventory {
 			return potion;
 		}
 
-		public void setPotion(Potion potion) {
-			this.potion = potion;
+		public void setPotion(Potion p) {
+			p.setInInvenProp(true);
+			this.potion = p;
 		}
 
 
-		public void setKey(Key key) {
-			this.key = key;
+		public void setKey(Key k) {
+			k.setInInvenProp(true);
+			this.key = k;
 		}
 		
 		public void removeKey() {

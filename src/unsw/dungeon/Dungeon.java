@@ -243,9 +243,8 @@ public class Dungeon{
     	return count;
     }
     
-    public void removeEntity(Entity e, Player player) throws FileNotFoundException {
-    	System.out.println(dungeonController);
-    	getDungeonController().removeObject(e, player);
+    public void removeEntity(Entity e)  {
+    	entities.remove(e);
     }
 
     

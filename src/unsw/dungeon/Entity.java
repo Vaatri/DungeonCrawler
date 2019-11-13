@@ -70,20 +70,20 @@ public class Entity {
 		
 	}
 	
-	public boolean inInventory() {
-		return false;
-	}
-	
-	public BooleanProperty inInventoryProp() {
-		return null;
-	}
-	
-	public void setInInvenProp() {
-		
-	}
-	public void removeInInvenProp() {
-		
-	}
+//	public boolean inInventory() {
+//		return false;
+//	}
+//	
+//	public BooleanProperty inInventoryProp() {
+//		return null;
+//	}
+//	
+//	public void setInInvenProp() {
+//		
+//	}
+//	public void removeInInvenProp() {
+//		
+//	}
 	
 	public boolean checkCollision(int x, int y, String dir) {
 		return false;

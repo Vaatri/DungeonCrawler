@@ -104,6 +104,13 @@ public class DungeonControllerLoader extends DungeonLoader {
     		view = new ImageView(doorImage);
     	}
     	addEntity(door, view);
+    	door.getOpenProp().addListener(new ChangeListener<Boolean>() {
+    		@Override
+    		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+    			if(newValue)
+    				view.setImage(openDoorImage);
+    		}
+    	});
     }
     @Override
     public void onLoad(Boulder boulder) {
@@ -114,6 +121,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Enemy enemy) {
     	ImageView view = new ImageView(enemyImage);
     	addEntity(enemy, view);
+    	trackEnemyDead(enemy, view);
     }
     @Override
     public void onLoad(Exit exit) {
@@ -193,12 +201,6 @@ public class DungeonControllerLoader extends DungeonLoader {
 		return dungeonController;
 	}
 
-	public void setDungeonController(DungeonController dungeonController) {
-		this.dungeonController = dungeonController;
-		System.out.println("dungeon loader's controller set as " + dungeonController);
-		this.dungeon.setDungeonController(dungeonController);
-		System.out.println("setting dungeon's controller now...");
-	}
 
 	@Override
 	public void onLoad(Goal goal) {
@@ -238,7 +240,17 @@ public class DungeonControllerLoader extends DungeonLoader {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
-					System.out.println("hello");
+					node.setVisible(false);
+				}
+			}
+		});
+	}
+	
+	private void trackEnemyDead(Enemy enemy, Node node) {
+		enemy.getDeadProp().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
 					node.setVisible(false);
 				}
 			}

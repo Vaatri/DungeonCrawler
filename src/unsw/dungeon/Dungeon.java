@@ -23,18 +23,6 @@ public class Dungeon{
     private List<Entity> entities;
     private Player player;
     String filename;
-    DungeonController dungeonController;
-    
-    public DungeonController getDungeonController() {
-		return dungeonController;
-	}
-
-
-	public void setDungeonController(DungeonController dungeonController) {
-		this.dungeonController = dungeonController;
-		System.out.println("dungeon's controller set as " + dungeonController);
-		
-	}
 
 
 
@@ -46,8 +34,6 @@ public class Dungeon{
         this.entities = new ArrayList<>();
         this.player = null;
         this.filename = filename;
-        this.dungeonController = null;
-        System.out.println("Creating dungeon with controller " + dungeonController);
         
     }
 
@@ -91,8 +77,6 @@ public class Dungeon{
     		for(int row = 0; row < height; row++) {
     			ArrayList<Entity> entityAtLoc = getEntityAtLocation(col, row);
     			if(entityAtLoc.size()>1) {
-    				System.out.println(entityAtLoc.get(0));
-    				System.out.println(entityAtLoc.get(1));
     				entityAtLoc.get(0).collide();
     				entityAtLoc.get(1).collide();
     			}

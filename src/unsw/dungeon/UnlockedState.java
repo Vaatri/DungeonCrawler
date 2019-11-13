@@ -15,6 +15,7 @@ public class UnlockedState implements DoorState{
      */
     public void react() {
     	door.setState(door.getOpenState());
+    	door.setOpen(true);
     	
     }
 

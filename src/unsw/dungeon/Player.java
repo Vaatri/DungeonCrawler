@@ -222,12 +222,6 @@ public class Player extends Entity implements Immovable,Subject{
 		if(inven.getSword() == null) {
 			inven.setSword(s);
 			dungeon.removeEntity(s);
-//			try {
-//				dungeon.removeEntity(s, this);
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 	}
 	public void pickUpKey(Key k) throws FileNotFoundException {
@@ -251,7 +245,6 @@ public class Player extends Entity implements Immovable,Subject{
 //			dungeon.removeEntity(p, this);
 			potionState = new PotionState(this, p);
 			setState(this.getPotionState());
-			System.out.println("Picked up a potion");
 		}
 	}
 	public void pickUpTreasure(Treasure t) {

@@ -1,6 +1,10 @@
 package unsw.dungeon;
 
 import java.util.List;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import java.util.ArrayList;
 
 public class Enemy extends Entity implements Immovable,Observer, Subject{
@@ -8,12 +12,13 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	MoveOption moveOption;
 	List<Observer> observerList = new ArrayList<Observer>();
 	private String type;
+	private BooleanProperty dead;
 	
 	public Enemy(int x, int y) {
         super(x, y);
-        moveOption = new MoveTowards();
+        this.moveOption = new MoveTowards();
         this.type = "enemy";
-        
+        this.dead = new SimpleBooleanProperty(false);
 	}
 	/**
 	 * this will move the enemy depending on its movement stratergy
@@ -98,6 +103,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	public void die(Player player) {
 		Dungeon d = player.getDungeon();
 		d.removeEntity(this);
+		setDead(true);
 		notifyObservers();
 		System.out.println("You have killed an enemy");
 	}
@@ -180,5 +186,17 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 			return false;
 		}
 		return true;
+	}
+	
+	public BooleanProperty getDeadProp() {
+		return dead;
+	}
+	
+	public boolean getDead() {
+		return dead.get();
+	}
+	
+	public void setDead(boolean b) {
+		this.dead.set(b);
 	}
 }

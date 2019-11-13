@@ -1,5 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Door extends Entity {
 	
 	private int keyID;
@@ -7,6 +10,7 @@ public class Door extends Entity {
 	DoorState unlockedState;
 	DoorState openState;
 	DoorState state;
+	private BooleanProperty open;
 	
 	public Door(int x, int y, int keyID) {
         super(x, y);
@@ -15,6 +19,7 @@ public class Door extends Entity {
         unlockedState = new UnlockedState(this);
         openState = new OpenState(this);
         state = lockedState;
+        this.open = new SimpleBooleanProperty(false);
     }
 	/**
 	 * check if door is locked.
@@ -94,5 +99,17 @@ public class Door extends Entity {
 			return false;
 		}
 		return state.checkCollision();
+	}
+	
+	public BooleanProperty getOpenProp() {
+		return this.open;
+	}
+	
+	public boolean getOpen() {
+		return this.open.get();
+	}
+	
+	public void setOpen(boolean b) {
+		this.open.set(b);
 	}
 }

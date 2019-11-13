@@ -23,7 +23,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 	
     private List<ImageView> entities;
     private List<Label> goals;
-    private List<ImageView> playerInventory;
+    private List<Collectable> playerInventory;
 
     //Images
     private Image playerImage;
@@ -39,6 +39,10 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image keyImage;
     private Image swordImage;
     private Image openDoorImage;
+    private int nTreasures;
+    private int nPotions;
+    private int nSwords;
+    private int nKeys;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -63,7 +67,6 @@ public class DungeonControllerLoader extends DungeonLoader {
         keyImage = new Image("/key.png");
         swordImage = new Image("/greatsword_1_new.png");
         openDoorImage = new Image("/open_door.png");
-        
     }
 
     @Override
@@ -81,8 +84,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Treasure treasure) {
     	ImageView view = new ImageView(treasureImage);
     	addEntity(treasure, view);
-    	trackCollectables(treasure, view);
-    	addToInventory(view);
+    	ImageView inventoryView = new ImageView(potionImage);
+    	trackCollectables(treasure, view, inventoryView);
+    	inventoryView.setVisible(false);
+    	addToInventory(treasure);
+    	nTreasures++;
     }
     @Override
     public void onLoad(Portal portal) {
@@ -131,28 +137,40 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Potion potion) {
     	ImageView view = new ImageView(potionImage);
+    	ImageView inventoryView = new ImageView(potionImage);
+    	inventoryView.setVisible(false);
+    	addToInventory(potion);
     	addEntity(potion, view);
-    	trackCollectables(potion, view);
+    	trackCollectables(potion, view, inventoryView);
+    	nPotions++;
     }
     @Override
     public void onLoad(Key key) {
     	ImageView view = new ImageView(keyImage);
+    	ImageView inventoryView = new ImageView(potionImage);
+    	inventoryView.setVisible(false);
+    	addToInventory(key);
     	addEntity(key, view);
-    	trackCollectables(key, view);
+    	trackCollectables(key, view, inventoryView);
+    	nKeys++;
     }
     @Override
     public void onLoad(Sword sword) {
     	ImageView view = new ImageView(swordImage);
+    	ImageView inventoryView = new ImageView(potionImage);
+    	inventoryView.setVisible(false);
+    	addToInventory(sword);
     	addEntity(sword, view);
-    	trackCollectables(sword, view);
+    	trackCollectables(sword, view, inventoryView);
+    	nSwords++;
     }
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
         entities.add(view);
     }
     
-    private void addToInventory(ImageView view) {
-    	playerInventory.add(view);
+    private void addToInventory(Collectable c) {
+    	playerInventory.add(c);
     }
 
     /**
@@ -235,12 +253,13 @@ public class DungeonControllerLoader extends DungeonLoader {
 	}
 
 	
-	private void trackCollectables(Collectable c, Node node) {
+	private void trackCollectables(Collectable c, Node dungeonNode, Node inventoryNode) {
 		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
-					node.setVisible(false);
+					dungeonNode.setVisible(false);
+					inventoryNode.setVisible(true);
 				}
 			}
 		});

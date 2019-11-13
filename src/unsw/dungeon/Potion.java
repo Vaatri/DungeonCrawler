@@ -25,6 +25,8 @@ public class Potion extends Entity implements Collectable {
 		if (emptyPotion()) {
 			player.setState(player.getEmptyHandState());
 			player.notifyObservers();
+			player.getInventory().removePotion();
+			setInInvenProp(false);
 		}
 	}
 	

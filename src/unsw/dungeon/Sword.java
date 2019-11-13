@@ -5,12 +5,14 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 public class Sword extends Entity implements Collectable{
 	
+//	private IntegerProperty attacksLeft;
 	private int attacksLeft;
 	private BooleanProperty inInventory;
 	
 	public Sword(int x, int y) {
         super(x, y);
         this.attacksLeft = 5;
+//        this.attacksLeft = new SimpleIntegerProperty(true);
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
@@ -18,6 +20,8 @@ public class Sword extends Entity implements Collectable{
 		attacksLeft--;
 		if (emptySword()) {
 			i.removeSword();
+			setInInvenProp(false);
+			
 		}
 	}
 	

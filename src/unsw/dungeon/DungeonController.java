@@ -3,6 +3,9 @@ package unsw.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -43,13 +46,13 @@ public class DungeonController {
     private List<ImageView> initialEntities;
     
     private List<Label> dungeonGoals;
-    private List<ImageView> playerInventory;
+    private List<Collectable> playerInventory;
 
     private Player player;
 
     private Dungeon dungeon;
 
-    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals, List<ImageView> playerInventory) {
+    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals, List<Collectable> playerInventory) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
@@ -72,7 +75,7 @@ public class DungeonController {
             squares.getChildren().add(entity);
         
         createObjectives();
-//        createInventory();
+        createInventory();
     }
 	public void removeObject(Entity entity, Player player) {
     	Image ground = new Image("/dirt_0_new.png");
@@ -106,26 +109,77 @@ public class DungeonController {
     }
     
     private void createInventory() {
-    	ImageView treasureImage = new ImageView(new Image("/gold_pile.png"));
-    	ImageView potionImage = new ImageView (new Image("/bubbly.png"));
-        ImageView keyImage = new ImageView(new Image("/key.png"));
-        ImageView swordImage = new ImageView(new Image("/greatsword_1_new.png"));
-        int treasureCount = 0;
-        int potionCount = 0;
-        int keyCount = 0;
-        int swordCount = 0;
-    	for(ImageView items: playerInventory) {
-    		if(items == treasureImage) 
-    			inventory.add(treasureImage, treasureCount++, 3);
-    		if(items == potionImage)
-    			inventory.add(potionImage, potionCount++, 1);
-    		if(items == swordImage)
-    			inventory.add(swordImage, swordCount++, 0);
-    		if(items == keyImage)
-    			inventory.add(keyImage, keyCount, 2);
-    		inventory.getChildren().add(items);
-    	}
+    	Inventory playerInven = player.getInventory();
+    	createSwordSlot(playerInven.hasSwordProp());
+    	createKeySlot(playerInven.hasKeyProp());
+    	createPotionSlot(playerInven.hasPotionProp());
+    	createTreasureSlot(playerInven.hasTreasureProp());
     }
+    
+    private void createSwordSlot(BooleanProperty bp) {
+    	ImageView swordImage = new ImageView(new Image("/greatsword_1_new.png"));
+    	inventory.add(swordImage, 0, 0);
+    	swordImage.setVisible(false);
+    	bp.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					swordImage.setVisible(true);
+				} else {
+					swordImage.setVisible(false);
+				}
+			}
+		});
+    }
+    private void createKeySlot(BooleanProperty bp) {
+    	ImageView keyImage = new ImageView(new Image("/key.png"));
+		bp.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					keyImage.setVisible(true);
+				} else {
+					keyImage.setVisible(false);
+				}
+			}
+		});
+    	keyImage.setVisible(false);
+    	inventory.add(keyImage, 0, 2);
+    }
+    
+    private void createPotionSlot(BooleanProperty bp) {
+		ImageView potionImage = new ImageView (new Image("/bubbly.png"));
+		bp.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					potionImage.setVisible(true);
+				} else {
+					potionImage.setVisible(false);
+				}
+			}
+		});
+		potionImage.setVisible(false);
+		inventory.add(potionImage, 0, 1);	
+    }
+    
+    private void createTreasureSlot(BooleanProperty bp) {
+    	ImageView treasureImage = new ImageView(new Image("/gold_pile.png"));
+		bp.addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					treasureImage.setVisible(true);
+				} else {
+					treasureImage.setVisible(false);
+				}
+			}
+		});
+    	treasureImage.setVisible(false);
+    	inventory.add(treasureImage, 0, 3);
+    }
+    
+    
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
@@ -147,5 +201,85 @@ public class DungeonController {
         }
     }
 
+//    private void linkSwordImage() {
+//    	ImageView swordImage = new ImageView(new Image("/greatsword_1_new.png"));
+//    	for(Collectable c: playerInventory) {
+//    		if (c instanceof Sword) {
+//    			c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+//    				@Override
+//    				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//    					if(newValue) {
+//    						swordImage.setVisible(true);
+//    					} else {
+//    						swordImage.setVisible(false);
+//    					}
+//    				}
+//    			});
+//    		}
+//    	}
+//    	inventory.add(swordImage, 0, 0);
+//    	swordImage.setVisible(false);
+//    }
+//    
+//    private void linkPotionImage() {
+//    	ImageView potionImage = new ImageView (new Image("/bubbly.png"));
+//    	for(Collectable c: playerInventory) {
+//    		if (c instanceof Potion) {
+//    			c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+//    				@Override
+//    				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//    					if(newValue) {
+//    						potionImage.setVisible(true);
+//    					} else {
+//    						potionImage.setVisible(false);
+//    					}
+//    				}
+//    			});
+//    		}
+//    	}
+//    	potionImage.setVisible(false);
+//    	inventory.add(potionImage, 0, 1);
+//    }
+//    
+//    private void linkKeyImage() {
+//    	ImageView keyImage = new ImageView(new Image("/key.png"));
+//    	for(Collectable c: playerInventory) {
+//    		if (c instanceof Key) {
+//    			c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+//    				@Override
+//    				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//    					if(newValue) {
+//    						keyImage.setVisible(true);
+//    					} else {
+//    						keyImage.setVisible(false);
+//    					}
+//    				}
+//    			});
+//    		}
+//    	}
+//    	keyImage.setVisible(false);
+//    	inventory.add(keyImage, 0, 2);
+//    }
+//    
+//    private void linkTreasureImage() {
+//    	ImageView treasureImage = new ImageView(new Image("/gold_pile.png"));
+//    	for(Collectable c: playerInventory) {
+//    		if (c instanceof Treasure) {
+//    			c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+//    				@Override
+//    				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+//    					if(newValue) {
+//    						treasureImage.setVisible(true);
+//    					} else {
+//    						treasureImage.setVisible(false);
+//    					}
+//    				}
+//    			});
+//    		}
+//    	}
+//    
+//    	treasureImage.setVisible(false);
+//    	inventory.add(treasureImage, 0, 3);
+//    }
 }
 

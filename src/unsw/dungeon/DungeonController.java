@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
@@ -76,11 +77,20 @@ public class DungeonController {
 	public void removeObject(Entity entity, Player player) {
     	Image ground = new Image("/dirt_0_new.png");
     	Image playerImage = new Image("/human_new.png");
-    	squares.getChildren().remove(entity);
-    	//squares.getChildren().add(null);
-    	squares.add(new ImageView(ground), entity.getX(), entity.getY());
-    	
-    	//squares.add(new ImageView(player), entity.getX(), entity.getY());
+    	int first= 0 ;
+    	for (Node child: squares.getChildren()) {
+    		if ((squares.getColumnIndex(child) == entity.getX()) && (squares.getRowIndex(child) == entity.getY())) {
+				
+    			if (first == 0) {
+    				first = 1;
+    			}
+    			else {
+    				System.out.println("the right one " + child);
+    				squares.getChildren().remove(child);
+        			return;
+    			}
+    		}
+    	}
     }
     private void createObjectives() {
   

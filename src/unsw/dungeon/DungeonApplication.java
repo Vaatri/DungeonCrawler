@@ -16,8 +16,7 @@ public class DungeonApplication extends Application {
 
         DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
         
-        DungeonController controller = dungeonLoader.loadController("test.json");
-        dungeonLoader.setDungeonController(controller);
+        DungeonController controller = dungeonLoader.loadController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();

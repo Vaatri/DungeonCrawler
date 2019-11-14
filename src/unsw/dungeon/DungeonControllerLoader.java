@@ -47,8 +47,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
         super(filename);
-        dungeon = null;
-        this.dungeonController = null;
         entities = new ArrayList<>();
         goals = new ArrayList<>();
         playerInventory = new ArrayList<>();
@@ -209,15 +207,11 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @return
      * @throws FileNotFoundException
      */
-    public DungeonController loadController(String filename) throws FileNotFoundException {
-    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory);
-        return dungeonController;
+    public DungeonController loadController() throws FileNotFoundException {
+    	
+        return new DungeonController(load(), entities, goals, playerInventory);
     }
     
-
-	public DungeonController getDungeonController() {
-		return dungeonController;
-	}
 
 
 	@Override

@@ -22,18 +22,16 @@ public class Dungeon{
 	private int width, height;
     private List<Entity> entities;
     private Player player;
-    String filename;
 
 
 
 
-	public Dungeon(int width, int height, String filename) throws FileNotFoundException  {
+	public Dungeon(int width, int height){
     	
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
-        this.filename = filename;
         
     }
 
@@ -133,7 +131,7 @@ public class Dungeon{
 		case "right":
 			checkX -= 1;
 		}
-		//get the enttity that is colliding
+		//get the entity that is colliding
 		ArrayList<Entity> el = getEntityAtLocation(checkX, checkY);
 		for(Entity e: el) {
 			if(e instanceof Boulder) {

@@ -44,7 +44,6 @@ public abstract class DungeonLoader {
         int height = json.getInt("height");
         
         Dungeon dungeon = new Dungeon(width, height, filename);
-        //this.dungeon = dungeon;
         JSONArray jsonEntities = json.getJSONArray("entities");
 
         for (int i = 0; i < jsonEntities.length(); i++) {
@@ -53,10 +52,7 @@ public abstract class DungeonLoader {
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
-        //dungeon.setDungeonLoader(this);
-        //dungeon.setDungeonControllerLoader(dungeonControllerLoader);
         this.dungeon = dungeon;
-        System.out.println("seting loader's dungeon as "+ this.dungeon);
         return dungeon;
     }
     
@@ -87,10 +83,10 @@ public abstract class DungeonLoader {
     	}
     	
     	dungeon.getPlayer().setPlayerGoals((ComplexGoal)cG);
-    	
+    	trackLevelGoal((ComplexGoal)cG);
     	
     }
-    
+
     /**
      * This function will handle single goals
      * @param dungeon
@@ -277,8 +273,12 @@ public abstract class DungeonLoader {
         }
         entity.setDungeon(dungeon);
         dungeon.addEntity(entity);
+       
     }
+    
 
+    
+    
     public abstract void onLoad(Entity player);
 
     public abstract void onLoad(Wall wall);
@@ -295,8 +295,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Potion potion);
     public abstract void onLoad(Key key);
     public abstract void onLoad(Sword sword);
-    
     public abstract void onLoad(Goal goal);
+    public abstract void trackLevelGoal(ComplexGoal g);
 
 	
  

@@ -13,7 +13,6 @@ public class Sword extends Entity implements Collectable{
 	public Sword(int x, int y) {
         super(x, y);
         this.attacksLeft = new SimpleIntegerProperty(5);
-//        this.attacksLeft = new SimpleIntegerProperty(true);
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
@@ -23,6 +22,9 @@ public class Sword extends Entity implements Collectable{
 			i.removeSword();
 			setInInvenProp(false);
 		}
+	}
+	public IntegerProperty getAttacksLeftProp() {
+		return attacksLeft;
 	}
 	
 	public boolean emptySword() {

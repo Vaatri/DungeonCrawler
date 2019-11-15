@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class ComplexGoal implements Goal {
@@ -14,6 +15,7 @@ public class ComplexGoal implements Goal {
 	private IntegerProperty AndGoalsSatisfied;
 	private IntegerProperty totalAndGoals;
 	private boolean OrSatisfied;
+	private BooleanProperty completed;
 	
 	/**
 	 * Complex goal contains a list of single goals
@@ -28,6 +30,7 @@ public class ComplexGoal implements Goal {
 		this.AndGoalsSatisfied = new SimpleIntegerProperty(0);
 		this.OrSatisfied = false;
 		this.totalAndGoals = new SimpleIntegerProperty(0);
+		this.completed = new SimpleBooleanProperty(false);
 	}
 
 	public List<Goal> getGoalList(){
@@ -64,12 +67,17 @@ public class ComplexGoal implements Goal {
 			g.setCompleted(this);
 		}
 		
-		if(totalAndGoals == AndGoalsSatisfied && OrSatisfied)
+		if(totalAndGoals.get() == AndGoalsSatisfied.get() && OrSatisfied) {
+			completed.set(true);
 			return true;
+		}	
 		
 		return false;
 	}
 
+	public BooleanProperty getCompletedProp() {
+		return completed;
+	}
 	@Override
 	public void setNeededToSatisfy(int i) {
 		// TODO Auto-generated method stub
@@ -91,7 +99,7 @@ public class ComplexGoal implements Goal {
 	@Override
 	public void addSatisfied() {
 		// TODO Auto-generated method stub
-		AndGoalsSatisfied.add(getGoalsSatisfied()+1);
+		AndGoalsSatisfied.set(getGoalsSatisfied()+1);
 	}
 
 	@Override

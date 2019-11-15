@@ -91,4 +91,5 @@ public class Key extends Entity implements Collectable{
 		this.inInventory.set(b);
 		
 	}
+
 }

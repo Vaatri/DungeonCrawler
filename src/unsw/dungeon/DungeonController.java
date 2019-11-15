@@ -69,14 +69,20 @@ public class DungeonController {
 
     private Dungeon dungeon;
     
+    private String levelFile;
+    
+    
 
-    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals, List<Collectable> playerInventory, Stage stage) {
+    public DungeonController(Dungeon dungeon, List<ImageView> initialEntities, List<Label> dungeonGoals, List<Collectable> playerInventory, Stage stage, String levelFile) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.initialEntities = new ArrayList<>(initialEntities);
         this.dungeonGoals = new ArrayList<>(dungeonGoals);
         this.stage = stage;
+        this.levelFile = levelFile;
     }
+    
+
 
     @FXML
     public void initialize() {
@@ -96,6 +102,7 @@ public class DungeonController {
         createObjectives();
         createInventory();
         createLivesLabel();
+        player.addObserverList();
     }
     private void createObjectives() {
   
@@ -260,17 +267,18 @@ public class DungeonController {
     
     @FXML
     public void handleResetButton(ActionEvent resetButtonPress) throws IOException {
-    	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test2.json");
-        
-        DungeonController controller = dungeonLoader.loadController("test2.json");
+    	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(levelFile);
+		dungeonLoader.setStage(stage);
+        DungeonController controller = dungeonLoader.loadController(levelFile);
         dungeonLoader.setDungeonController(controller);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         root.requestFocus();
+        System.out.println(stage);
+        System.out.println(scene);
         stage.setScene(scene);
-        stage.setTitle("Dungeon Crawlers");
         stage.show();
     }
 

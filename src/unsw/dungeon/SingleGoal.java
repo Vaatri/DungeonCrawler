@@ -85,6 +85,7 @@ public class SingleGoal implements Goal, Observer {
 				goalsSatisfied.set(getGoalsSatisfied() - 1);
 		}
 		
+		System.out.println(type+" "+subjectType);
 		if(type.equals(subjectType) && !subjectType.equals("switch")) {
 			addSatisfied();
 		}	
@@ -97,7 +98,7 @@ public class SingleGoal implements Goal, Observer {
 	 */
 	@Override
 	public boolean checkCompleted() {
-		if (goalsSatisfied == neededToSatisfy) {
+		if (goalsSatisfied.get() == neededToSatisfy.get()) {
 			return true;
 		}else {
 			return false;

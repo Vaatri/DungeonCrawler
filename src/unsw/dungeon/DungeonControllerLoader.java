@@ -7,6 +7,7 @@ import java.util.List;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -26,6 +27,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     private List<Label> goals;
     private List<Collectable> playerInventory;
     private Stage stage;
+    private WinScreen winScreen;
+    
     
     //Images
     private Image playerImage;
@@ -212,7 +215,7 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @throws FileNotFoundException
      */
     public DungeonController loadController(String filename) throws FileNotFoundException {
-    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory, this.stage);
+    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory, this.stage,filename);
         return dungeonController;
     }
     
@@ -277,5 +280,22 @@ public class DungeonControllerLoader extends DungeonLoader {
 			}
 		});
 	}
+	
+	@Override
+	public void trackLevelGoal(ComplexGoal g) {
+		g.getCompletedProp().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					System.out.println("hello");
+					winScreen.start();
+				}
+			}
+		});
+	}
+	
+    public void setWinScreen(WinScreen ws) {
+    	winScreen = ws;
+    }
 
 }

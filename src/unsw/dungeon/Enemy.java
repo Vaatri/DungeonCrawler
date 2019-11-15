@@ -105,7 +105,6 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		d.removeEntity(this);
 		setDead(true);
 		notifyObservers();
-		System.out.println("You have killed an enemy");
 	}
 	
 	
@@ -147,7 +146,6 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		
 		if (((Player)obj).getState().equals(((Player)obj).getPotionState())){
 			this.setMoveOption(new MoveAway());
-			System.out.println("is moving away");
 			moveEnemy(((Player)obj));
 		}
 		else {

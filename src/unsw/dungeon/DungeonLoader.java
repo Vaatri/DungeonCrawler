@@ -56,7 +56,6 @@ public abstract class DungeonLoader {
         //dungeon.setDungeonLoader(this);
         //dungeon.setDungeonControllerLoader(dungeonControllerLoader);
         this.dungeon = dungeon;
-        System.out.println("seting loader's dungeon as "+ this.dungeon);
         return dungeon;
     }
     
@@ -87,10 +86,10 @@ public abstract class DungeonLoader {
     	}
     	
     	dungeon.getPlayer().setPlayerGoals((ComplexGoal)cG);
-    	
+    	trackLevelGoal((ComplexGoal)cG);
     	
     }
-    
+
     /**
      * This function will handle single goals
      * @param dungeon
@@ -295,8 +294,8 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Potion potion);
     public abstract void onLoad(Key key);
     public abstract void onLoad(Sword sword);
-    
     public abstract void onLoad(Goal goal);
+    public abstract void trackLevelGoal(ComplexGoal g);
 
 	
  

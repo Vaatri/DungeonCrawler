@@ -164,13 +164,22 @@ public class DungeonController {
     		usageCountLabel.setVisible(true);
     	}
     }
-    
+    public Image keyIm(int i) {
+    	if(i==1)return new Image("/key1.png");
+    	if(i==2)return new Image("/key2.png");
+    	if(i==3)return new Image("/key3.png");
+    	return new Image("/key4.png");
+    }
     private void createKeySlot(BooleanProperty bp) {
-    	ImageView keyImage = new ImageView(new Image("/key.png"));
+    	ImageView keyImage = new ImageView(new Image("/key1.png"));
+    	//System.out.println("this is key id " + this.dungeon.;
+    	//keyImage = new ImageView(keyIm(key.getID()));
+    	
 		bp.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
+					//keyImage = new ImageView(keyIm(dungeon.getPlayer().getKeyID()));
 					keyImage.setVisible(true);
 				} else {
 					keyImage.setVisible(false);

@@ -37,14 +37,23 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image treasureImage;
     private Image portalImage;
     private Image floorSwitchImage;
-    private Image doorImage;
+    private Image doorImage1;
+    private Image doorImage2;
+    private Image doorImage3;
+    private Image doorImage4;
     private Image boulderImage;
     private Image enemyImage;
     private Image exitImage;
     private Image potionImage;
-    private Image keyImage;
+    private Image keyImage1;
+    private Image keyImage2;
+    private Image keyImage3;
+    private Image keyImage4;
     private Image swordImage;
-    private Image openDoorImage;
+    private Image openDoorImage1;
+    private Image openDoorImage2;
+    private Image openDoorImage3;
+    private Image openDoorImage4;
     private Image healthPotionImage;
 
     public DungeonControllerLoader(String filename)
@@ -60,15 +69,24 @@ public class DungeonControllerLoader extends DungeonLoader {
         treasureImage = new Image("/gold_pile.png");
         portalImage = new Image("/portal.png");
         floorSwitchImage = new Image("/pressure_plate.png");
-        doorImage = new Image("/closed_door.png");
+        doorImage1 = new Image("/closed_door1.png");
+        doorImage2 = new Image("/closed_door2.png");
+        doorImage3 = new Image("/closed_door3.png");
+        doorImage4 = new Image("/closed_door4.png");
         boulderImage = new Image("/boulder.png");
         enemyImage = new Image("/deep_elf_master_archer.png");
         exitImage = new Image("/exit.png");
         healthPotionImage = new Image("/brilliant_blue_new.png");
         potionImage = new Image("/bubbly.png");
-        keyImage = new Image("/key.png");
+        keyImage1 = new Image("/key1.png");
+        keyImage2 = new Image("/key2.png");
+        keyImage3 = new Image("/key3.png");
+        keyImage4 = new Image("/key4.png");
         swordImage = new Image("/greatsword_1_new.png");
-        openDoorImage = new Image("/open_door.png");
+        openDoorImage1 = new Image("/open_door1.png");
+        openDoorImage2 = new Image("/open_door2.png");
+        openDoorImage3 = new Image("/open_door3.png");
+        openDoorImage4 = new Image("/open_door4.png");
     }
     
     public void setStage(Stage stage) {
@@ -113,19 +131,32 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Door door) {
     	ImageView view;
     	if(door.getState().equals(door.getOpenState())) {
-    		view = new ImageView(openDoorImage);
+    		view = new ImageView(openIm(door.getID()));
     	}
     	else {
-    		view = new ImageView(doorImage);
+    		view = new ImageView(closedIm(door.getID()));
     	}
     	addEntity(door, view);
     	door.getOpenProp().addListener(new ChangeListener<Boolean>() {
     		@Override
     		public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-    			if(newValue)
-    				view.setImage(openDoorImage);
+    			if(newValue) {
+    				view.setImage(openIm(door.getID()));
+    			}
     		}
     	});
+    }
+    public Image openIm(int i) {
+	    if(i == 1)return openDoorImage1;
+		if(i==2) return openDoorImage2;
+		if(i==3)return openDoorImage3;
+		return openDoorImage4;
+    }
+    public Image closedIm(int i) {
+    	if(i == 1)return doorImage1;
+ 		if(i==2) return doorImage2;
+ 		if(i==3)return doorImage3;
+ 		return doorImage4;
     }
     @Override
     public void onLoad(Boulder boulder) {
@@ -161,12 +192,18 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
     @Override
     public void onLoad(Key key) {
-    	ImageView view = new ImageView(keyImage);
-    	ImageView inventoryView = new ImageView(potionImage);
+    	ImageView view = new ImageView(keyIm(key.getID()));
+    	ImageView inventoryView = new ImageView(keyIm(key.getID()));
     	inventoryView.setVisible(false);
     	addToInventory(key);
     	addEntity(key, view);
     	trackCollectables(key, view, inventoryView);
+    }
+    public Image keyIm(int i) {
+    	if(i == 1)return keyImage1;
+    	if(i==2) return keyImage2;
+    	if(i==3)return keyImage3;
+    	return keyImage4;
     }
     @Override
     public void onLoad(Sword sword) {

@@ -255,18 +255,23 @@ public class Player extends Entity implements Immovable,Subject{
     public String getType() {
     	return "";
     }
-	
+	public int getKeyID() {
+		return this.inven.getKey().getID();
+	}
 	public void pickUpSword(Sword s) {
 		if(inven.getSword() == null) {
 			inven.setSword(s);
 			dungeon.removeEntity(s);
 		}
 	}
-	public void pickUpKey(Key k) throws FileNotFoundException {
+	public boolean pickUpKey(Key k) throws FileNotFoundException {
 		if(inven.getKey() == null) {
+			System.out.println("first time picking up key");
 			inven.setKey(k);
 			dungeon.removeEntity(k);
+			return true;
 		}
+		return false;
 	}
 	/**
 	 * When potion is picked up, it will store potion in the inventory, 
@@ -295,6 +300,5 @@ public class Player extends Entity implements Immovable,Subject{
 			dungeon.removeEntity(t);
 
 	}
-  
     
 }

@@ -40,14 +40,14 @@ public class TutorialController {
         treasureImage = new ImageView(new Image("/gold_pile.png"));
         portalImage = new ImageView(new Image("/portal.png"));
         floorSwitchImage = new ImageView(new Image("/pressure_plate.png"));
-        doorImage = new ImageView(new Image("/closed_door.png"));
+        doorImage = new ImageView(new Image("/closed_door1.png"));
         boulderImage = new ImageView(new Image("/boulder.png"));
         enemyImage = new ImageView(new Image("/deep_elf_master_archer.png"));
         exitImage = new ImageView(new Image("/exit.png"));
         potionImage = new ImageView(new Image("/bubbly.png"));
-        keyImage = new ImageView(new Image("/key.png"));
+        keyImage = new ImageView(new Image("/key1.png"));
         swordImage = new ImageView(new Image("/greatsword_1_new.png"));
-        openDoorImage = new ImageView(new Image("/open_door.png"));
+        openDoorImage = new ImageView(new Image("/open_door1.png"));
 	}
 	
 	

@@ -8,6 +8,9 @@ public class MoveTowards implements MoveOption{
 	public void moveDirection(Player player, Enemy enemy) {
 		int smallest = Integer.MAX_VALUE;
 		String direction = "";
+		if (enemy.distanceOnSpot(player) == 0) {
+			return;
+		}
 		if ((enemy.distanceUp(player) <= smallest) && enemy.distanceUp(player) >= 0) {
 			smallest = enemy.distanceUp(player);
 			direction = "up";

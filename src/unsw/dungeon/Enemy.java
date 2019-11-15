@@ -21,7 +21,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
         this.dead = new SimpleBooleanProperty(false);
 	}
 	/**
-	 * this will move the enemy depending on its movement stratergy
+	 * this will move the enemy depending on its movement strategy
 	 * @param player
 	 */
 	public void moveEnemy(Player player) {
@@ -41,7 +41,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * @return
 	 */
 	public int distanceUp(Player player) {
-		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "up", null)) {
+		if (player.getDungeon().checkAdjacentEnemy(this.getX(), this.getY(), "up")) {
 			return -1;
 		}
 		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - (this.getY()-1)));
@@ -53,7 +53,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * @return
 	 */
 	public int distanceDown(Player player) { 
-		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "down", null)) {
+		if (player.getDungeon().checkAdjacentEnemy(this.getX(), this.getY(), "down")) {
 			return -1;
 		}
 		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - (this.getY()+1)));
@@ -65,7 +65,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * @return
 	 */
 	public int distanceLeft(Player player) { 
-		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "left", null)) {
+		if (player.getDungeon().checkAdjacentEnemy(this.getX(), this.getY(), "left")) {
 			return -1;
 		}
 		return(Math.abs(player.getX() - (this.getX()-1)) + Math.abs(player.getY() - this.getY()));
@@ -77,10 +77,14 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	 * @return
 	 */
 	public int distanceRight(Player player) {
-		if (player.getDungeon().checkAdjacent(this.getX(), this.getY(), "right", null)) {
+		if (player.getDungeon().checkAdjacentEnemy(this.getX(), this.getY(), "right")) {
 			return -1;
 		}
 		return(Math.abs(player.getX() - (this.getX()+1)) + Math.abs(player.getY() - this.getY()));
+	}
+	public int distanceOnSpot(Player player) {
+	
+		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - this.getY()));
 	}
 	
 	/**
@@ -182,6 +186,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	@Override
 	public boolean checkCollision(int x, int y, String direction) {
 		//check the entity that is colliding
+		
 		if(!getDungeon().checkIfBoulder(x, y, direction)) {
 			return false;
 		}

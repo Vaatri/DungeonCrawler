@@ -163,26 +163,37 @@ public class Player extends Entity implements Immovable,Subject{
      * @param direction
      */
     public void move(int x, int y, String direction) {
-		notifyObservers();
+
 		stateHandler();
     	switch(direction) {
 		case("up"):
-			if (getY() > 0)
-	            y().set(getY() - 1);
+			System.out.println("get y "+ getY());
+			if (getY() > 0) {
+	        	y().set(getY() - 1);
+				notifyObservers();
+			}
 			return;
 		case("down"):
-	        if (getY() < dungeon.getHeight() - 1)
+	        if (getY() < dungeon.getHeight() - 1) {
 	            y().set(getY() + 1);
+				notifyObservers();
+	        }
 			return;
 		case("left"):
-			if (getX() > 0)
+			if (getX() > 0) {
 	            x().set(getX() - 1);
+				notifyObservers();
+			}
 			return;
 		case("right"):
-			if (getX() < dungeon.getWidth() - 1)
+			if (getX() < dungeon.getWidth() - 1) {
 	            x().set(getX() + 1);
+				notifyObservers();
+			}
 			return;
 		}
+    	
+		return;
     }
     
     /**

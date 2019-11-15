@@ -1,15 +1,21 @@
 package unsw.dungeon;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
-public class Door extends Entity {
+public class Door extends Entity implements Subject {
 	
+	
+	private List<Observer> observers = new ArrayList<Observer>();
 	private int keyID;
 	DoorState lockedState;
 	DoorState unlockedState;
 	DoorState openState;
 	DoorState state;
+	private Key key;
 	private BooleanProperty open;
 	
 	public Door(int x, int y, int keyID) {
@@ -20,6 +26,7 @@ public class Door extends Entity {
         openState = new OpenState(this);
         state = lockedState;
         this.open = new SimpleBooleanProperty(false);
+        this.key = null;
     }
 	/**
 	 * check if door is locked.
@@ -111,5 +118,30 @@ public class Door extends Entity {
 	
 	public void setOpen(boolean b) {
 		this.open.set(b);
+	}
+	
+	public void setKey(Key k) {
+		key = k;
+	}
+	@Override
+	public void registerObserver(Observer o) {
+		// TODO Auto-generated method stub
+		observers.add(o);
+		
+	}
+	@Override
+	public void removeObserver(Observer o) {
+		// TODO Auto-generated method stub
+		observers.remove(o);
+		
+	}
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		for(Observer o : observers) {
+			System.out.println("hello");
+			o.update(this);
+		}
+		
 	}
 }

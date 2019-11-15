@@ -7,7 +7,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
-public class Inventory {
+public class Inventory implements Observer{
 
 		private Sword sword;
 		private Key key;
@@ -164,5 +164,12 @@ public class Inventory {
 		public void removePotion() {
 			setPotionProp(false);
 			this.potion = null;
+		}
+
+		@Override
+		public void update(Subject obj) {
+			// TODO Auto-generated method stub
+			removeKey();
+			
 		}
 }

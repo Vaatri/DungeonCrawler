@@ -1,8 +1,8 @@
 package unsw.dungeon;
 
 public class UnlockedState implements DoorState{
-	Door door;
-	 
+	private Door door;
+	
     public UnlockedState(Door door) {
         this.door = door;
     }
@@ -16,6 +16,7 @@ public class UnlockedState implements DoorState{
     public void react() {
     	door.setState(door.getOpenState());
     	door.setOpen(true);
+    	door.notifyObservers();
     	
     }
 

@@ -39,7 +39,6 @@ public class Player extends Entity implements Immovable,Subject{
         potionState = new PotionState(this , null);
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
-        addObserverList();
         this.playerGoals = null;
     }
     
@@ -49,9 +48,12 @@ public class Player extends Entity implements Immovable,Subject{
     public void addObserverList() {
     	// add all the enemies on the dungeon in observer list;
     	for (Entity e: dungeon.getEntitiesList()) {
-    		
 			if (e instanceof Enemy) {
 				registerObserver(((Observer)e));
+			} 
+			if (e instanceof Door) {
+				((Door)e).registerObserver(inven);
+				System.out.println("yooy");
 			}
     	}
     }
@@ -239,8 +241,6 @@ public class Player extends Entity implements Immovable,Subject{
 		if(inven.getKey() == null) {
 			inven.setKey(k);
 			dungeon.removeEntity(k);
-			System.out.println("Picked up key");
-//			dungeon.removeEntity(k, this);
 		}
 	}
 	/**

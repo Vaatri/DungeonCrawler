@@ -44,7 +44,6 @@ public abstract class DungeonLoader {
         int height = json.getInt("height");
         
         Dungeon dungeon = new Dungeon(width, height, filename);
-        //this.dungeon = dungeon;
         JSONArray jsonEntities = json.getJSONArray("entities");
 
         for (int i = 0; i < jsonEntities.length(); i++) {
@@ -53,8 +52,6 @@ public abstract class DungeonLoader {
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
-        //dungeon.setDungeonLoader(this);
-        //dungeon.setDungeonControllerLoader(dungeonControllerLoader);
         this.dungeon = dungeon;
         return dungeon;
     }
@@ -276,8 +273,12 @@ public abstract class DungeonLoader {
         }
         entity.setDungeon(dungeon);
         dungeon.addEntity(entity);
+       
     }
+    
 
+    
+    
     public abstract void onLoad(Entity player);
 
     public abstract void onLoad(Wall wall);

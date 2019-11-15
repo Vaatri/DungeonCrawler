@@ -97,6 +97,7 @@ public class DungeonController {
         
         createObjectives();
         createInventory();
+        player.addObserverList();
     }
     private void createObjectives() {
   

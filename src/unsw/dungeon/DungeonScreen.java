@@ -17,7 +17,7 @@ public class DungeonScreen {
 	
 	public DungeonScreen(Stage stage) throws IOException{
 		this.stage = stage;
-		String levelFile = "test.json";
+		String levelFile = "test2.json";
         dungeonLoader = new DungeonControllerLoader(levelFile);
         dungeonLoader.setStage(stage);
         DungeonController controller = dungeonLoader.loadController(levelFile);

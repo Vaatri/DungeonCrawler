@@ -212,7 +212,42 @@ public class Dungeon{
     	
     	return false;
     }
-    
+    /**
+     * This will check an enemy's direction's adjacent block for an immovable entity.
+     * @param x
+     * @param y
+     * @param direction
+     * @param b
+     * @return
+     */
+    public boolean checkAdjacentEnemy(int x, int y, String direction) {
+    	//check for anything adjacent to the boulder that we want to push
+		for(Entity e: entities) {	
+    		if ((e instanceof Boulder)  || (e instanceof Enemy) || 
+    			(e instanceof Door) || (e instanceof Exit) || (e instanceof Wall)) {
+				switch(direction) {
+				case("up"):
+					if (e.getX() == x && e.getY() == (y-1))
+						return true;
+					break;
+				case("down"):
+					if (e.getX() == x && e.getY() == (y+1))
+						return true;
+					break;
+				case("left"):
+					if (e.getX() == (x-1) && e.getY() == y)
+						return true;
+					break;
+				case("right"):
+					if (e.getX() == (x+1) && e.getY() == y) 
+						return true;
+					break;
+				}
+    		}
+		}	
+    	
+    	return false;
+    }
     /**
      * helper function for testing
      * @return

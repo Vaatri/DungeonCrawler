@@ -250,9 +250,9 @@ public class DungeonController {
     
     @FXML
     public void handleResetButton(ActionEvent resetButtonPress) throws IOException {
-    	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
+    	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test2.json");
         
-        DungeonController controller = dungeonLoader.loadController("test.json");
+        DungeonController controller = dungeonLoader.loadController("test2.json");
         dungeonLoader.setDungeonController(controller);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);

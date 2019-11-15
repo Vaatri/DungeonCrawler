@@ -16,9 +16,9 @@ public class DungeonScreen {
 	
 	public DungeonScreen(Stage stage) throws IOException{
 		this.stage = stage;
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test2.json");
         dungeonLoader.setStage(stage);
-        DungeonController controller = dungeonLoader.loadController("test.json");
+        DungeonController controller = dungeonLoader.loadController("test2.json");
         dungeonLoader.setDungeonController(controller);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);

@@ -3,13 +3,15 @@ package unsw.dungeon;
 import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Inventory {
 
 		private Sword sword;
 		private Key key;
-		private int treasure;
+		private IntegerProperty treasure;
 		private Potion potion;
 		private BooleanProperty hasSword;
 		private BooleanProperty hasKey;
@@ -19,7 +21,7 @@ public class Inventory {
 		public Inventory() {
 			this.sword = null;
 			this.key = null;
-			this.treasure = 0;
+			this.treasure = new SimpleIntegerProperty(0);
 			this.potion = null;
 			this.hasKey = new SimpleBooleanProperty(false);
 			this.hasSword = new SimpleBooleanProperty(false);
@@ -98,7 +100,7 @@ public class Inventory {
 		 * @return
 		 */
 		public boolean hasTreasure() {
-			if (treasure == 0)
+			if (treasure.get() == 0)
 				return false;
 			else 
 				return true;
@@ -109,7 +111,7 @@ public class Inventory {
 		 * @return
 		 */
 		public int howManyTreasure() {
-			return treasure;
+			return treasure.get();
 		}
 
 		public Sword getSword() {
@@ -117,19 +119,19 @@ public class Inventory {
 		}
 
 		public void setSword(Sword s) {
+			this.sword = s;
 			s.setInInvenProp(true);
 			setSwordProp(true);
-			this.sword = s;
 		}
 
-		public int getTreasure() {
+		public IntegerProperty getTreasureProp() {
 			return treasure;
 		}
 
 		public void setTreasure(Treasure t) {
 			t.setInInvenProp(true);
 			setTreasureProp(true);
-			this.treasure++;
+			treasure.set(treasure.get() + 1);
 		}
 
 		public Potion getPotion() {
@@ -137,9 +139,9 @@ public class Inventory {
 		}
 
 		public void setPotion(Potion p) {
+			this.potion = p;
 			p.setInInvenProp(true);
 			setPotionProp(true);
-			this.potion = p;
 		}
 
 

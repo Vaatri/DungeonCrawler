@@ -17,7 +17,15 @@ import org.json.JSONTokener;
  *
  */
 public abstract class DungeonLoader {
-	
+	DungeonController dungeonController;
+	Dungeon dungeon;
+    public DungeonController getDungeonController() {
+		return dungeonController;
+	}
+
+	public void setDungeonController(DungeonController dungeonController) {
+		
+	}
 
 	private JSONObject json;
 
@@ -31,11 +39,11 @@ public abstract class DungeonLoader {
      * @return
      * @throws FileNotFoundException 
      */
-    public Dungeon load() {
+    public Dungeon load(String filename) throws FileNotFoundException {
         int width = json.getInt("width");
         int height = json.getInt("height");
         
-        Dungeon dungeon = new Dungeon(width, height);
+        Dungeon dungeon = new Dungeon(width, height, filename);
         //this.dungeon = dungeon;
         JSONArray jsonEntities = json.getJSONArray("entities");
 
@@ -45,6 +53,10 @@ public abstract class DungeonLoader {
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
+        //dungeon.setDungeonLoader(this);
+        //dungeon.setDungeonControllerLoader(dungeonControllerLoader);
+        this.dungeon = dungeon;
+        System.out.println("seting loader's dungeon as "+ this.dungeon);
         return dungeon;
     }
     

@@ -3,6 +3,10 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.List;
 /**
  * The player entity
@@ -13,7 +17,7 @@ public class Player extends Entity implements Immovable,Subject{
 
     private Dungeon dungeon;
     private Inventory inven;
-    private int lives;
+    private IntegerProperty lives;
     PlayerState potionState;
     PlayerState emptyHandState;
     PlayerState state;
@@ -35,7 +39,7 @@ public class Player extends Entity implements Immovable,Subject{
         super(x, y);
         this.dungeon = dungeon;
         this.inven = new Inventory();
-        this.lives = 4;
+        this.lives = new SimpleIntegerProperty(4);
         potionState = new PotionState(this , null);
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
@@ -217,13 +221,20 @@ public class Player extends Entity implements Immovable,Subject{
     }
     
     public void removeLife() {
-    	lives--;
+    	lives.set(lives.get()-1);
     }
     
     public void resetLives() {
-    	lives = 4;
+    	lives.set(4);
     }
-    
+    public IntegerProperty getLives() {
+    	return lives;
+    }
+    public boolean emptyLives() {
+    	if (lives.get() == 0)
+    		return true;
+    	return false;
+    }
     @Override
     public String getType() {
     	return "";

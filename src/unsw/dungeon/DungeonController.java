@@ -20,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -53,6 +54,9 @@ public class DungeonController {
     
     @FXML
     private Label attacksCount;
+    
+    @FXML
+    private GridPane livesLabel;
     
     @FXML
     private Button resetButton;
@@ -91,6 +95,7 @@ public class DungeonController {
         
         createObjectives();
         createInventory();
+        createLivesLabel();
     }
     private void createObjectives() {
   
@@ -104,7 +109,12 @@ public class DungeonController {
     		}
     	}
     }
-    
+    private void createLivesLabel() {
+    	Label label = new Label();
+		label.textProperty().bind(player.getLives().asString());
+		livesLabel.add(label, 0, 0);
+		
+	}
     private void createInventory() {
     	Inventory playerInven = player.getInventory();
     	createSwordSlot(playerInven.hasSwordProp(), playerInven);

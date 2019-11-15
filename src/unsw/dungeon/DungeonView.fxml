@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane fx:id="frame" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="frame" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane fx:id="squares" onKeyPressed="#handleKeyPress" prefHeight="355.0" prefWidth="353.0">
          <columnConstraints>
@@ -31,7 +31,7 @@
    <right>
       <Pane fx:id="statusContainer" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="andObjectives" layoutY="27.0" prefHeight="98.0" prefWidth="200.0">
+            <GridPane fx:id="andObjectives" layoutY="95.0" prefHeight="60.0" prefWidth="200.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -58,7 +58,7 @@
                   <Label fx:id="durationCount" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
             </GridPane>
-            <GridPane fx:id="orObjectives" layoutY="129.0" prefHeight="86.0" prefWidth="200.0">
+            <GridPane fx:id="orObjectives" layoutY="152.0" prefHeight="56.0" prefWidth="200.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -68,9 +68,18 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Label layoutX="10.0" layoutY="6.0" text="Player Objectives" />
-            <Label layoutX="14.0" layoutY="215.0" text="Player Inventory" />
-            <Button fx:id="resetButton" layoutX="123.0" layoutY="1.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="10.0" prefWidth="63.0" text="Reset" />
+            <Label layoutX="1.0" layoutY="73.0" text="Player Objectives" />
+            <Label layoutX="4.0" layoutY="214.0" text="Player Inventory" />
+            <Button fx:id="resetButton" layoutX="127.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="10.0" prefWidth="63.0" text="Reset" />
+            <GridPane fx:id="livesLabel" layoutX="152.0" layoutY="46.0" prefHeight="21.0" prefWidth="38.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.0" minWidth="5.0" prefWidth="127.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Label layoutX="1.0" layoutY="49.0" text="Lives Remaining (/4):" />
          </children>
       </Pane>
    </right>

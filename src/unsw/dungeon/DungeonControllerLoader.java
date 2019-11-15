@@ -255,6 +255,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 	}
 
 	
+	
 	private void trackCollectables(Collectable c, Node dungeonNode, Node inventoryNode) {
 		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
 			@Override

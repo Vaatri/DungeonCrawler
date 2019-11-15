@@ -30,7 +30,7 @@ public class DungeonApplication extends Application {
         //root.requestFocus();
         //primaryStage.setScene(scene);
         //primaryStage.setTitle("Dungeon Crawlers");
-        //primaryStage.show();
+        //primaryStage.show(); 
 
         
 

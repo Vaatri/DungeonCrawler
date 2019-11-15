@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
@@ -24,7 +25,8 @@ public class DungeonControllerLoader extends DungeonLoader {
     private List<ImageView> entities;
     private List<Label> goals;
     private List<Collectable> playerInventory;
-
+    private Stage stage;
+    
     //Images
     private Image playerImage;
     private Image wallImage;
@@ -39,10 +41,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image keyImage;
     private Image swordImage;
     private Image openDoorImage;
-    private int nTreasures;
-    private int nPotions;
-    private int nSwords;
-    private int nKeys;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -68,6 +66,14 @@ public class DungeonControllerLoader extends DungeonLoader {
         swordImage = new Image("/greatsword_1_new.png");
         openDoorImage = new Image("/open_door.png");
     }
+    
+    public void setStage(Stage stage) {
+    	this.stage = stage;
+    }
+    
+    public Stage getStage() {
+    	return this.stage;
+    }
 
     @Override
     public void onLoad(Entity player) {
@@ -88,7 +94,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     	trackCollectables(treasure, view, inventoryView);
     	inventoryView.setVisible(false);
     	addToInventory(treasure);
-    	nTreasures++;
     }
     @Override
     public void onLoad(Portal portal) {
@@ -142,7 +147,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     	addToInventory(potion);
     	addEntity(potion, view);
     	trackCollectables(potion, view, inventoryView);
-    	nPotions++;
     }
     @Override
     public void onLoad(Key key) {
@@ -152,7 +156,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     	addToInventory(key);
     	addEntity(key, view);
     	trackCollectables(key, view, inventoryView);
-    	nKeys++;
     }
     @Override
     public void onLoad(Sword sword) {
@@ -162,7 +165,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     	addToInventory(sword);
     	addEntity(sword, view);
     	trackCollectables(sword, view, inventoryView);
-    	nSwords++;
     }
     private void addEntity(Entity entity, ImageView view) {
         trackPosition(entity, view);
@@ -210,7 +212,7 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @throws FileNotFoundException
      */
     public DungeonController loadController(String filename) throws FileNotFoundException {
-    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory);
+    	this.dungeonController = new DungeonController(load(filename), entities, goals, playerInventory, this.stage);
         return dungeonController;
     }
     

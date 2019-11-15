@@ -8,23 +8,19 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Sword extends Entity implements Collectable{
 	
 	private IntegerProperty attacksLeft;
-//	private int attacksLeft;
 	private BooleanProperty inInventory;
 	
 	public Sword(int x, int y) {
         super(x, y);
-//        this.attacksLeft = 5;
         this.attacksLeft = new SimpleIntegerProperty(5);
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
 	public void useSword(Inventory i) {
-		attacksLeft.set(attacksLeft.get() - 1);
-	
+		attacksLeft.setValue(attacksLeft.get() - 1);
 		if (emptySword()) {
 			i.removeSword();
 			setInInvenProp(false);
-			
 		}
 	}
 	public IntegerProperty getAttacksLeftProp() {
@@ -73,5 +69,9 @@ public class Sword extends Entity implements Collectable{
 		// TODO Auto-generated method stub
 		this.inInventory.set(b);
 		
+	}
+	
+	public IntegerProperty getUsageProperty() {
+		return attacksLeft;
 	}
 }

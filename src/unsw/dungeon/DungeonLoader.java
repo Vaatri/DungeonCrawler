@@ -273,6 +273,11 @@ public abstract class DungeonLoader {
         	onLoad(sword);
         	entity = sword;
         	break;
+        case "healthPotion":
+        	HealthPotion healthPotion = new HealthPotion(x,y);
+        	onLoad(healthPotion);
+        	entity = healthPotion;
+        	break;
         }
         entity.setDungeon(dungeon);
         dungeon.addEntity(entity);
@@ -299,6 +304,7 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Key key);
     public abstract void onLoad(Sword sword);
     public abstract void onLoad(Goal goal);
+    public abstract void onLoad(HealthPotion healthPotion);
     public abstract void trackLevelGoal(ComplexGoal g);
 
 	

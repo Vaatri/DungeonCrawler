@@ -45,6 +45,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image keyImage;
     private Image swordImage;
     private Image openDoorImage;
+    private Image healthPotionImage;
 
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
@@ -59,12 +60,11 @@ public class DungeonControllerLoader extends DungeonLoader {
         treasureImage = new Image("/gold_pile.png");
         portalImage = new Image("/portal.png");
         floorSwitchImage = new Image("/pressure_plate.png");
-        // need an open door
         doorImage = new Image("/closed_door.png");
         boulderImage = new Image("/boulder.png");
         enemyImage = new Image("/deep_elf_master_archer.png");
         exitImage = new Image("/exit.png");
-        // brilliant blue potion not added
+        healthPotionImage = new Image("/brilliant_blue_new.png");
         potionImage = new Image("/bubbly.png");
         keyImage = new Image("/key.png");
         swordImage = new Image("/greatsword_1_new.png");
@@ -142,6 +142,13 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Exit exit) {
     	ImageView view = new ImageView(exitImage);
     	addEntity(exit, view);
+    }
+    @Override
+    public void onLoad(HealthPotion healthPotion) {
+    	ImageView view = new ImageView(healthPotionImage);
+    	addEntity(healthPotion, view);
+    	addToInventory(healthPotion);
+    	trackCollectablesNonInventory(healthPotion, view);
     }
     @Override
     public void onLoad(Potion potion) {
@@ -258,7 +265,17 @@ public class DungeonControllerLoader extends DungeonLoader {
 		});
 	}
 
-	
+	private void trackCollectablesNonInventory(Collectable c, Node dungeonNode) {
+		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					dungeonNode.setVisible(false);
+				}
+			}
+		});
+		
+	}
 	
 	private void trackCollectables(Collectable c, Node dungeonNode, Node inventoryNode) {
 		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {

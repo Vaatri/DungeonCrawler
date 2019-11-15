@@ -17,6 +17,7 @@ public class Inventory implements Observer{
 		private BooleanProperty hasKey;
 		private BooleanProperty hasTreasure;
 		private BooleanProperty hasPotion;
+		private BooleanProperty hasHealthPotion;
 		
 		public Inventory() {
 			this.sword = null;
@@ -27,8 +28,18 @@ public class Inventory implements Observer{
 			this.hasSword = new SimpleBooleanProperty(false);
 			this.hasPotion = new SimpleBooleanProperty(false);
 			this.hasTreasure = new SimpleBooleanProperty(false);
+			this.hasHealthPotion = new SimpleBooleanProperty(false);
+			
 		}
 		
+		public BooleanProperty hasHealthPotion() {
+			return hasHealthPotion;
+		}
+
+		public void setHealthPotion(boolean b) {
+			hasHealthPotion.set(b);
+		}
+
 		/**
 		 * return true if player has sword in inventory
 		 * @return

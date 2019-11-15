@@ -237,7 +237,9 @@ public class Player extends Entity implements Immovable,Subject{
     public void removeLife() {
     	lives.set(lives.get()-1);
     }
-    
+    public void incrementLife() {
+    	lives.set(lives.get() + 1);
+    }
     public void resetLives() {
     	lives.set(4);
     }
@@ -281,17 +283,17 @@ public class Player extends Entity implements Immovable,Subject{
 			setState(this.getPotionState());
 		}
 	}
+	public void pickUpHealthPotion(HealthPotion p) throws FileNotFoundException{
+		inven.setHealthPotion(true);
+		p.setInInvenProp(true);
+		dungeon.removeEntity(p);
+		this.incrementLife();
+	}
 	public void pickUpTreasure(Treasure t) {
 		//if(inven.getSword() == null) {
 			inven.setTreasure(t);
 			dungeon.removeEntity(t);
-//			try {
-//				dungeon.removeEntity(t, this);
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		//}
+
 	}
   
     

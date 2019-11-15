@@ -240,11 +240,6 @@
       "type": "enemy"
     },
     {
-        "x":1,
-        "y":10,
-        "type": "player"
-    },
-    {
       "x": 4,
       "y": 4,
       "type": "wall"
@@ -346,6 +341,16 @@
       "y": 8,
       "id":1,
       "type": "door"
+    },
+    {
+        "x": 1,
+        "y": 5,
+        "type": "healthPotion"
+    }, 
+    {
+        "x":1,
+        "y":10,
+        "type": "player"
     }
 ],
 "goal-condition": {

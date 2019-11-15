@@ -99,6 +99,7 @@ public abstract class DungeonLoader {
 		onLoad(sg);
 		attachObserver(dungeon, (SingleGoal)sg);
 		g.addGoal(sg);
+		g.setCompleted(null);
 		
     }
     
@@ -115,6 +116,7 @@ public abstract class DungeonLoader {
     	JSONObject jsonObject;
     	String type;
     	int andGoalCount = 0;
+    	boolean foundOR = false;
     	
     	for(int i = 0; i < array.length(); i++) {
     		jsonObject = array.getJSONObject(i);
@@ -128,6 +130,7 @@ public abstract class DungeonLoader {
 					onLoad(sg);
 					g.addGoal(sg);
 					attachObserver(dungeon, (SingleGoal)sg);
+					foundOR = true;
     			}
     			break;
     		} else {
@@ -139,6 +142,9 @@ public abstract class DungeonLoader {
     		}
     	}
     	g.setNeededToSatisfy(andGoalCount);
+    	
+    	if(!foundOR) 
+    		g.setCompleted(null);
     }
 
     

@@ -4,15 +4,17 @@ import java.io.FileNotFoundException;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Potion extends Entity implements Collectable {
 	
-	private int duration;
+	private IntegerProperty duration;
 	private BooleanProperty inInventory;
 	
 	public Potion(int x, int y) {
         super(x, y);
-        this.duration = 10;
+        this.duration = new SimpleIntegerProperty(10);
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
@@ -21,7 +23,7 @@ public class Potion extends Entity implements Collectable {
 	 * potion duration will decrement.
 	 */
 	public void decrementDuration(Player player) {
-		duration--;
+		duration.set(duration.get() - 1);;
 		if (emptyPotion()) {
 			player.setState(player.getEmptyHandState());
 			player.notifyObservers();
@@ -35,7 +37,7 @@ public class Potion extends Entity implements Collectable {
 	 * @return
 	 */
 	public boolean emptyPotion() {
-		if(duration == 0)	
+		if(duration.get() == 0)	
 			return true;
 		return false;
 	}
@@ -45,9 +47,12 @@ public class Potion extends Entity implements Collectable {
 	 * @return
 	 */
 	public int getDuration() {
-		return duration;
+		return duration.get();
 	}
 	
+	public IntegerProperty getDurationProp() {
+		return duration;
+	}
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		return true; 

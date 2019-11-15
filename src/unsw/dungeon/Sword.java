@@ -1,32 +1,32 @@
 package unsw.dungeon;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class Sword extends Entity implements Collectable{
 	
-//	private IntegerProperty attacksLeft;
-	private int attacksLeft;
+	private IntegerProperty attacksLeft;
 	private BooleanProperty inInventory;
 	
 	public Sword(int x, int y) {
         super(x, y);
-        this.attacksLeft = 5;
+        this.attacksLeft = new SimpleIntegerProperty(5);
 //        this.attacksLeft = new SimpleIntegerProperty(true);
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
 	public void useSword(Inventory i) {
-		attacksLeft--;
+		attacksLeft.setValue(attacksLeft.get() - 1);
 		if (emptySword()) {
 			i.removeSword();
 			setInInvenProp(false);
-			
 		}
 	}
 	
 	public boolean emptySword() {
-		if (attacksLeft == 0) {
+		if (attacksLeft.get() == 0) {
 			return true;
 		}
 		return false;
@@ -67,5 +67,9 @@ public class Sword extends Entity implements Collectable{
 		// TODO Auto-generated method stub
 		this.inInventory.set(b);
 		
+	}
+	
+	public IntegerProperty getUsageProperty() {
+		return attacksLeft;
 	}
 }

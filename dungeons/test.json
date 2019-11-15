@@ -272,8 +272,9 @@
 "goal-condition": {
   "goal": "AND", "subgoals":
   [ { "goal": "exit"},
+    {"goal": "treasure" },
     { "goal": "OR", "subgoals":
-      [ {"goal": "treasure" },
+      [ {"goal": "enemies" },
         {"goal": "switch"}
       ]
     }

@@ -110,8 +110,10 @@ public class SingleGoal implements Goal, Observer {
 	@Override
 	public void setCompleted(Goal g) {
 		// TODO Auto-generated method stub
-		if (checkCompleted())
+		if (checkCompleted()) {
 			goalCriteria.setCompleted(g);
+			goalsSatisfied.set(goalsSatisfied.get() + 1);
+		}	
 	}
 
 

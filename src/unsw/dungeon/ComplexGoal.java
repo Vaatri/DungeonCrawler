@@ -66,9 +66,11 @@ public class ComplexGoal implements Goal {
 		for(Goal g : goalList) {
 			g.setCompleted(this);
 		}
+		
+		System.out.println(totalAndGoals.get()+" "+AndGoalsSatisfied.get());
+		
 		if(totalAndGoals.get() == AndGoalsSatisfied.get() && OrSatisfied) {
 			completed.set(true);
-			System.out.println("okok");
 			return true;
 		}	
 		

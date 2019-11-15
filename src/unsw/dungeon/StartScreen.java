@@ -15,7 +15,7 @@ public class StartScreen {
 	
 	public StartScreen(Stage stage) throws IOException{
 		this.stage = stage;
-		this.controller = new TutorialController();
+		controller = new TutorialController();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("startScreen.fxml"));
 		loader.setController(controller);
 		Parent root = loader.load();

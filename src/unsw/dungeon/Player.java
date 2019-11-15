@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class Player extends Entity implements Immovable,Subject{
     PlayerState emptyHandState;
     PlayerState state;
     private ComplexGoal playerGoals;
+    private BooleanProperty dead;
       
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
     
@@ -44,9 +47,18 @@ public class Player extends Entity implements Immovable,Subject{
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
         this.playerGoals = null;
-    }
+        this.dead = new SimpleBooleanProperty(false);
+        }
     
-    /**
+    public BooleanProperty getDead() {
+		return dead;
+	}
+
+	public void setDead() {
+		dead.set(true);
+	}
+
+	/**
      * Add all enemies within the dungeon to players observer List.
      */
     public void addObserverList() {

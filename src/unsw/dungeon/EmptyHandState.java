@@ -24,6 +24,7 @@ public class EmptyHandState implements PlayerState{
 		// if the player does not have a sword, it dies
 		if (player.emptyLives()) {
 			System.out.println("YOU DIED");
+			player.setDead();
 			return;
 		}
 		else {

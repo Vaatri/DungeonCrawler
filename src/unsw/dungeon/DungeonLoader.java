@@ -52,11 +52,14 @@ public abstract class DungeonLoader {
         
         JSONObject jsonGoal = json.getJSONObject("goal-condition");
         loadGoals(dungeon, jsonGoal, jsonEntities);
+        trackPlayerDead(dungeon.getPlayer());
         this.dungeon = dungeon;
         return dungeon;
     }
     
-   /*
+   protected abstract void trackPlayerDead(Player player);
+
+/*
     public DungeonController loadController(String filename) throws FileNotFoundException {
     	System.out.println("shouldnt be here");
         return null;

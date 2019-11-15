@@ -28,6 +28,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private List<Collectable> playerInventory;
     private Stage stage;
     private WinScreen winScreen;
+    private LoseScreen loseScreen;
     
     
     //Images
@@ -294,9 +295,23 @@ public class DungeonControllerLoader extends DungeonLoader {
 			}
 		});
 	}
-	
+	@Override
+	public void trackPlayerDead(Player p) {
+		p.getDead().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(newValue) {
+					System.out.println("CHANGED " + oldValue + newValue);
+					loseScreen.start();
+				}
+			}
+		});
+	}
     public void setWinScreen(WinScreen ws) {
     	winScreen = ws;
     }
 
+    public void setLoseScreen(LoseScreen ls) {
+    	loseScreen = ls;
+    }
 }

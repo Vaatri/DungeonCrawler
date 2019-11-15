@@ -15,9 +15,8 @@ public class DungeonScreen {
 	private DungeonControllerLoader dungeonLoader;
 	private Scene scene;
 	
-	public DungeonScreen(Stage stage) throws IOException{
+	public DungeonScreen(Stage stage, String levelFile) throws IOException{
 		this.stage = stage;
-		String levelFile = "test2.json";
         dungeonLoader = new DungeonControllerLoader(levelFile);
         dungeonLoader.setStage(stage);
         DungeonController controller = dungeonLoader.loadController(levelFile);
@@ -44,6 +43,6 @@ public class DungeonScreen {
 	public DungeonControllerLoader getLoader() {
 		return dungeonLoader;
 	}
-
+	
 	
 }

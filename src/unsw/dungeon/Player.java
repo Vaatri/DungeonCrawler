@@ -53,7 +53,6 @@ public class Player extends Entity implements Immovable,Subject{
 			} 
 			if (e instanceof Door) {
 				((Door)e).registerObserver(inven);
-				System.out.println("yooy");
 			}
     	}
     }

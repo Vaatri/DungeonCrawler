@@ -266,8 +266,6 @@ public class DungeonController {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         root.requestFocus();
-        System.out.println(stage);
-        System.out.println(scene);
         stage.setScene(scene);
         stage.show();
     }

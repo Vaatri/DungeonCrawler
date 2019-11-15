@@ -18,6 +18,7 @@ public class WinScreen {
 		this.stage = stage;
 		controller = new WinController();
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("winPage.fxml"));
+		controller.setStage(stage);
 		loader.setController(controller);
 		Parent root = loader.load();
 		scene = new Scene(root);
@@ -26,5 +27,9 @@ public class WinScreen {
 	public void start() {
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	public WinController getController() {
+		return controller;
 	}
 }

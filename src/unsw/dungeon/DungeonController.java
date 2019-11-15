@@ -256,7 +256,6 @@ public class DungeonController {
     
     @FXML
     public void handleResetButton(ActionEvent resetButtonPress) throws IOException {
-    	
     	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(levelFile);  
     	dungeonLoader.setStage(stage);
         DungeonController controller = dungeonLoader.loadController(levelFile);

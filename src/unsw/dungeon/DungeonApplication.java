@@ -20,7 +20,6 @@ public class DungeonApplication extends Application {
     	startScreen.getController().setScreen(dungeonScreen);
     	dungeonScreen.getLoader().setWinScreen(winScreen);
     	startScreen.start();
-      
 
     } 
 

@@ -274,6 +274,7 @@ public class Player extends Entity implements Immovable,Subject{
 		if(inven.getKey() == null) {
 			System.out.println("first time picking up key");
 			inven.setKey(k);
+			System.out.println("added key into player's inventory");
 			dungeon.removeEntity(k);
 			return true;
 		}

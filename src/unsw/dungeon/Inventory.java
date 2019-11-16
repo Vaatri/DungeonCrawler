@@ -157,9 +157,10 @@ public class Inventory implements Observer{
 
 
 		public void setKey(Key k) {
+			
+			this.key = k;
 			k.setInInvenProp(true);
 			setKeyProp(true);
-			this.key = k;
 		}
 		
 		public void removeKey() {

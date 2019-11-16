@@ -125,7 +125,7 @@ public class DungeonController {
     private void createInventory() {
     	Inventory playerInven = player.getInventory();
     	createSwordSlot(playerInven.hasSwordProp(), playerInven);
-    	createKeySlot(playerInven.hasKeyProp());
+    	createKeySlot(playerInven.hasKeyProp(), playerInven.getKey());
     	createPotionSlot(playerInven.hasPotionProp(), playerInven);
     	createTreasureSlot(playerInven.hasTreasureProp(), playerInven);
     }
@@ -164,30 +164,40 @@ public class DungeonController {
     		usageCountLabel.setVisible(true);
     	}
     }
-    public Image keyIm(int i) {
-    	if(i==1)return new Image("/key1.png");
-    	if(i==2)return new Image("/key2.png");
-    	if(i==3)return new Image("/key3.png");
-    	return new Image("/key4.png");
+    public ImageView keyIm() {
+    	
+    	if (!dungeon.hasKey()) return new ImageView(new Image ("/key1.png"));
+    	
+    	if(dungeon.getkeyID() == 1)return new ImageView(new Image("/key1.png"));
+    	if(dungeon.getkeyID()==2)return new ImageView(new Image("/key2.png"));
+    	if(dungeon.getkeyID()==3)return new ImageView(new Image("/key3.png"));
+    	return new ImageView(new Image("/key4.png"));
     }
-    private void createKeySlot(BooleanProperty bp) {
-    	ImageView keyImage = new ImageView(new Image("/key1.png"));
+    private void createKeySlot(BooleanProperty bp, Key key) {
+    	//ImageView keyImage = new ImageView(keyIm());
     	//System.out.println("this is key id " + this.dungeon.;
     	//keyImage = new ImageView(keyIm(key.getID()));
-    	
+    	System.out.println("hi");
 		bp.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
 					//keyImage = new ImageView(keyIm(dungeon.getPlayer().getKeyID()));
-					keyImage.setVisible(true);
+					System.out.println("set true " + keyIm());
+			    	
+			    	keyIm().setVisible(true);
+			    	inventory.add(keyIm(), 0, 2);
+					
 				} else {
-					keyImage.setVisible(false);
+					keyIm().setVisible(false);
 				}
 			}
+			
 		});
-    	keyImage.setVisible(false);
-    	inventory.add(keyImage, 0, 2);
+		System.out.println("set false " + keyIm());
+		keyIm().setVisible(false);
+		inventory.add(keyIm(), 0, 2);
+    	
     }
     
     private void createPotionSlot(BooleanProperty bp, Inventory playerInven) {

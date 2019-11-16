@@ -95,7 +95,15 @@ public class Dungeon{
     	
     	return null;
     }
-    
+    public boolean hasKey() {
+    	System.out.println("hasKey " + getPlayer().getInventory().hasKey());
+    	if (this.getPlayer().getInventory().hasKey())return true;
+    	return false;
+    }
+    public int getkeyID() {
+    	System.out.println("keyID "+ getPlayer().getKeyID());
+    	 return this.getPlayer().getKeyID();
+    }
     /**
      * Check if there will be a collision at the coordinates player wants
      * to move towards. If there is a collision, player will move depending 

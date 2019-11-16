@@ -29,6 +29,7 @@ public class DungeonApplication extends Application {
     	dungeon2Screen.getLoader().setWinScreen(winScreen2);
     	dungeon2Screen.getLoader().setLoseScreen(loseScreen);
     	startScreen.start();
+    
     } 
 
     public static void main(String[] args) {

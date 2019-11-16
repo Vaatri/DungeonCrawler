@@ -15,6 +15,7 @@ public class LoseScreen {
 	public LoseScreen(Stage stage) throws IOException{
 		this.stage = stage;
 		controller = new LoseController();
+		controller.setStage(stage);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("loseScreen.fxml"));
 		loader.setController(controller);
 		Parent root = loader.load();
@@ -24,5 +25,9 @@ public class LoseScreen {
 	public void start() {
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	public LoseController getController() {
+		return controller;
 	}
 }

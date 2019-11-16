@@ -305,7 +305,7 @@ public class DungeonController {
     		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
     			@Override
     			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-    				if(!oldValue) {
+    				if(newValue) {
     					keyView.setVisible(false);
     				}
     			}

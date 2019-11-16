@@ -148,14 +148,14 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
     public Image openIm(int i) {
 	    if(i == 1)return openDoorImage1;
-		if(i==2) return openDoorImage2;
-		if(i==3)return openDoorImage3;
+		if(i == 2) return openDoorImage2;
+		if(i == 3)return openDoorImage3;
 		return openDoorImage4;
     }
     public Image closedIm(int i) {
     	if(i == 1)return doorImage1;
- 		if(i==2) return doorImage2;
- 		if(i==3)return doorImage3;
+ 		if(i == 2) return doorImage2;
+ 		if(i == 3)return doorImage3;
  		return doorImage4;
     }
     @Override

@@ -141,10 +141,6 @@ public class Player extends Entity implements Immovable,Subject{
      */
     public void movementHandler(int x, int y, String direction) {
     	
-    	//refactor
-    	//check if there will be a collision
-    	//if there is and we can move, then move
-    	//otherwise do nothing.
     	if (dungeon.checkCollision(x,y,direction)) {
     		move(x,y,direction);
     	}
@@ -221,7 +217,6 @@ public class Player extends Entity implements Immovable,Subject{
      * active time.
      */
     public void stateHandler() {
-    	// handle player's state
     	state.handle();
     }
     
@@ -272,7 +267,6 @@ public class Player extends Entity implements Immovable,Subject{
 	}
 	public boolean pickUpKey(Key k) throws FileNotFoundException {
 		if(inven.getKey() == null) {
-			System.out.println("first time picking up key");
 			inven.setKey(k);
 			dungeon.removeEntity(k);
 			return true;
@@ -289,7 +283,6 @@ public class Player extends Entity implements Immovable,Subject{
 		if(inven.getPotion() == null) {
 			inven.setPotion(p);
 			dungeon.removeEntity(p);
-//			dungeon.removeEntity(p, this);
 			potionState = new PotionState(this, p);
 			setState(this.getPotionState());
 		}
@@ -301,10 +294,20 @@ public class Player extends Entity implements Immovable,Subject{
 		this.incrementLife();
 	}
 	public void pickUpTreasure(Treasure t) {
-		//if(inven.getSword() == null) {
 			inven.setTreasure(t);
 			dungeon.removeEntity(t);
 
+	}
+	
+	public Key dropKey() {
+		if(dungeon.getEntityAtLocation(getX(), getY()).size() == 1) {
+			Key k = inven.getKey();
+			inven.removeKey();
+			dungeon.addEntity(k);
+			k.setXandY(getX(), getY());
+			return k;
+		}	
+		return null;
 	}
     
 }

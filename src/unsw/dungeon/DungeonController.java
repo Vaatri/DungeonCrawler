@@ -106,6 +106,7 @@ public class DungeonController {
         createInventory();
         createLivesLabel();
         player.addObserverList();
+        dropButton.setFocusTraversable(false);
     }
     private void createObjectives() {
   
@@ -175,8 +176,7 @@ public class DungeonController {
     }
     private void createKeySlot(BooleanProperty bp) {
     	ImageView keyImage = new ImageView(new Image("/key1.png"));
-    	//System.out.println("this is key id " + this.dungeon.;
-    	//keyImage = new ImageView(keyIm(key.getID()));
+    	dropButton.setVisible(false);
     	
 		bp.addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -184,8 +184,10 @@ public class DungeonController {
 				if(newValue) {
 					//keyImage = new ImageView(keyIm(dungeon.getPlayer().getKeyID()));
 					keyImage.setVisible(true);
+					dropButton.setVisible(true);
 				} else {
 					keyImage.setVisible(false);
+					dropButton.setVisible(false);
 				}
 			}
 		});
@@ -259,6 +261,7 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
+    	System.out.println("hello");
     	switch (event.getCode()) {
         case UP:
             player.moveUp();
@@ -294,7 +297,23 @@ public class DungeonController {
     
     @FXML
     public void handleDropButton(ActionEvent dropButtonPress) {
-    	System.out.println("hello");
+    	Key k = player.dropKey();
+    	if (k != null) {
+    		Image keyImage = keyIm(k.getID());
+    		ImageView keyView = new ImageView(keyImage);
+    		squares.add(keyView, k.getX(), k.getY());
+    		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+    			@Override
+    			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+    				if(!oldValue) {
+    					keyView.setVisible(false);
+    				}
+    			}
+    		});
+    	}
+    	
+    	
+    	
     }
 
 }

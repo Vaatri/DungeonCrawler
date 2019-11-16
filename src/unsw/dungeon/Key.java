@@ -21,12 +21,15 @@ public class Key extends Entity implements Collectable{
 	public void unlockDoor() {
 		Door d = getLinkedDoor();
 		if(d != null) {
+			System.out.println("unlocked door with id " + d.getID());
 			d.setState(d.getUnlockedState());
 		} else {
 			System.out.println("DOOR IS FUCKED BRO");
 		}
 	}
-	
+	public int getID() {
+		return doorID;
+	}
 	public void lockDoor() {
 		Door d = getLinkedDoor();
 		if (d != null) {
@@ -59,12 +62,12 @@ public class Key extends Entity implements Collectable{
 		Player p = dungeon.getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
 			try {
-				p.pickUpKey(this);
+				if(p.pickUpKey(this)) unlockDoor();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			unlockDoor();
+			//unlockDoor();
 		}
 	}
 	

@@ -3,6 +3,12 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Optional;
+
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.List;
 /**
  * The player entity
@@ -13,11 +19,14 @@ public class Player extends Entity implements Immovable,Subject{
 
     private Dungeon dungeon;
     private Inventory inven;
-    private int lives;
+    private IntegerProperty lives;
     PlayerState potionState;
     PlayerState emptyHandState;
     PlayerState state;
     private ComplexGoal playerGoals;
+    private BooleanProperty dead;
+    private int startX;
+    private int startY;
       
     ArrayList<Observer> listObservers = new ArrayList<Observer>();
     
@@ -35,14 +44,25 @@ public class Player extends Entity implements Immovable,Subject{
         super(x, y);
         this.dungeon = dungeon;
         this.inven = new Inventory();
-        this.lives = 4;
+        this.lives = new SimpleIntegerProperty(4);
         potionState = new PotionState(this , null);
         emptyHandState = new EmptyHandState(this);
         state = emptyHandState;
         this.playerGoals = null;
-    }
+        this.dead = new SimpleBooleanProperty(false);
+        this.startX = x;
+        this.startY = y;
+        }
     
-    /**
+    public BooleanProperty getDead() {
+		return dead;
+	}
+
+	public void setDead() {
+		dead.set(true);
+	}
+
+	/**
      * Add all enemies within the dungeon to players observer List.
      */
     public void addObserverList() {
@@ -168,7 +188,6 @@ public class Player extends Entity implements Immovable,Subject{
 		stateHandler();
     	switch(direction) {
 		case("up"):
-			System.out.println("get y "+ getY());
 			if (getY() > 0) {
 	        	y().set(getY() - 1);
 				notifyObservers();
@@ -217,30 +236,48 @@ public class Player extends Entity implements Immovable,Subject{
     	playerGoals = g;
     }
     
+    public void resetPosition() {
+    	setXandY(startX, startY);
+    }
+    
     public void removeLife() {
-    	lives--;
+    	lives.set(lives.get()-1);
     }
-    
+    public void incrementLife() {
+    	lives.set(lives.get() + 1);
+    }
     public void resetLives() {
-    	lives = 4;
+    	lives.set(4);
     }
-    
+    public IntegerProperty getLives() {
+    	return lives;
+    }
+    public boolean emptyLives() {
+    	if (lives.get() == 0)
+    		return true;
+    	return false;
+    }
     @Override
     public String getType() {
     	return "";
     }
-	
+	public int getKeyID() {
+		return this.inven.getKey().getID();
+	}
 	public void pickUpSword(Sword s) {
 		if(inven.getSword() == null) {
 			inven.setSword(s);
 			dungeon.removeEntity(s);
 		}
 	}
-	public void pickUpKey(Key k) throws FileNotFoundException {
+	public boolean pickUpKey(Key k) throws FileNotFoundException {
 		if(inven.getKey() == null) {
+			System.out.println("first time picking up key");
 			inven.setKey(k);
 			dungeon.removeEntity(k);
+			return true;
 		}
+		return false;
 	}
 	/**
 	 * When potion is picked up, it will store potion in the inventory, 
@@ -257,18 +294,17 @@ public class Player extends Entity implements Immovable,Subject{
 			setState(this.getPotionState());
 		}
 	}
+	public void pickUpHealthPotion(HealthPotion p) throws FileNotFoundException{
+		inven.setHealthPotion(true);
+		p.setInInvenProp(true);
+		dungeon.removeEntity(p);
+		this.incrementLife();
+	}
 	public void pickUpTreasure(Treasure t) {
 		//if(inven.getSword() == null) {
 			inven.setTreasure(t);
 			dungeon.removeEntity(t);
-//			try {
-//				dungeon.removeEntity(t, this);
-//			} catch (FileNotFoundException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		//}
+
 	}
-  
     
 }

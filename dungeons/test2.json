@@ -204,7 +204,7 @@
         "type": "sword"
     }, 
     {
-        "x": 3,
+        "x": 1,
         "y": 1,
         "id": 1,
         "type": "portal"
@@ -240,11 +240,6 @@
       "type": "enemy"
     },
     {
-        "x":1,
-        "y":10,
-        "type": "player"
-    },
-    {
       "x": 4,
       "y": 4,
       "type": "wall"
@@ -274,6 +269,42 @@
       "y": 5,
       "id":1,
       "type": "key"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "id":2,
+      "type": "key"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "id":2,
+      "type": "door"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "id":3,
+      "type": "key"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "id":3,
+      "type": "door"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "id":4,
+      "type": "key"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "id":4,
+      "type": "door"
     },
     {
       "x": 6,
@@ -346,6 +377,16 @@
       "y": 8,
       "id":1,
       "type": "door"
+    },
+    {
+        "x": 1,
+        "y": 5,
+        "type": "healthPotion"
+    }, 
+    {
+        "x":1,
+        "y":10,
+        "type": "player"
     }
 ],
 "goal-condition": {

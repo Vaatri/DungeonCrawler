@@ -18,12 +18,13 @@ public class DungeonApplication extends Application {
     	DungeonScreen dungeonScreen = new DungeonScreen(primaryStage,levelOne);
     	DungeonScreen dungeon2Screen = new DungeonScreen(primaryStage, levelTwo);
     	WinScreen winScreen = new WinScreen(primaryStage);
-     
+    	LoseScreen loseScreen = new LoseScreen(primaryStage);
     	startScreen.getController().setScreen(dungeonScreen);
     	winScreen.getController().setScreen(dungeon2Screen);
+    	startScreen.getController().setScreen(dungeonScreen);
     	dungeonScreen.getLoader().setWinScreen(winScreen);
+    	dungeonScreen.getLoader().setLoseScreen(loseScreen);
     	startScreen.start();
-    	
     } 
 
     public static void main(String[] args) {

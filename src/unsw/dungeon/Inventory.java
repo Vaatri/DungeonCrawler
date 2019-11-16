@@ -164,8 +164,13 @@ public class Inventory implements Observer{
 		}
 		
 		public void removeKey() {
+			Door d = key.getLinkedDoor();
 			setKeyProp(false);
-			key.lockDoor();
+			if (!d.getState().equals(d.getOpenState())) {
+				key.lockDoor();
+				d.setOpen(false);
+			}
+			
 			this.key = null;
 		}
 		

@@ -11,6 +11,8 @@ public class OpenState implements DoorState{
      * if the door is open, then the player is able to pass through the door.
      */
     public void react() {
+    		//door.setOpen(true);
+    		System.out.println("open go through");
     }
 
 	@Override

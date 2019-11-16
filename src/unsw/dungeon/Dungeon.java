@@ -121,7 +121,7 @@ public class Dungeon{
     			return false;
     		}
     	}
-    	
+    	System.out.println("true dungeon check collision");
     	return true;
     }
     

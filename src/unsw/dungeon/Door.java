@@ -102,9 +102,8 @@ public class Door extends Entity implements Subject {
 	@Override
 	public boolean checkCollision(int x, int y, String direction) {
 		//check the entity that is colliding
-		if(!getDungeon().checkIfBoulder(x, y, direction)) {
-			return false;
-		}
+		System.out.println("WHAT'S MY STATE " + this.getState());
+		System.out.println("check collision is true " + state);
 		return state.checkCollision();
 	}
 	

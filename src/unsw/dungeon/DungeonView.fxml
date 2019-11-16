@@ -7,8 +7,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="frame" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="frame" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <GridPane fx:id="squares" onKeyPressed="#handleKeyPress" prefHeight="355.0" prefWidth="353.0">
          <columnConstraints>
@@ -31,7 +32,7 @@
    <right>
       <Pane fx:id="statusContainer" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <GridPane fx:id="andObjectives" layoutY="95.0" prefHeight="60.0" prefWidth="200.0">
+            <GridPane fx:id="andObjectives" alignment="CENTER" layoutX="12.0" layoutY="84.0" prefHeight="60.0" prefWidth="188.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -41,7 +42,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <GridPane fx:id="inventory" layoutY="239.0" prefHeight="117.0" prefWidth="200.0">
+            <GridPane fx:id="inventory" alignment="CENTER" layoutX="12.0" layoutY="239.0" prefHeight="117.0" prefWidth="188.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="48.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="105.0" />
@@ -56,10 +57,13 @@
                <children>
                   <Label fx:id="attacksCount" GridPane.columnIndex="2" />
                   <Label fx:id="durationCount" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <Button fx:id="dropButton" mnemonicParsing="false" onAction="#handleDropButton" text="Drop Key" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="dropButton" mnemonicParsing="false" onAction="#handleDropButton" text="Drop Key" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Nice" size="12.0" />
+                     </font></Button>
                </children>
             </GridPane>
-            <GridPane fx:id="orObjectives" layoutY="152.0" prefHeight="56.0" prefWidth="200.0">
+            <GridPane fx:id="orObjectives" alignment="CENTER" layoutX="12.0" layoutY="146.0" prefHeight="56.0" prefWidth="188.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -69,10 +73,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <Label layoutX="1.0" layoutY="73.0" text="Player Objectives" />
-            <Label layoutX="4.0" layoutY="214.0" text="Player Inventory" />
-            <Button fx:id="resetButton" layoutX="127.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="10.0" prefWidth="63.0" text="Reset" />
-            <GridPane fx:id="livesLabel" layoutX="152.0" layoutY="46.0" prefHeight="21.0" prefWidth="38.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="59.0" prefHeight="21.0" prefWidth="198.0" text="Player Objectives">
+               <font>
+                  <Font name="Open Sans Bold" size="15.0" />
+               </font></Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="214.0" prefHeight="19.0" prefWidth="194.0" text="Player Inventory">
+               <font>
+                  <Font name="Open Sans Bold" size="15.0" />
+               </font></Label>
+            <Button fx:id="resetButton" layoutX="138.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleResetButton" prefHeight="10.0" text="Reset">
+               <font>
+                  <Font name="Nice" size="12.0" />
+               </font></Button>
+            <GridPane fx:id="livesLabel" alignment="CENTER" layoutX="105.0" layoutY="18.0" prefHeight="21.0" prefWidth="28.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="128.0" minWidth="5.0" prefWidth="127.0" />
                </columnConstraints>
@@ -80,7 +93,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <Label layoutX="1.0" layoutY="49.0" text="Lives Remaining (/4):" />
+            <Label layoutX="29.0" layoutY="18.0" text="Lives Left:" textFill="#fc0202">
+               <font>
+                  <Font name="Open Sans Bold" size="14.0" />
+               </font></Label>
          </children>
       </Pane>
    </right>

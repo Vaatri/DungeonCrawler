@@ -23,6 +23,7 @@ public class Key extends Entity implements Collectable{
 		if(d != null) {
 			System.out.println("unlocked door with id " + d.getID());
 			d.setState(d.getUnlockedState());
+			//d.setOpen(true);
 		} else {
 			System.out.println("DOOR IS FUCKED BRO");
 		}
@@ -34,6 +35,7 @@ public class Key extends Entity implements Collectable{
 		Door d = getLinkedDoor();
 		if (d != null) {
 			d.setState(d.getLockedState());
+			d.setOpen(false);
 		} else {
 			System.out.println("DOOR IS FUCKED BRO");
 		}
@@ -73,7 +75,6 @@ public class Key extends Entity implements Collectable{
 			//unlockDoor();
 		}
 	}
-	
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		return true; 

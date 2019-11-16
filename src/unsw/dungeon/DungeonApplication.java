@@ -12,8 +12,8 @@ public class DungeonApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-    	String levelTwo = "test2.json";
     	String levelOne = "level2.json";
+    	String levelTwo = "level1.json";
     	StartScreen startScreen = new StartScreen(primaryStage);
     	
     	DungeonScreen dungeonScreen = new DungeonScreen(primaryStage,levelOne);

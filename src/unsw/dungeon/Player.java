@@ -180,7 +180,7 @@ public class Player extends Entity implements Immovable,Subject{
      * @param direction
      */
     public void move(int x, int y, String direction) {
-
+    	System.out.println("moving " + direction);
 		stateHandler();
     	switch(direction) {
 		case("up"):

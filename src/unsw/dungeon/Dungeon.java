@@ -232,7 +232,7 @@ public class Dungeon{
     	//check for anything adjacent to the boulder that we want to push
 		for(Entity e: entities) {	
     		if ((e instanceof Boulder)  || (e instanceof Enemy) || 
-    			(e instanceof Door) || (e instanceof Exit) || (e instanceof Wall)) {
+    			(e instanceof Door) || (e instanceof Portal) || (e instanceof Exit) || (e instanceof Wall)) {
 				switch(direction) {
 				case("up"):
 					if (e.getX() == x && e.getY() == (y-1))

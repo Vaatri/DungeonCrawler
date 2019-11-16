@@ -299,7 +299,9 @@ public class Player extends Entity implements Immovable,Subject{
 			dungeon.removeEntity(t);
 
 	}
-	
+	public Key getKey() {
+		return this.inven.getKey();
+	}
 	public Key dropKey() {
 		if(dungeon.getEntityAtLocation(getX(), getY()).size() == 1) {
 			Key k = inven.getKey();

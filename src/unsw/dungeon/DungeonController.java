@@ -186,25 +186,45 @@ public class DungeonController {
     	return new ImageView(new Image("/key4.png"));
     }
     private void createKeySlot(BooleanProperty bp) {
-    	ImageView keyImage = new ImageView(new Image("/key1.png"));
-    	dropButton.setVisible(false);
+    	//ImageView keyImage = new ImageView(new Image("/key1.png"));
     	
+    	dropButton.setVisible(false);
+    	System.out.println("up ");
+    	ImageView img = keyImView();
+    	img.setVisible(false);
+		inventory.add(img, 0, 2);
 		bp.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				
 				if(newValue) {
-					//keyImage = new ImageView(keyIm(dungeon.getPlayer().getKeyID()));
-					keyImage.setVisible(true);
+					img.setImage(keyIm(dungeon.getkeyID()));
+					img.setVisible(true);
 					dropButton.setVisible(true);
 				} else {
-					keyImage.setVisible(false);
+					img.setVisible(false);
 					dropButton.setVisible(false);
 				}
 			}
 		});
-    	keyImage.setVisible(false);
-    	inventory.add(keyImage, 0, 2);
-
+    }
+    @FXML
+    public void handleDropButton(ActionEvent dropButtonPress) {
+    	Key k = player.dropKey();
+    	if (k != null) {
+    		Image keyImage = keyIm(k.getID());
+    		System.out.println("handle drop with id " + k.getID());
+    		ImageView keyView = new ImageView(keyImage);
+    		squares.add(keyView, k.getX(), k.getY());
+    		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+    			@Override
+    			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+    				if(newValue) {
+    					keyView.setVisible(false);
+    				}
+    			}
+    		});
+    	}
     	
     }
     
@@ -308,27 +328,7 @@ public class DungeonController {
         stage.show();
     }
     
-    @FXML
-    public void handleDropButton(ActionEvent dropButtonPress) {
-    	Key k = player.dropKey();
-    	if (k != null) {
-    		Image keyImage = keyIm(k.getID());
-    		ImageView keyView = new ImageView(keyImage);
-    		squares.add(keyView, k.getX(), k.getY());
-    		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
-    			@Override
-    			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-    				if(newValue) {
-    					keyView.setVisible(false);
-    				}
-    			}
-    		});
-    	}
-
-    	
-    	
-    	
-    }
+    
 
 }
 

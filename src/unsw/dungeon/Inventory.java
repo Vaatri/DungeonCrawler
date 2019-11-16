@@ -165,6 +165,7 @@ public class Inventory implements Observer{
 		
 		public void removeKey() {
 			setKeyProp(false);
+			key.lockDoor();
 			this.key = null;
 		}
 		

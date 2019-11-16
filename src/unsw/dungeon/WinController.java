@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -26,6 +27,9 @@ public class WinController {
 	
 	@FXML
 	private Button nextLevelButton;
+	
+	@FXML
+	private Label winLabel;
 		
 	
 	public void setScreen(DungeonScreen dungeonScreen) {
@@ -44,11 +48,22 @@ public class WinController {
 	@FXML
 	private void initialize() {
 		nextLevelButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override public void handle(ActionEvent e) {
+			@Override 
+			public void handle(ActionEvent e) {
 			     dungeonScreen.start();
 			}
 		});
 		
-//		canvas.back
+	}
+	
+	public void convertEndScreen() {
+		winLabel.setText("You have finished the game!!");
+		nextLevelButton.setText("exit");
+		nextLevelButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				stage.close();
+			}
+		});
 	}
 }

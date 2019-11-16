@@ -344,7 +344,6 @@ public class DungeonControllerLoader extends DungeonLoader {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
-					System.out.println("hello");
 					winScreen.start();
 				}
 			}
@@ -356,7 +355,6 @@ public class DungeonControllerLoader extends DungeonLoader {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
-					System.out.println("CHANGED " + oldValue + newValue);
 					loseScreen.start();
 				}
 			}

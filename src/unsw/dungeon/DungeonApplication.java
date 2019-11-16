@@ -12,18 +12,22 @@ public class DungeonApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-    	String levelOne = "level2.json";
-    	String levelTwo = "test2.json";
+    	String levelOne = "test2.json";
+    	String levelTwo = "level2.json";
     	StartScreen startScreen = new StartScreen(primaryStage);
     	DungeonScreen dungeonScreen = new DungeonScreen(primaryStage,levelOne);
     	DungeonScreen dungeon2Screen = new DungeonScreen(primaryStage, levelTwo);
     	WinScreen winScreen = new WinScreen(primaryStage);
+    	WinScreen winScreen2 = new WinScreen(primaryStage);
+    	winScreen2.getController().convertEndScreen();
     	LoseScreen loseScreen = new LoseScreen(primaryStage);
     	startScreen.getController().setScreen(dungeonScreen);
     	winScreen.getController().setScreen(dungeon2Screen);
     	startScreen.getController().setScreen(dungeonScreen);
     	dungeonScreen.getLoader().setWinScreen(winScreen);
     	dungeonScreen.getLoader().setLoseScreen(loseScreen);
+    	dungeon2Screen.getLoader().setWinScreen(winScreen2);
+    	dungeon2Screen.getLoader().setLoseScreen(loseScreen);
     	startScreen.start();
     } 
 

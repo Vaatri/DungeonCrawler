@@ -60,6 +60,9 @@ public class DungeonController {
     
     @FXML
     private Button resetButton;
+    
+    @FXML
+    private Button dropButton;
 
     private List<ImageView> initialEntities;
     
@@ -287,6 +290,11 @@ public class DungeonController {
         root.requestFocus();
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @FXML
+    public void handleDropButton(ActionEvent dropButtonPress) {
+    	System.out.println("hello");
     }
 
 }

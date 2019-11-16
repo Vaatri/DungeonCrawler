@@ -60,6 +60,9 @@ public class DungeonController {
     
     @FXML
     private Button resetButton;
+    
+    @FXML
+    private Button dropButton;
 
     private List<ImageView> initialEntities;
     
@@ -103,6 +106,7 @@ public class DungeonController {
         createInventory();
         createLivesLabel();
         player.addObserverList();
+        dropButton.setFocusTraversable(false);
     }
     private void createObjectives() {
   
@@ -125,7 +129,7 @@ public class DungeonController {
     private void createInventory() {
     	Inventory playerInven = player.getInventory();
     	createSwordSlot(playerInven.hasSwordProp(), playerInven);
-    	createKeySlot(playerInven.hasKeyProp(), playerInven.getKey());
+    	createKeySlot(playerInven.hasKeyProp());
     	createPotionSlot(playerInven.hasPotionProp(), playerInven);
     	createTreasureSlot(playerInven.hasTreasureProp(), playerInven);
     }
@@ -173,11 +177,10 @@ public class DungeonController {
     	if(dungeon.getkeyID()==3)return new ImageView(new Image("/key3.png"));
     	return new ImageView(new Image("/key4.png"));
     }
-    private void createKeySlot(BooleanProperty bp, Key key) {
-    	//ImageView keyImage = new ImageView(keyIm());
-    	//System.out.println("this is key id " + this.dungeon.;
-    	//keyImage = new ImageView(keyIm(key.getID()));
-    	System.out.println("hi");
+    private void createKeySlot(BooleanProperty bp) {
+    	//ImageView keyImage = new ImageView(new Image("/key1.png"));
+    	dropButton.setVisible(false);
+    	
 		bp.addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -190,6 +193,8 @@ public class DungeonController {
 					
 				} else {
 					keyIm().setVisible(false);
+					//keyImage.setVisible(true);
+					dropButton.setVisible(true);
 				}
 			}
 			
@@ -266,6 +271,7 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
+    	System.out.println("hello");
     	switch (event.getCode()) {
         case UP:
             player.moveUp();
@@ -297,6 +303,27 @@ public class DungeonController {
         root.requestFocus();
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @FXML
+    public void handleDropButton(ActionEvent dropButtonPress) {
+    	Key k = player.dropKey();
+    	if (k != null) {
+    		//Image keyImage = keyIm();
+    		ImageView keyView = keyIm();
+    		squares.add(keyView, k.getX(), k.getY());
+    		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
+    			@Override
+    			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+    				if(newValue) {
+    					keyView.setVisible(false);
+    				}
+    			}
+    		});
+    	}
+    	
+    	
+    	
     }
 
 }

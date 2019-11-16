@@ -62,7 +62,10 @@ public class Key extends Entity implements Collectable{
 		Player p = dungeon.getPlayer();
 		if(checkPos(p.getX(), p.getY(), getX(), getY())) {
 			try {
-				if(p.pickUpKey(this)) unlockDoor();
+				if(p.pickUpKey(this)) {
+					unlockDoor();
+					setInInvenProp(true);
+				}	
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

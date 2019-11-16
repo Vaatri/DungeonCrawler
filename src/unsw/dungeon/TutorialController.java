@@ -22,6 +22,7 @@ public class TutorialController {
     private ImageView enemyImage;
     private ImageView exitImage;
     private ImageView potionImage;
+    private ImageView potion2Image;
     private ImageView keyImage;
     private ImageView swordImage;
     private ImageView openDoorImage;
@@ -45,6 +46,7 @@ public class TutorialController {
         enemyImage = new ImageView(new Image("/deep_elf_master_archer.png"));
         exitImage = new ImageView(new Image("/exit.png"));
         potionImage = new ImageView(new Image("/bubbly.png"));
+        potion2Image = new ImageView(new Image("brilliant_blue_new.png"));
         keyImage = new ImageView(new Image("/key1.png"));
         swordImage = new ImageView(new Image("/greatsword_1_new.png"));
         openDoorImage = new ImageView(new Image("/open_door1.png"));
@@ -66,12 +68,13 @@ public class TutorialController {
 		tutorialPane.add(treasureImage, 0, 1);
 		tutorialPane.add(swordImage, 0, 2);
 		tutorialPane.add(potionImage, 0, 3);
-		tutorialPane.add(keyImage, 0, 4);
-		tutorialPane.add(doorImage, 0, 5);
-		tutorialPane.add(enemyImage, 0, 6);
-		tutorialPane.add(boulderImage, 0, 7);
-		tutorialPane.add(floorSwitchImage, 0, 8);
-		tutorialPane.add(portalImage, 0, 9);
-		tutorialPane.add(exitImage, 0, 10);
+		tutorialPane.add(potion2Image, 0, 4);
+		tutorialPane.add(keyImage, 0, 5);
+		tutorialPane.add(doorImage, 0, 6);
+		tutorialPane.add(enemyImage, 0, 7);
+		tutorialPane.add(boulderImage, 0, 8);
+		tutorialPane.add(floorSwitchImage, 0, 9);
+		tutorialPane.add(portalImage, 0, 10);
+		tutorialPane.add(exitImage, 0, 11);
 	}
 }

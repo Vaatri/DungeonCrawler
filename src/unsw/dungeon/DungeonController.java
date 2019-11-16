@@ -168,8 +168,16 @@ public class DungeonController {
     		usageCountLabel.setVisible(true);
     	}
     }
-    public ImageView keyIm() {
+    public Image keyIm(int i) {
     	
+    	if(i==1)return new Image("/key1.png");
+    	if(i==2)return new Image("/key2.png");
+    	if(i==3)return new Image("/key3.png");
+    	return new Image("/key4.png");
+
+    }
+    public ImageView keyImView() {
+
     	if (!dungeon.hasKey()) return new ImageView(new Image ("/key1.png"));
     	
     	if(dungeon.getkeyID() == 1)return new ImageView(new Image("/key1.png"));
@@ -178,7 +186,7 @@ public class DungeonController {
     	return new ImageView(new Image("/key4.png"));
     }
     private void createKeySlot(BooleanProperty bp) {
-    	//ImageView keyImage = new ImageView(new Image("/key1.png"));
+    	ImageView keyImage = new ImageView(new Image("/key1.png"));
     	dropButton.setVisible(false);
     	
 		bp.addListener(new ChangeListener<Boolean>() {
@@ -186,22 +194,17 @@ public class DungeonController {
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if(newValue) {
 					//keyImage = new ImageView(keyIm(dungeon.getPlayer().getKeyID()));
-					System.out.println("set true " + keyIm());
-			    	
-			    	keyIm().setVisible(true);
-			    	inventory.add(keyIm(), 0, 2);
-					
-				} else {
-					keyIm().setVisible(false);
-					//keyImage.setVisible(true);
+					keyImage.setVisible(true);
 					dropButton.setVisible(true);
+				} else {
+					keyImage.setVisible(false);
+					dropButton.setVisible(false);
 				}
 			}
-			
 		});
-		System.out.println("set false " + keyIm());
-		keyIm().setVisible(false);
-		inventory.add(keyIm(), 0, 2);
+    	keyImage.setVisible(false);
+    	inventory.add(keyImage, 0, 2);
+
     	
     }
     
@@ -309,8 +312,8 @@ public class DungeonController {
     public void handleDropButton(ActionEvent dropButtonPress) {
     	Key k = player.dropKey();
     	if (k != null) {
-    		//Image keyImage = keyIm();
-    		ImageView keyView = keyIm();
+    		Image keyImage = keyIm(k.getID());
+    		ImageView keyView = new ImageView(keyImage);
     		squares.add(keyView, k.getX(), k.getY());
     		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
     			@Override
@@ -321,6 +324,7 @@ public class DungeonController {
     			}
     		});
     	}
+
     	
     	
     	

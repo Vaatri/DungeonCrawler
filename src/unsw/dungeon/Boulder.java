@@ -65,6 +65,9 @@ public class Boulder extends Entity{
 		
 	}
 	
+	/**
+	 * if the boulder is not colliding with another boulder, i.e. boulder is not stacked, we can move the boulder
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		int checkX = x;

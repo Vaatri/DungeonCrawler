@@ -49,13 +49,13 @@ public class Door extends Entity implements Subject {
 	public void react() {
     	state.react();
     }
+	
 	/**
 	 * check if door is unlocked.
 	 * @return
 	 */
 	public boolean isUnlocked() {
 		if(this.state == unlockedState ) {
-			
 			return true;
 		}
 		return false;
@@ -99,11 +99,11 @@ public class Door extends Entity implements Subject {
 		react();
 	}
 	
+	/**
+	 * collision handling depending on its state
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String direction) {
-		//check the entity that is colliding
-		System.out.println("WHAT'S MY STATE " + this.getState());
-		System.out.println("check collision is true " + state);
 		return state.checkCollision();
 	}
 	
@@ -124,21 +124,17 @@ public class Door extends Entity implements Subject {
 	}
 	@Override
 	public void registerObserver(Observer o) {
-		// TODO Auto-generated method stub
 		observers.add(o);
 		
 	}
 	@Override
 	public void removeObserver(Observer o) {
-		// TODO Auto-generated method stub
 		observers.remove(o);
 		
 	}
 	@Override
 	public void notifyObservers() {
-		// TODO Auto-generated method stub
 		for(Observer o : observers) {
-			System.out.println("hello");
 			o.update(this);
 		}
 		

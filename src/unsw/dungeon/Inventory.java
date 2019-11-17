@@ -138,7 +138,11 @@ public class Inventory implements Observer{
 		public IntegerProperty getTreasureProp() {
 			return treasure;
 		}
-
+		
+		/**
+		 * set treasure inside inventory
+		 * @param t
+		 */
 		public void setTreasure(Treasure t) {
 			t.setInInvenProp(true);
 			setTreasureProp(true);
@@ -148,14 +152,21 @@ public class Inventory implements Observer{
 		public Potion getPotion() {
 			return potion;
 		}
-
+		
+		/**
+		 * set potion inside inventory
+		 * @param p
+		 */
 		public void setPotion(Potion p) {
 			this.potion = p;
 			p.setInInvenProp(true);
 			setPotionProp(true);
 		}
 
-
+		/**
+		 * set key inside inventory
+		 * @param k
+		 */
 		public void setKey(Key k) {
 			
 			this.key = k;
@@ -163,6 +174,9 @@ public class Inventory implements Observer{
 			setKeyProp(true);
 		}
 		
+		/**
+		 * remove key from inventory
+		 */
 		public void removeKey() {
 			Door d = key.getLinkedDoor();
 			setKeyProp(false);
@@ -174,11 +188,17 @@ public class Inventory implements Observer{
 			this.key = null;
 		}
 		
+		/**
+		 * remove sword from inventory
+		 */
 		public void removeSword() {
 			setSwordProp(false);
 			this.sword = null;
 		}
 		
+		/**
+		 * remove potion from inventory
+		 */
 		public void removePotion() {
 			setPotionProp(false);
 			this.potion = null;

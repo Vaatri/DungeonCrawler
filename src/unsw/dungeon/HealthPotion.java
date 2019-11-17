@@ -47,16 +47,13 @@ public class HealthPotion extends Entity implements Collectable{
 
 	@Override
 	public BooleanProperty inInventoryProp() {
-		// TODO Auto-generated method stub
 		return inInventory;
 	}
 
 	@Override
 	public void setInInvenProp(boolean b) {
-		// TODO Auto-generated method stub
 		inInventory.set(b);
 		
 	}
 	
-
 }

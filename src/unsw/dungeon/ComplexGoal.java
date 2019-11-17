@@ -42,7 +42,6 @@ public class ComplexGoal implements Goal {
 		return type;
 	}
 	
-	
 	@Override
 	public void addGoal(Goal g) {
 		goalList.add(g);
@@ -52,9 +51,6 @@ public class ComplexGoal implements Goal {
 	public void removeGoal() {
 		
 	}
-//	public String toString() {
-//		return "neededToSatisfy: " +neededToSatisfy+" containing Goals: "+goalList;
-//	}
 	
 	/**
 	 * this will check all of the single Goals within complex goal's list
@@ -82,7 +78,6 @@ public class ComplexGoal implements Goal {
 	}
 	@Override
 	public void setNeededToSatisfy(int i) {
-		// TODO Auto-generated method stub
 		totalAndGoals.set(i);
 	}
 	
@@ -91,47 +86,38 @@ public class ComplexGoal implements Goal {
 		return totalAndGoals.get();
 	}
 	
-
 	@Override
 	public int getGoalsSatisfied() {
-		// TODO Auto-generated method stub
 		return AndGoalsSatisfied.get();
 	}
 
 	@Override
 	public void addSatisfied() {
-		// TODO Auto-generated method stub
 		AndGoalsSatisfied.set(getGoalsSatisfied()+1);
 	}
 
 	@Override
 	public void setCompleted(Goal g) {
-		// TODO Auto-generated method stub
 		OrSatisfied = true;
 	}
 	
 	@Override
 	public IntegerProperty propertyNTS() {
-		// TODO Auto-generated method stub
 		return totalAndGoals;
 	}
-
-
+	
 	@Override
 	public IntegerProperty propertyGS() {
-		// TODO Auto-generated method stub
 		return AndGoalsSatisfied;
 	}
 
 	@Override
 	public boolean getMandatory() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public BooleanProperty getMandoProperty() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

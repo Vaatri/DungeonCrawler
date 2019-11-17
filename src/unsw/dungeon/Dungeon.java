@@ -121,10 +121,16 @@ public class Dungeon{
     			return false;
     		}
     	}
-    	System.out.println("true dungeon check collision");
     	return true;
     }
     
+    /**
+     * boolean function to check whether the entity at coordinates x and y is a boulder
+     * @param x
+     * @param y
+     * @param dir
+     * @return
+     */
     public boolean checkIfBoulder(int x, int y, String dir) {
 		int checkX = x;
 		int checkY = y;
@@ -141,7 +147,6 @@ public class Dungeon{
 		case "right":
 			checkX -= 1;
 		}
-		//get the enttity that is colliding
 		ArrayList<Entity> el = getEntityAtLocation(checkX, checkY);
 		for(Entity e: el) {
 			if(e instanceof Boulder) {
@@ -169,11 +174,6 @@ public class Dungeon{
     	}
     	return entityList;
     }
-    /*
-    public void removeEntityFromMap(Entity e) {
-    	entities.remove(e);
-    	System.out.println("removed "+ e + " from map");
-    }*/
     
     /**
      * return a list of entities from dungeon
@@ -270,6 +270,10 @@ public class Dungeon{
     	return count;
     }
     
+    /**
+     * remove entity from entity list
+     * @param e
+     */
     public void removeEntity(Entity e)  {
     	entities.remove(e);
     }

@@ -24,7 +24,6 @@ public class DungeonApplication extends Application {
     	WinScreen winScreen = new WinScreen(primaryStage);
     	WinScreen winScreen2 = new WinScreen(primaryStage);
     	WinScreen winScreen3 = new WinScreen(primaryStage);
-    	//winScreen2.getController().convertEndScreen();
     	winScreen3.getController().convertEndScreen();
     	
     	LoseScreen loseScreen = new LoseScreen(primaryStage);

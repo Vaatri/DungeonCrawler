@@ -22,6 +22,9 @@ public class Exit extends Entity implements Subject{
 		notifyObservers();
 	}
 	
+	/**
+	 * check that a player is not colliding with a boulder
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		//check the entity that is colliding

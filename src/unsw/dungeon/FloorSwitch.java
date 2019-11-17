@@ -49,6 +49,9 @@ public class FloorSwitch extends Entity implements Subject{
 		untriggerSwitch();
 	}
 	
+	/**
+	 * trigger floor switch if boulder is moved on top
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		//check the entity that is colliding
@@ -57,7 +60,6 @@ public class FloorSwitch extends Entity implements Subject{
 		}
 		return true;
 	}
-	
 	
 	/**
 	 * Set the switches trigger status to triggered and notify observers.

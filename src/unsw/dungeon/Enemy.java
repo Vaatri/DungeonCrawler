@@ -30,13 +30,12 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	public MoveOption getMoveOption() {
 		return moveOption;
 	}
-	
 	public void setMoveOption(MoveOption moveOption) {
 		this.moveOption = moveOption;
 	}
 	
 	/**
-	 * find the distance from enemy to player
+	 * find the distance from enemy to player if the enemy was to move up
 	 * @param player
 	 * @return
 	 */
@@ -48,7 +47,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	}
 	
 	/**
-	 * find the distance from enemy to player
+	 * find the distance from enemy to player if the enemy was to move down
 	 * @param player
 	 * @return
 	 */
@@ -60,7 +59,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	}
 	
 	/**
-	 * find the distance from enemy to player
+	 * find the distance from enemy to player if the enemy was to move left
 	 * @param player
 	 * @return
 	 */
@@ -72,7 +71,7 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 	}
 	
 	/**
-	 * find the distance from enemy to player
+	 * find the distance from enemy to player if the enemy was to move right
 	 * @param player
 	 * @return
 	 */
@@ -82,6 +81,12 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		}
 		return(Math.abs(player.getX() - (this.getX()+1)) + Math.abs(player.getY() - this.getY()));
 	}
+	
+	/**
+	 * find the distance from enemy to player if the enemy was to stay in its spot
+	 * @param player
+	 * @return
+	 */
 	public int distanceOnSpot(Player player) {
 	
 		return(Math.abs(player.getX() - this.getX()) + Math.abs(player.getY() - this.getY()));
@@ -110,7 +115,6 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		setDead(true);
 		notifyObservers();
 	}
-	
 	
 	/**
 	 * Similar move function that player uses.
@@ -181,10 +185,11 @@ public class Enemy extends Entity implements Immovable,Observer, Subject{
 		return type;
 	}
 	
+	/**
+	 * return true if player is colliding with enemy
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String direction) {
-		//check the entity that is colliding
-		
 		if(!getDungeon().checkIfBoulder(x, y, direction)) {
 			return false;
 		}

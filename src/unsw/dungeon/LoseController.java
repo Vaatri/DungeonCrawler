@@ -16,18 +16,28 @@ public class LoseController {
 	@FXML
 	private Button exitButton;
 	
-//	private DungeonScreen resetScreen;
 	
 	private Stage stage;
 	
 	private String levelFileName;
 	
+	
+	
+	/**
+	 * Event handler of user pressing restart Button within lose screen.
+	 * @param restartButtonPress
+	 * @throws IOException
+	 */
 	@FXML
 	public void handleRestartButton(ActionEvent restartButtonPress) throws IOException {
 		DungeonScreen resetScreen = new DungeonScreen(stage, levelFileName);
 		resetScreen.start();
 	}
 	
+	/**
+	 * Event handler of user pressing exit button within lose screen. 
+	 * @param exitButtonPress
+	 */
 	@FXML
 	public void handleExitButton(ActionEvent exitButtonPress) {
 		stage.close();

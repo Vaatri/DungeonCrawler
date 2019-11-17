@@ -16,6 +16,11 @@ public class Sword extends Entity implements Collectable{
         this.inInventory = new SimpleBooleanProperty(false);
     }
 	
+	/**
+	 * Use the sword. Sword usage will be decremented.
+	 * If sword is exhausted, sword will be removed from inventory.
+	 * @param i
+	 */
 	public void useSword(Inventory i) {
 		attacksLeft.setValue(attacksLeft.get() - 1);
 		if (emptySword()) {
@@ -27,6 +32,10 @@ public class Sword extends Entity implements Collectable{
 		return attacksLeft;
 	}
 	
+	/**
+	 * Check if sword has attacks left or not.
+	 * @return
+	 */
 	public boolean emptySword() {
 		if (attacksLeft.get() == 0) {
 			return true;
@@ -52,6 +61,9 @@ public class Sword extends Entity implements Collectable{
 		return true; 
 	}
 
+	/**
+	 * check if item is in players inventory.
+	 */
 	@Override
 	public boolean inInventory() {
 		// TODO Auto-generated method stub

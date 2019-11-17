@@ -289,6 +289,12 @@ public class DungeonControllerLoader extends DungeonLoader {
 		trackGoals(goal, label);
 	}
 	
+	
+	/**
+	 * Track players goals through each level and display it within the UI.
+	 * @param goal
+	 * @param label
+	 */
 	private void trackGoals(Goal goal, Label label) {
 		goal.propertyGS().addListener(new ChangeListener<Number>() {
 			@Override
@@ -303,6 +309,11 @@ public class DungeonControllerLoader extends DungeonLoader {
 		});
 	}
 
+	/**
+	 * Track collectable entities. If entity is picked up by player, entity's image will be set to invisible.
+	 * @param c
+	 * @param dungeonNode
+	 */
 	private void trackCollectablesNonInventory(Collectable c, Node dungeonNode) {
 		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -315,6 +326,14 @@ public class DungeonControllerLoader extends DungeonLoader {
 		
 	}
 	
+	
+	/**
+	 * Track collectable entities. If entity is picked up by player, entity's image will be added
+	 * to players inventory UI.
+	 * @param c
+	 * @param dungeonNode
+	 * @param inventoryNode
+	 */
 	private void trackCollectables(Collectable c, Node dungeonNode, Node inventoryNode) {
 		c.inInventoryProp().addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -327,6 +346,11 @@ public class DungeonControllerLoader extends DungeonLoader {
 		});
 	}
 	
+	/**
+	 * Track enemy entities. If enemy is dead, set Image to invisible.
+	 * @param enemy
+	 * @param node
+	 */
 	private void trackEnemyDead(Enemy enemy, Node node) {
 		enemy.getDeadProp().addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -338,6 +362,9 @@ public class DungeonControllerLoader extends DungeonLoader {
 		});
 	}
 	
+	/**
+	 * Track level goals. If goal is completed, Win screen will be displayed.
+	 */
 	@Override
 	public void trackLevelGoal(ComplexGoal g) {
 		g.getCompletedProp().addListener(new ChangeListener<Boolean>() {
@@ -349,6 +376,10 @@ public class DungeonControllerLoader extends DungeonLoader {
 			}
 		});
 	}
+	
+	/**
+	 * Track player lives. If player lives is depleted, lose screen will be displayed.
+	 */
 	@Override
 	public void trackPlayerDead(Player p) {
 		p.getDead().addListener(new ChangeListener<Boolean>() {
@@ -360,6 +391,8 @@ public class DungeonControllerLoader extends DungeonLoader {
 			}
 		});
 	}
+	
+	
     public void setWinScreen(WinScreen ws) {
     	winScreen = ws;
     }

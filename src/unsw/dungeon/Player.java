@@ -288,12 +288,25 @@ public class Player extends Entity implements Immovable,Subject{
 			setState(this.getPotionState());
 		}
 	}
+	
+	/**
+	 * On event of collision with player and health potion. Player will pick up health potion.
+	 * Potion will be removed from map, and player Life will be incremented.
+	 * @param p
+	 * @throws FileNotFoundException
+	 */
 	public void pickUpHealthPotion(HealthPotion p) throws FileNotFoundException{
 		inven.setHealthPotion(true);
 		p.setInInvenProp(true);
 		dungeon.removeEntity(p);
 		this.incrementLife();
 	}
+	
+	/**
+	 * On event of collosion with player and treasure. Treasure will be added into player inventory
+	 * and removed from the map.
+	 * @param t
+	 */
 	public void pickUpTreasure(Treasure t) {
 			inven.setTreasure(t);
 			dungeon.removeEntity(t);
@@ -302,6 +315,12 @@ public class Player extends Entity implements Immovable,Subject{
 	public Key getKey() {
 		return this.inven.getKey();
 	}
+	
+	/**
+	 * On event of drop button press. Key will be removed from players inventory, added into dungeons entity
+	 * list and coordinates will be set to players location.
+	 * @return
+	 */
 	public Key dropKey() {
 		if(dungeon.getEntityAtLocation(getX(), getY()).size() == 1) {
 			Key k = inven.getKey();

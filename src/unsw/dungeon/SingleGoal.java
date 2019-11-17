@@ -107,6 +107,9 @@ public class SingleGoal implements Goal, Observer {
 	
 
 
+	/**
+	 * Wrapper for goalCriteria. Will update the appropriate attribute in complex goal .
+	 */
 	@Override
 	public void setCompleted(Goal g) {
 		// TODO Auto-generated method stub

@@ -108,6 +108,11 @@ public class DungeonController {
         player.addObserverList();
         dropButton.setFocusTraversable(false);
     }
+    
+    
+    /**
+     * Add level objectives to players objective UI.
+     */
     private void createObjectives() {
   
     	int andRowCount = 0;
@@ -120,12 +125,20 @@ public class DungeonController {
     		}
     	}
     }
+    
+    /**
+     * Create a label for player lives in UI.
+     */
     private void createLivesLabel() {
     	Label label = new Label();
 		label.textProperty().bind(player.getLives().asString());
 		livesLabel.add(label, 0, 0);
 		
 	}
+    
+    /**
+     * Create respective images/labels for Players inventory UI.
+     */
     private void createInventory() {
     	Inventory playerInven = player.getInventory();
     	createSwordSlot(playerInven.hasSwordProp(), playerInven);
@@ -134,6 +147,13 @@ public class DungeonController {
     	createTreasureSlot(playerInven.hasTreasureProp(), playerInven);
     }
     
+    
+    /**
+     * Create a sword image for players inventory. Initially it will be invisible, but once
+     * player picks up a sword. Sword will be visible in inventory, with amount of attacks left.
+     * @param bp
+     * @param playerInven
+     */
     private void createSwordSlot(BooleanProperty bp, Inventory playerInven) {
     	ImageView swordImage = new ImageView(new Image("/greatsword_1_new.png"));
     	Label swordUsageLabel = new Label("Attacks left: ");
@@ -161,6 +181,12 @@ public class DungeonController {
 		});
     }
     
+    /**
+     * Set the amount of uses the sword has left.
+     * Once sword is used, this will be called to change the label text.
+     * @param playerInven
+     * @param usageCountLabel
+     */
     private void setUsageCountLabel(Inventory playerInven, Label usageCountLabel) {
     	Sword s = playerInven.getSword();
     	if(s != null) {
@@ -168,6 +194,12 @@ public class DungeonController {
     		usageCountLabel.setVisible(true);
     	}
     }
+    
+    /**
+     * Return correct key image.
+     * @param i
+     * @return
+     */
     public Image keyIm(int i) {
     	
     	if(i==1)return new Image("/key1.png");
@@ -176,6 +208,11 @@ public class DungeonController {
     	return new Image("/key4.png");
 
     }
+    
+    /**
+     * Return correct key ImageView.
+     * @return
+     */
     public ImageView keyImView() {
 
     	if (!dungeon.hasKey()) return new ImageView(new Image ("/key1.png"));
@@ -185,6 +222,12 @@ public class DungeonController {
     	if(dungeon.getkeyID()==3)return new ImageView(new Image("/key3.png"));
     	return new ImageView(new Image("/key4.png"));
     }
+    
+    /**
+     * Create a key slot within player's inventory UI.
+     * Will also create a drop button that player can use to drop the key.
+     * @param bp
+     */
     private void createKeySlot(BooleanProperty bp) {
     	//ImageView keyImage = new ImageView(new Image("/key1.png"));
     	
@@ -208,12 +251,17 @@ public class DungeonController {
 			}
 		});
     }
+    
+    /**
+     * Handler for drop button press event. Key will be dropped, removed from player inventory
+     * inventory image will be set to invisible, and a new image will be created within the dungeon view.
+     * @param dropButtonPress
+     */
     @FXML
     public void handleDropButton(ActionEvent dropButtonPress) {
     	Key k = player.dropKey();
     	if (k != null) {
     		Image keyImage = keyIm(k.getID());
-    		System.out.println("handle drop with id " + k.getID());
     		ImageView keyView = new ImageView(keyImage);
     		squares.add(keyView, k.getX(), k.getY());
     		k.inInventoryProp().addListener(new ChangeListener<Boolean>() {
@@ -228,6 +276,13 @@ public class DungeonController {
     	
     }
     
+    
+    /**
+     * Create a potion slot for player's inventory in UI. Connecting label will also be created
+     * and set to invisible. Once player picks up a potion, image and respective labels will be set to visible.
+     * @param bp
+     * @param playerInven
+     */
     private void createPotionSlot(BooleanProperty bp, Inventory playerInven) {
 		ImageView potionImage = new ImageView (new Image("/bubbly.png"));
 		Label durationLabel = new Label("Duration: ");
@@ -253,6 +308,12 @@ public class DungeonController {
 		inventory.add(potionImage, 0, 1);	
     }
     
+    
+    /**
+     * Track the duration for potions. This will set the label text.
+     * @param playerInven
+     * @param countLabel
+     */
     private void setPotionUsageCountLabel(Inventory playerInven, Label countLabel) {
     	Potion p = playerInven.getPotion();
     	if (p != null) {
@@ -261,6 +322,12 @@ public class DungeonController {
     	}
     }
     
+    /**
+     * Create a treasure slot for players inventory within UI. Will initially be set to invisible.
+     * Will create a listener onto players inventory.
+     * @param bp
+     * @param playerInven
+     */
     private void createTreasureSlot(BooleanProperty bp, Inventory playerInven) {
     	ImageView treasureImage = new ImageView(new Image("/gold_pile.png"));
     	Label descriptionLabel = new Label("How many: ");
@@ -287,6 +354,11 @@ public class DungeonController {
     	inventory.add(treasureCount, 2, 3);
     }
     
+    /**
+     * Track how much treasure player has in inventory and display it in inventory UI.
+     * @param playerInven
+     * @param treasureCount
+     */
     private void createTreasureCountLabel(Inventory playerInven, Label treasureCount) {
     	treasureCount.textProperty().bind(playerInven.getTreasureProp().asString());
     	treasureCount.setVisible(true);
@@ -313,6 +385,12 @@ public class DungeonController {
         }
     }
     
+    
+    /**
+     * Handler for the event of reset button press. Will reset the dungeon to its original state.
+     * @param resetButtonPress
+     * @throws IOException
+     */
     @FXML
     public void handleResetButton(ActionEvent resetButtonPress) throws IOException {
     	DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(levelFile);

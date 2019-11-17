@@ -58,7 +58,11 @@ public class Potion extends Entity implements Collectable {
 		return true; 
 	}
 	
-	//refactoring
+	
+	/**
+	 * In event of collision with Entity. If entity is player, then potion
+	 * will be either picked up and placed into player inventory, or left on dungeon floor.
+	 */
 	@Override
 	public void collide() {
 		Player p = getDungeon().getPlayer();

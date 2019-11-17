@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class DungeonApplication extends Application {
 
+	
+	/**
+	 * Start the Dungeon crawlers game.
+	 */
     @Override
     public void start(Stage primaryStage) throws IOException {
     	String levelOne = "level1.json";
@@ -42,7 +46,6 @@ public class DungeonApplication extends Application {
     	dungeon3Screen.getLoader().setWinScreen(winScreen3);
     	dungeon3Screen.getLoader().setLoseScreen(loseScreen3);
     	
-    	startScreen.getController().setScreen(dungeonScreen);
     	startScreen.getController().setScreen(dungeonScreen);
     	
     	loseScreen.getController().setLevelFileName(levelOne);

@@ -57,6 +57,10 @@ public class Portal extends Entity implements Immovable{
 		this.portalID = portalID;
 	}
 
+	
+	/**
+	 * In event of collision with player. Player will be teleported to connected portal.
+	 */
 	@Override
 	public void collide() {
 		Player p = getDungeon().getPlayer();
@@ -64,6 +68,10 @@ public class Portal extends Entity implements Immovable{
 			teleport();
 		}
 	}
+	
+	/**
+	 * Determine behaviour of colliding with another entity.
+	 */
 	@Override
 	public boolean checkCollision(int x, int y, String dir) {
 		resetPortal();

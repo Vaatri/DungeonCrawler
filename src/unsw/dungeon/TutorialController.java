@@ -62,6 +62,9 @@ public class TutorialController {
 		dungeonScreen = ds;
 	}
 	
+	/**
+	 * add images to tutorial gridpane.
+	 */
 	@FXML
 	private void initialize() {
 		tutorialPane.add(playerImage,0, 0);

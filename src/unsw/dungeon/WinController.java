@@ -56,6 +56,9 @@ public class WinController {
 		
 	}
 	
+	/**
+	 * If level is last level of the game, convert the win screen into an end game screen.
+	 */
 	public void convertEndScreen() {
 		winLabel.setText("You have finished the game!!");
 		nextLevelButton.setText("exit");
